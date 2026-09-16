@@ -1,0 +1,40 @@
+{
+  "name": "codeforge",
+  "displayName": "CodeForge",
+  "description": "Deterministic educational programming assistant",
+  "version": "0.1.0",
+  "publisher": "codeforge-dev",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Education",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:codeforge.generateCppSolution"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeforge.generateCppSolution",
+        "title": "CodeForge: Generate C++ Solution",
+        "category": "CodeForge"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "tsc -p ./ && node ./out/tests/runAllTests.js",
+    "test:e2e": "tsc -p ./ && node ./out/tests/e2e.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

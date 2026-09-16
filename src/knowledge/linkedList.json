@@ -1,0 +1,33 @@
+{
+  "structure": "singly_linked_list",
+  "displayName": "Singly Linked List",
+  "domain": "data_structure",
+  "description": "A linear collection of data elements whose order is not given by their physical placement in memory. Instead, each element points to the next.",
+  "supportedOperations": {
+    "insert_end": {
+      "name": "Insert at End",
+      "verified": true,
+      "moduleId": "singly_linked_list_insert_end_cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Inserts a new element at the tail of the singly linked list."
+    }
+  },
+  "unsupportedOperations": {
+    "insert_beginning": {
+      "name": "Insert at Beginning",
+      "verified": false,
+      "description": "Inserts a new element at the head of the list."
+    },
+    "delete_end": {
+      "name": "Delete from End",
+      "verified": false,
+      "description": "Deletes the last element of the list."
+    },
+    "reverse": {
+      "name": "Reverse List",
+      "verified": false,
+      "description": "Reverses the direction of pointers in the singly linked list."
+    }
+  }
+}
