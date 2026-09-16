@@ -1,0 +1,209 @@
+[
+  {
+    "id": 9,
+    "input": "push_back in singly linked list",
+    "category": "Supported Phrasings",
+    "expected": {
+      "status": "success",
+      "structure": "singly_linked_list",
+      "operation": "insert_end",
+      "error_code": null
+    },
+    "actual": {
+      "status": "ambiguous",
+      "structure": "singly_linked_list",
+      "operation": null,
+      "error_code": "UNKNOWN_OPERATION"
+    },
+    "parser_decision": {
+      "confidence_basis": "ambiguous",
+      "normalized_query": "push_back in singly linked list",
+      "message": "Target data structure is 'singly_linked_list', but no supported operation (such as 'insert at end') was recognized."
+    },
+    "why_it_failed": "Status mismatch: expected 'success', got 'ambiguous'; Operation mismatch: expected 'insert_end', got 'None'"
+  },
+  {
+    "id": 13,
+    "input": "pls insrt 10 @ end of likned lst asap!!!",
+    "category": "Supported Phrasings",
+    "expected": {
+      "status": "success",
+      "structure": "singly_linked_list",
+      "operation": "insert_end",
+      "error_code": null
+    },
+    "actual": {
+      "status": "ambiguous",
+      "structure": null,
+      "operation": "insert_end",
+      "error_code": "AMBIGUOUS_STRUCTURE"
+    },
+    "parser_decision": {
+      "confidence_basis": "ambiguous",
+      "normalized_query": "pls insert 10 end of linked last asap",
+      "message": "No explicit data structure was specified (e.g. 'singly linked list'). CodeForge requires an explicit target data structure."
+    },
+    "why_it_failed": "Status mismatch: expected 'success', got 'ambiguous'; Structure mismatch: expected 'singly_linked_list', got 'None'"
+  },
+  {
+    "id": 27,
+    "input": "insert at index 3 in singly linked list",
+    "category": "Unsupported Operations",
+    "expected": {
+      "status": "unsupported",
+      "structure": "singly_linked_list",
+      "operation": null,
+      "error_code": "UNSUPPORTED_OPERATION"
+    },
+    "actual": {
+      "status": "ambiguous",
+      "structure": "singly_linked_list",
+      "operation": null,
+      "error_code": "UNKNOWN_OPERATION"
+    },
+    "parser_decision": {
+      "confidence_basis": "ambiguous",
+      "normalized_query": "insert at index 3 in singly linked list",
+      "message": "Target data structure is 'singly_linked_list', but no supported operation (such as 'insert at end') was recognized."
+    },
+    "why_it_failed": "Status mismatch: expected 'unsupported', got 'ambiguous'; Error code mismatch: expected 'UNSUPPORTED_OPERATION', got 'UNKNOWN_OPERATION'"
+  },
+  {
+    "id": 28,
+    "input": "traverse and print all elements of singly linked list",
+    "category": "Unsupported Operations",
+    "expected": {
+      "status": "unsupported",
+      "structure": "singly_linked_list",
+      "operation": null,
+      "error_code": "UNSUPPORTED_OPERATION"
+    },
+    "actual": {
+      "status": "ambiguous",
+      "structure": "singly_linked_list",
+      "operation": null,
+      "error_code": "UNKNOWN_OPERATION"
+    },
+    "parser_decision": {
+      "confidence_basis": "ambiguous",
+      "normalized_query": "traverse and print all element of singly linked list",
+      "message": "Target data structure is 'singly_linked_list', but no supported operation (such as 'insert at end') was recognized."
+    },
+    "why_it_failed": "Status mismatch: expected 'unsupported', got 'ambiguous'; Error code mismatch: expected 'UNSUPPORTED_OPERATION', got 'UNKNOWN_OPERATION'"
+  },
+  {
+    "id": 39,
+    "input": "reverse singly linked list after inserting a node at tail",
+    "category": "Compound Operations",
+    "expected": {
+      "status": "unsupported",
+      "structure": null,
+      "operation": null,
+      "error_code": "UNSUPPORTED_COMPOUND_PROBLEM"
+    },
+    "actual": {
+      "status": "unsupported",
+      "structure": "singly_linked_list",
+      "operation": "reverse",
+      "error_code": "UNSUPPORTED_OPERATION"
+    },
+    "parser_decision": {
+      "confidence_basis": "exact_rule_match",
+      "normalized_query": "reverse singly linked list after inserting a node at tail",
+      "message": "Operation 'reverse' was identified for 'singly_linked_list', but CodeForge Prototype V0 currently only has a verified solution for 'insert_end'."
+    },
+    "why_it_failed": "Error code mismatch: expected 'UNSUPPORTED_COMPOUND_PROBLEM', got 'UNSUPPORTED_OPERATION'"
+  },
+  {
+    "id": 40,
+    "input": "insert a node at the beginning not at the end of singly linked list",
+    "category": "Adversarial / Negation",
+    "expected": {
+      "status": "unsupported",
+      "structure": "singly_linked_list",
+      "operation": "insert_beginning",
+      "error_code": "UNSUPPORTED_OPERATION"
+    },
+    "actual": {
+      "status": "unsupported",
+      "structure": null,
+      "operation": null,
+      "error_code": "UNSUPPORTED_COMPOUND_PROBLEM"
+    },
+    "parser_decision": {
+      "confidence_basis": "unsupported",
+      "normalized_query": "insert a node at the beginning not at the end of singly linked list",
+      "message": "CodeForge detected multiple operations in a single query. Compound operations are not supported in Prototype V0."
+    },
+    "why_it_failed": "Structure mismatch: expected 'singly_linked_list', got 'None'; Operation mismatch: expected 'insert_beginning', got 'None'; Error code mismatch: expected 'UNSUPPORTED_OPERATION', got 'UNSUPPORTED_COMPOUND_PROBLEM'"
+  },
+  {
+    "id": 41,
+    "input": "do not insert at the end of the linked list",
+    "category": "Adversarial / Negation",
+    "expected": {
+      "status": "ambiguous",
+      "structure": null,
+      "operation": null,
+      "error_code": null
+    },
+    "actual": {
+      "status": "success",
+      "structure": "singly_linked_list",
+      "operation": "insert_end",
+      "error_code": null
+    },
+    "parser_decision": {
+      "confidence_basis": "synonym_match",
+      "normalized_query": "do not insert at the end of the linked list",
+      "message": "Successfully identified singly_linked_list with insert_end operation."
+    },
+    "why_it_failed": "Status mismatch: expected 'ambiguous', got 'success'"
+  },
+  {
+    "id": 42,
+    "input": "whats the difference between insert at tail and insert at head in a linked list",
+    "category": "Conceptual / Non-code",
+    "expected": {
+      "status": "ambiguous",
+      "structure": null,
+      "operation": null,
+      "error_code": null
+    },
+    "actual": {
+      "status": "unsupported",
+      "structure": null,
+      "operation": null,
+      "error_code": "UNSUPPORTED_COMPOUND_PROBLEM"
+    },
+    "parser_decision": {
+      "confidence_basis": "unsupported",
+      "normalized_query": "whats the difference between insert at tail and insert at head in a linked list",
+      "message": "CodeForge detected multiple operations in a single query. Compound operations are not supported in Prototype V0."
+    },
+    "why_it_failed": "Status mismatch: expected 'ambiguous', got 'unsupported'"
+  },
+  {
+    "id": 45,
+    "input": "singly_linked_list::insert_tail()",
+    "category": "Code-like Syntax",
+    "expected": {
+      "status": "success",
+      "structure": "singly_linked_list",
+      "operation": "insert_end",
+      "error_code": null
+    },
+    "actual": {
+      "status": "ambiguous",
+      "structure": null,
+      "operation": null,
+      "error_code": "AMBIGUOUS_STRUCTURE"
+    },
+    "parser_decision": {
+      "confidence_basis": "ambiguous",
+      "normalized_query": "singly_linked_list insert_tail",
+      "message": "No explicit data structure was specified (e.g. 'singly linked list'). CodeForge requires an explicit target data structure."
+    },
+    "why_it_failed": "Status mismatch: expected 'success', got 'ambiguous'; Structure mismatch: expected 'singly_linked_list', got 'None'; Operation mismatch: expected 'insert_end', got 'None'"
+  }
+]
