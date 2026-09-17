@@ -1,9 +1,9 @@
 {
-  "name": "codeforge",
-  "displayName": "CodeForge",
-  "description": "Deterministic educational programming assistant",
+  "name": "chup",
+  "displayName": "Chup",
+  "description": "Deterministic educational programming assistant for C++ and data structures",
   "version": "0.1.0",
-  "publisher": "codeforge-dev",
+  "publisher": "chup-dev",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -19,7 +19,8 @@
     "algorithms",
     "numerical-methods",
     "menu-driven",
-    "education"
+    "education",
+    "chup"
   ],
   "author": "Abdullah Al Mamun <mamun.cse.ku@gmail.com>",
   "license": "MIT",
@@ -28,15 +29,16 @@
     "url": "https://github.com/abdullahalmamun29/chup"
   },
   "activationEvents": [
+    "onCommand:chup.generateCppSolution",
     "onCommand:codeforge.generateCppSolution"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "codeforge.generateCppSolution",
-        "title": "CodeForge: Generate C++ Solution",
-        "category": "CodeForge"
+        "command": "chup.generateCppSolution",
+        "title": "Chup: Generate C++ Solution",
+        "category": "Chup"
       }
     ]
   },
@@ -50,6 +52,7 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^4.0.0",
     "typescript": "^5.3.3"
   }
 }
