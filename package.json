@@ -3,7 +3,7 @@
   "displayName": "Chup",
   "description": "Deterministic educational programming assistant for C++ and data structures",
   "version": "0.1.0",
-  "publisher": "chup-dev",
+  "publisher": "abdullahAlMamun",
   "engines": {
     "vscode": "^1.85.0"
   },
