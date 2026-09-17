@@ -2,6 +2,7 @@
 src/**
 scripts/**
 dist_test/**
+docs/**
 generate_modules.py
 tsconfig.json
 **/*.map
