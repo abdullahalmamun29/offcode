@@ -1,0 +1,53 @@
+{
+  "id": "techniques",
+  "displayName": "Algorithm Techniques",
+  "domain": "algorithm",
+  "description": "General problem solving techniques.",
+  "methods": [
+    {
+      "id": "two_pointers",
+      "name": "Two Pointers",
+      "aliases": [
+        "twopointers"
+      ],
+      "verified": false,
+      "description": "Uses the two pointers technique."
+    },
+    {
+      "id": "sliding_window",
+      "name": "Sliding Window",
+      "aliases": [
+        "slidingwindow"
+      ],
+      "verified": false,
+      "description": "Uses the sliding window technique."
+    },
+    {
+      "id": "prefix_sum",
+      "name": "Prefix Sum",
+      "aliases": [
+        "prefixsum"
+      ],
+      "verified": false,
+      "description": "Uses the prefix sum technique."
+    },
+    {
+      "id": "frequency_counting",
+      "name": "Frequency Counting",
+      "aliases": [
+        "frequencycounting"
+      ],
+      "verified": false,
+      "description": "Uses the frequency counting technique."
+    },
+    {
+      "id": "difference_array",
+      "name": "Difference Array",
+      "aliases": [
+        "differencearray"
+      ],
+      "verified": false,
+      "description": "Uses the difference array technique."
+    }
+  ]
+}

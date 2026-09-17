@@ -1,0 +1,198 @@
+{
+  "id": "linear_systems",
+  "displayName": "Linear Systems",
+  "domain": "numerical",
+  "category": "linear_systems",
+  "description": "Methods for solving linear systems.",
+  "methods": [
+    {
+      "id": "gauss_elimination",
+      "name": "Gauss Elimination",
+      "aliases": [
+        "gausselimination"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.gauss_elimination.cpp",
+      "timeComplexity": "O(N^3)",
+      "spaceComplexity": "O(N^2)",
+      "description": "gauss elimination.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "augmented_matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size+1",
+            "prompt": "Enter augmented matrix"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gauss_jordan",
+      "name": "Gauss Jordan",
+      "aliases": [
+        "gaussjordan"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.gauss_jordan.cpp",
+      "timeComplexity": "O(N^3)",
+      "spaceComplexity": "O(N^2)",
+      "description": "gauss jordan.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "augmented_matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size+1",
+            "prompt": "Enter augmented matrix"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lu_decomposition",
+      "name": "Lu Decomposition",
+      "aliases": [
+        "ludecomposition"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.lu_decomposition.cpp",
+      "timeComplexity": "O(N^3)",
+      "spaceComplexity": "O(N^2)",
+      "description": "lu decomposition.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "augmented_matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size+1",
+            "prompt": "Enter augmented matrix"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jacobi",
+      "name": "Jacobi",
+      "aliases": [
+        "jacobi"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.jacobi.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N^2)",
+      "description": "jacobi.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "coefficient_matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size",
+            "prompt": "Enter coefficient matrix"
+          },
+          {
+            "name": "rhs_vector",
+            "type": "double[]",
+            "count": "matrix_size",
+            "prompt": "Enter RHS vector"
+          },
+          {
+            "name": "initial_approximation",
+            "type": "double[]",
+            "count": "matrix_size",
+            "prompt": "Enter initial approximation"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gauss_seidel",
+      "name": "Gauss Seidel",
+      "aliases": [
+        "gaussseidel"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.gauss_seidel.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N^2)",
+      "description": "gauss seidel.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "coefficient_matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size",
+            "prompt": "Enter coefficient matrix"
+          },
+          {
+            "name": "rhs_vector",
+            "type": "double[]",
+            "count": "matrix_size",
+            "prompt": "Enter RHS vector"
+          },
+          {
+            "name": "initial_approximation",
+            "type": "double[]",
+            "count": "matrix_size",
+            "prompt": "Enter initial approximation"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
+    }
+  ]
+}

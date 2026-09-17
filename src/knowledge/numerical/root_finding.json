@@ -1,0 +1,196 @@
+{
+  "id": "root_finding",
+  "displayName": "Root Finding Methods",
+  "domain": "numerical",
+  "category": "root_finding",
+  "description": "Methods for finding roots of equations.",
+  "methods": [
+    {
+      "id": "bisection",
+      "name": "Bisection",
+      "aliases": [
+        "bisection"
+      ],
+      "verified": true,
+      "moduleId": "numerical.root_finding.bisection.cpp",
+      "timeComplexity": "O(log((b-a)/tol))",
+      "spaceComplexity": "O(N)",
+      "description": "Bisection method.",
+      "runtime_input": {
+        "function_mode": "polynomial_coefficients",
+        "parameters": [
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter the degree of the polynomial"
+          },
+          {
+            "name": "coefficients",
+            "type": "double[]",
+            "count": "degree+1",
+            "prompt": "Enter coefficients (highest power first: a_n a_{n-1} ... a_1 a_0)"
+          },
+          {
+            "name": "lower_bound",
+            "type": "double",
+            "prompt": "Enter lower bound (a)"
+          },
+          {
+            "name": "upper_bound",
+            "type": "double",
+            "prompt": "Enter upper bound (b)"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance (e.g., 0.0001)"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter maximum number of iterations"
+          }
+        ]
+      }
+    },
+    {
+      "id": "false_position",
+      "name": "False Position",
+      "aliases": [
+        "false_position"
+      ],
+      "verified": true,
+      "moduleId": "numerical.root_finding.false_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "False position method.",
+      "runtime_input": {
+        "function_mode": "polynomial_coefficients",
+        "parameters": [
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter the degree of the polynomial"
+          },
+          {
+            "name": "coefficients",
+            "type": "double[]",
+            "count": "degree+1",
+            "prompt": "Enter coefficients (highest power first: a_n a_{n-1} ... a_1 a_0)"
+          },
+          {
+            "name": "lower_bound",
+            "type": "double",
+            "prompt": "Enter lower bound (a)"
+          },
+          {
+            "name": "upper_bound",
+            "type": "double",
+            "prompt": "Enter upper bound (b)"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance (e.g., 0.0001)"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter maximum number of iterations"
+          }
+        ]
+      }
+    },
+    {
+      "id": "newton_raphson",
+      "name": "Newton Raphson",
+      "aliases": [
+        "newton_raphson"
+      ],
+      "verified": true,
+      "moduleId": "numerical.root_finding.newton_raphson.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Newton Raphson method.",
+      "runtime_input": {
+        "function_mode": "polynomial_coefficients",
+        "parameters": [
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter the degree of the polynomial"
+          },
+          {
+            "name": "coefficients",
+            "type": "double[]",
+            "count": "degree+1",
+            "prompt": "Enter coefficients"
+          },
+          {
+            "name": "initial_guess",
+            "type": "double",
+            "prompt": "Enter initial guess"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
+    },
+    {
+      "id": "secant",
+      "name": "Secant",
+      "aliases": [
+        "secant"
+      ],
+      "verified": true,
+      "moduleId": "numerical.root_finding.secant.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Secant method.",
+      "runtime_input": {
+        "function_mode": "polynomial_coefficients",
+        "parameters": [
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter the degree of the polynomial"
+          },
+          {
+            "name": "coefficients",
+            "type": "double[]",
+            "count": "degree+1",
+            "prompt": "Enter coefficients"
+          },
+          {
+            "name": "x0",
+            "type": "double",
+            "prompt": "Enter x0"
+          },
+          {
+            "name": "x1",
+            "type": "double",
+            "prompt": "Enter x1"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
+    }
+  ]
+}

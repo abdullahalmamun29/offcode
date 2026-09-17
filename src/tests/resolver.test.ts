@@ -1,9 +1,29 @@
 /**
- * Unit tests for Operation Resolver.
+ * Unit tests for Operation Resolver V1.
  */
 
 import { resolveProblemSpec } from "../resolver/operationResolver";
-import { ProblemSpec } from "../models/problemSpec";
+import { ProblemSpecV1 } from "../models/problemSpec";
+
+function makeSpec(overrides: Partial<ProblemSpecV1>): ProblemSpecV1 {
+  return {
+    status: "success",
+    language: "cpp",
+    domain: "data_structure",
+    intent: "code_generation",
+    structure: { type: "singly_linked_list", confidence_basis: "exact_rule_match" },
+    operation: { action: "insert", position: "tail", combined: "insert_end", negated: false },
+    compound: { is_compound: false, detected_actions: [] },
+    numerical: { method: null, category: null },
+    confidence: 1.0,
+    confidence_basis: "exact_rule_match",
+    error_code: null,
+    message: "",
+    raw_query: "test",
+    normalized_query: "test",
+    ...overrides
+  };
+}
 
 export function runResolverTests(): { passed: number; failed: number } {
   let passed = 0;
@@ -19,85 +39,60 @@ export function runResolverTests(): { passed: number; failed: number } {
     }
   }
 
-  console.log("\n[TypeScript Tests: Operation Resolver]");
+  console.log("\n[TypeScript Tests: Operation Resolver V1]");
 
-  // 1. Success case: singly_linked_list + insert_end + cpp
-  const validSpec: ProblemSpec = {
-    status: "success",
-    language: "cpp",
-    domain: "data_structure",
-    structure: "singly_linked_list",
-    operation: "insert_end",
-    confidence: 1.0,
-    confidence_basis: "exact_rule_match",
-    raw_query: "Insert a node at the end of a singly linked list."
-  };
-  const resSuccess = resolveProblemSpec(validSpec);
-  assert(resSuccess.code === "SUCCESS", "Resolves valid singly_linked_list insert_end to SUCCESS");
-  assert(resSuccess.moduleId === "singly_linked_list_insert_end_cpp", "Resolves to correct moduleId");
+  // 1. Success: SLL + insert_end
+  const res1 = resolveProblemSpec(makeSpec({}));
+  assert(res1.code === "SUCCESS", "Resolves SLL insert_end to SUCCESS");
+  assert(res1.moduleId === "singly_linked_list.insert_end.cpp", "Correct moduleId for SLL insert_end");
 
-  // 2. Identified but unsupported operation: singly_linked_list + reverse
-  const unsupportedOpSpec: ProblemSpec = {
+  // 2. Negated
+  const res2 = resolveProblemSpec(makeSpec({ status: "negated" }));
+  assert(res2.code === "NEGATED", "Resolves negated to NEGATED");
+
+  // 3. Question
+  const res3 = resolveProblemSpec(makeSpec({ status: "question", intent: "conceptual_question" }));
+  assert(res3.code === "QUESTION", "Resolves question to QUESTION");
+
+  // 4. Compound
+  const res4 = resolveProblemSpec(makeSpec({
     status: "unsupported",
-    language: "cpp",
-    domain: "data_structure",
-    structure: "singly_linked_list",
-    operation: "reverse",
-    confidence: 0.0,
-    confidence_basis: "unsupported",
-    error_code: "UNSUPPORTED_OPERATION",
-    message: "Operation reverse not supported."
-  };
-  const resUnsupportedOp = resolveProblemSpec(unsupportedOpSpec);
-  assert(
-    resUnsupportedOp.code === "IDENTIFIED_UNSUPPORTED",
-    "Resolves recognized but unsupported operation to IDENTIFIED_UNSUPPORTED"
-  );
-
-  // 3. Identified but unsupported structure: binary_tree
-  const unsupportedStructSpec: ProblemSpec = {
-    status: "unsupported",
-    language: "cpp",
-    domain: "data_structure",
-    structure: "binary_tree",
-    operation: "create",
-    confidence: 0.0,
-    confidence_basis: "unsupported",
-    error_code: "UNSUPPORTED_STRUCTURE"
-  };
-  const resUnsupportedStruct = resolveProblemSpec(unsupportedStructSpec);
-  assert(
-    resUnsupportedStruct.code === "IDENTIFIED_UNSUPPORTED",
-    "Resolves unsupported structure to IDENTIFIED_UNSUPPORTED"
-  );
-
-  // 4. Ambiguous / Missing structure
-  const ambiguousSpec: ProblemSpec = {
-    status: "ambiguous",
-    language: "cpp",
-    domain: "data_structure",
-    structure: undefined,
-    operation: "insert_end",
-    confidence: 0.0,
-    confidence_basis: "ambiguous",
-    error_code: "AMBIGUOUS_STRUCTURE"
-  };
-  const resAmbiguous = resolveProblemSpec(ambiguousSpec);
-  assert(resAmbiguous.code === "CANNOT_IDENTIFY", "Resolves ambiguous structure to CANNOT_IDENTIFY");
-
-  // 5. Compound operation
-  const compoundSpec: ProblemSpec = {
-    status: "unsupported",
-    language: "cpp",
-    domain: "data_structure",
-    structure: "singly_linked_list",
-    operation: "compound_operation",
-    confidence: 0.0,
-    confidence_basis: "unsupported",
+    compound: { is_compound: true, detected_actions: ["insert", "delete"] },
     error_code: "UNSUPPORTED_COMPOUND_PROBLEM"
-  };
-  const resCompound = resolveProblemSpec(compoundSpec);
-  assert(resCompound.code === "COMPOUND_UNSUPPORTED", "Resolves compound query to COMPOUND_UNSUPPORTED");
+  }));
+  assert(res4.code === "COMPOUND_UNSUPPORTED", "Resolves compound to COMPOUND_UNSUPPORTED");
+
+  // 5. Ambiguous
+  const res5 = resolveProblemSpec(makeSpec({
+    status: "ambiguous",
+    structure: { type: null, confidence_basis: "ambiguous" },
+    error_code: "AMBIGUOUS_STRUCTURE"
+  }));
+  assert(res5.code === "AMBIGUOUS", "Resolves ambiguous to AMBIGUOUS");
+
+  // 6. Unsupported structure
+  const res6 = resolveProblemSpec(makeSpec({
+    status: "unsupported",
+    structure: { type: "unknown_ds", confidence_basis: "exact_rule_match" },
+    operation: { action: "insert", position: "tail", combined: "insert_end", negated: false }
+  }));
+  assert(res6.code === "UNSUPPORTED_STRUCTURE", "Resolves unknown structure to UNSUPPORTED_STRUCTURE");
+
+  // 7. Unsupported operation on known structure
+  const res7 = resolveProblemSpec(makeSpec({
+    operation: { action: "frobnicate", position: null, combined: "frobnicate", negated: false }
+  }));
+  assert(res7.code === "UNSUPPORTED_OPERATION", "Resolves unknown operation to UNSUPPORTED_OPERATION");
+
+  // 8. Numerical method resolution
+  const res8 = resolveProblemSpec(makeSpec({
+    domain: "numerical",
+    structure: { type: null, confidence_basis: "exact_rule_match" },
+    numerical: { method: "bisection", category: "root_finding" },
+    operation: { action: null, position: null, combined: null, negated: false }
+  }));
+  assert(res8.code === "SUCCESS", "Resolves bisection to SUCCESS");
+  assert(res8.moduleId === "numerical.root_finding.bisection.cpp", "Correct moduleId for bisection");
 
   return { passed, failed };
 }

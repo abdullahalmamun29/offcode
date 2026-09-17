@@ -1,0 +1,160 @@
+{
+  "id": "doubly_circular_linked_list",
+  "displayName": "Doubly Circular Linked List",
+  "domain": "data_structure",
+  "description": "A circular linked list where each node has pointers to both next and previous nodes.",
+  "aliases": [
+    "doubly circular linked list",
+    "circular doubly linked list",
+    "doubly circular list",
+    "circular doubly list",
+    "dcll",
+    "cdll"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create List",
+      "action": "create",
+      "position": null,
+      "aliases": ["make", "initialize", "construct"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Creates a doubly circular linked list by reading elements from stdin."
+    },
+    {
+      "id": "display",
+      "name": "Display Forward",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse", "forward"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Traverses and displays the doubly circular list forward."
+    },
+    {
+      "id": "display_reverse",
+      "name": "Display Reverse",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["backward", "print_reverse", "reverse_display"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.display_reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Traverses and displays the doubly circular list backward."
+    },
+    {
+      "id": "insert_beginning",
+      "name": "Insert at Beginning",
+      "action": "insert",
+      "position": "head",
+      "aliases": ["prepend", "push_front"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.insert_beginning.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inserts a new node at the head of the doubly circular linked list."
+    },
+    {
+      "id": "insert_end",
+      "name": "Insert at End",
+      "action": "insert",
+      "position": "tail",
+      "aliases": ["append", "push_back"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.insert_end.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inserts a new node at the tail of the doubly circular linked list."
+    },
+    {
+      "id": "insert_position",
+      "name": "Insert at Position",
+      "action": "insert",
+      "position": "index",
+      "aliases": ["insert_at", "insert_index"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.insert_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Inserts a new node at a given 0-indexed position."
+    },
+    {
+      "id": "delete_beginning",
+      "name": "Delete from Beginning",
+      "action": "delete",
+      "position": "head",
+      "aliases": ["pop_front", "remove_head"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.delete_beginning.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Deletes the head node of the doubly circular linked list."
+    },
+    {
+      "id": "delete_end",
+      "name": "Delete from End",
+      "action": "delete",
+      "position": "tail",
+      "aliases": ["pop_back", "remove_tail"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.delete_end.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Deletes the tail node of the doubly circular linked list."
+    },
+    {
+      "id": "delete_value",
+      "name": "Delete by Value",
+      "action": "delete",
+      "position": null,
+      "aliases": ["remove_value", "erase"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.delete_value.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Deletes a node with the specified value."
+    },
+    {
+      "id": "search",
+      "name": "Search Element",
+      "action": "search",
+      "position": null,
+      "aliases": ["find", "locate"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Searches for an element in the doubly circular linked list."
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse List",
+      "action": "reverse",
+      "position": "all",
+      "aliases": ["invert", "flip"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Reverses the links of the doubly circular linked list."
+    },
+    {
+      "id": "count",
+      "name": "Count Nodes",
+      "action": "count",
+      "position": "all",
+      "aliases": ["size", "length"],
+      "verified": true,
+      "moduleId": "doubly_circular_linked_list.count.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Counts the number of nodes in the doubly circular linked list."
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "id": "bst",
+  "displayName": "Binary Search Tree",
+  "domain": "data_structure",
+  "description": "A binary tree where left child is smaller and right child is larger.",
+  "aliases": [
+    "bst",
+    "binary search tree"
+  ],
+  "operations": [
+    {
+      "id": "insert",
+      "name": "Insert",
+      "action": "insert",
+      "position": null,
+      "aliases": [
+        "insert"
+      ],
+      "verified": true,
+      "moduleId": "bst.insert.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert."
+    },
+    {
+      "id": "search",
+      "name": "Search",
+      "action": "search",
+      "position": null,
+      "aliases": [
+        "search"
+      ],
+      "verified": true,
+      "moduleId": "bst.search.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs search."
+    },
+    {
+      "id": "delete",
+      "name": "Delete",
+      "action": "delete",
+      "position": null,
+      "aliases": [
+        "delete"
+      ],
+      "verified": true,
+      "moduleId": "bst.delete.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete."
+    },
+    {
+      "id": "inorder",
+      "name": "Inorder",
+      "action": "inorder",
+      "position": null,
+      "aliases": [
+        "inorder"
+      ],
+      "verified": true,
+      "moduleId": "bst.inorder.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs inorder."
+    },
+    {
+      "id": "preorder",
+      "name": "Preorder",
+      "action": "preorder",
+      "position": null,
+      "aliases": [
+        "preorder"
+      ],
+      "verified": true,
+      "moduleId": "bst.preorder.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs preorder."
+    },
+    {
+      "id": "postorder",
+      "name": "Postorder",
+      "action": "postorder",
+      "position": null,
+      "aliases": [
+        "postorder"
+      ],
+      "verified": true,
+      "moduleId": "bst.postorder.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs postorder."
+    },
+    {
+      "id": "find_min",
+      "name": "Find Min",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmin"
+      ],
+      "verified": true,
+      "moduleId": "bst.find_min.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find min."
+    },
+    {
+      "id": "find_max",
+      "name": "Find Max",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmax"
+      ],
+      "verified": true,
+      "moduleId": "bst.find_max.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find max."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "polynomial",
+  "displayName": "Polynomial (Linked List)",
+  "domain": "data_structure",
+  "description": "Polynomial representation and operations using linked lists.",
+  "aliases": [
+    "polynomial",
+    "polynomials",
+    "polynomial addition",
+    "polynomial operations",
+    "poly"
+  ],
+  "operations": [
+    {
+      "id": "add",
+      "name": "Polynomial Addition",
+      "action": "add",
+      "position": null,
+      "aliases": [
+        "add",
+        "addition",
+        "polynomial addition",
+        "add polynomials"
+      ],
+      "verified": true,
+      "moduleId": "polynomial.add.cpp",
+      "timeComplexity": "O(N + M)",
+      "spaceComplexity": "O(N + M)",
+      "description": "Performs polynomial addition using linked lists with runtime input."
+    },
+    {
+      "id": "create",
+      "name": "Create Polynomial",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create",
+        "make",
+        "implement"
+      ],
+      "verified": true,
+      "moduleId": "polynomial.add.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Creates and displays polynomial using linked list."
+    },
+    {
+      "id": "display",
+      "name": "Display Polynomial",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display",
+        "show",
+        "print"
+      ],
+      "verified": true,
+      "moduleId": "polynomial.add.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Displays polynomial."
+    }
+  ]
+}

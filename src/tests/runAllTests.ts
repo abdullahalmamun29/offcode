@@ -1,5 +1,5 @@
 /**
- * CodeForge Test Suite Runner.
+ * CodeForge V1 Test Suite Runner.
  */
 
 import { runResolverTests } from "./resolver.test";
@@ -8,7 +8,7 @@ import { runPythonBridgeTests } from "./parser.test";
 
 async function main() {
   console.log("=================================================");
-  console.log("      CodeForge TypeScript Test Suite Runner     ");
+  console.log("      CodeForge V1 TypeScript Test Suite Runner   ");
   console.log("=================================================");
 
   const resResolver = runResolverTests();

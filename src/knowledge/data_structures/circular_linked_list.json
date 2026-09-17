@@ -1,0 +1,96 @@
+{
+  "id": "circular_linked_list",
+  "displayName": "Circular Linked List",
+  "domain": "data_structure",
+  "description": "A linked list where the last node points back to the first node.",
+  "aliases": [
+    "cll",
+    "circular linked"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs create."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    },
+    {
+      "id": "insert_beginning",
+      "name": "Insert Beginning",
+      "action": "insert",
+      "position": "head",
+      "aliases": [
+        "insertbeginning"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.insert_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert beginning."
+    },
+    {
+      "id": "insert_end",
+      "name": "Insert End",
+      "action": "insert",
+      "position": "tail",
+      "aliases": [
+        "insertend"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.insert_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert end."
+    },
+    {
+      "id": "delete_beginning",
+      "name": "Delete Beginning",
+      "action": "delete",
+      "position": "head",
+      "aliases": [
+        "deletebeginning"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.delete_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete beginning."
+    },
+    {
+      "id": "delete_end",
+      "name": "Delete End",
+      "action": "delete",
+      "position": "tail",
+      "aliases": [
+        "deleteend"
+      ],
+      "verified": true,
+      "moduleId": "circular_linked_list.delete_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete end."
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "graph",
+  "displayName": "Graph",
+  "domain": "data_structure",
+  "description": "A non-linear data structure consisting of nodes and edges.",
+  "aliases": [
+    "graph",
+    "network"
+  ],
+  "operations": [
+    {
+      "id": "create_adjacency_matrix",
+      "name": "Create Adjacency Matrix",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "createadjacencymatrix"
+      ],
+      "verified": true,
+      "moduleId": "graph.create_adjacency_matrix.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs create adjacency matrix."
+    },
+    {
+      "id": "create_adjacency_list",
+      "name": "Create Adjacency List",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "createadjacencylist"
+      ],
+      "verified": true,
+      "moduleId": "graph.create_adjacency_list.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs create adjacency list."
+    },
+    {
+      "id": "bfs",
+      "name": "Bfs",
+      "action": "bfs",
+      "position": null,
+      "aliases": [
+        "bfs"
+      ],
+      "verified": true,
+      "moduleId": "graph.bfs.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs bfs."
+    },
+    {
+      "id": "dfs",
+      "name": "Dfs",
+      "action": "dfs",
+      "position": null,
+      "aliases": [
+        "dfs"
+      ],
+      "verified": true,
+      "moduleId": "graph.dfs.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs dfs."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "graph.display.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs display."
+    },
+    {
+      "id": "degree",
+      "name": "Degree",
+      "action": "degree",
+      "position": null,
+      "aliases": [
+        "degree"
+      ],
+      "verified": true,
+      "moduleId": "graph.degree.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs degree."
+    },
+    {
+      "id": "connected_components",
+      "name": "Connected Components",
+      "action": "connected",
+      "position": null,
+      "aliases": [
+        "connectedcomponents"
+      ],
+      "verified": true,
+      "moduleId": "graph.connected_components.cpp",
+      "timeComplexity": "O(V+E)",
+      "spaceComplexity": "O(V+E)",
+      "description": "Performs connected components."
+    }
+  ]
+}

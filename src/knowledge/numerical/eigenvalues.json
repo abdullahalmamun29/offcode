@@ -1,0 +1,54 @@
+{
+  "id": "eigenvalues",
+  "displayName": "Eigenvalues",
+  "domain": "numerical",
+  "category": "eigenvalues",
+  "description": "Eigenvalue methods.",
+  "methods": [
+    {
+      "id": "power_method",
+      "name": "Power Method",
+      "aliases": [
+        "power_method"
+      ],
+      "verified": true,
+      "moduleId": "numerical.eigenvalues.power_method.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N^2)",
+      "description": "Power method.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size",
+            "prompt": "Enter matrix"
+          },
+          {
+            "name": "initial_vector",
+            "type": "double[]",
+            "count": "matrix_size",
+            "prompt": "Enter initial vector"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
+    }
+  ]
+}

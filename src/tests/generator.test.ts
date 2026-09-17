@@ -1,9 +1,34 @@
 /**
- * Unit tests for C++ Code Generator.
+ * Unit tests for C++ Code Generator V1.
  */
 
-import { generateSinglyLinkedListInsertEnd } from "../generator/cppGenerator";
-import { ProblemSpec } from "../models/problemSpec";
+import { generateCpp } from "../generator/cppGenerator";
+import { ProblemSpecV1, ResolutionResult } from "../models/problemSpec";
+
+function makeResolution(moduleId: string): ResolutionResult {
+  return {
+    code: "SUCCESS",
+    moduleId: moduleId,
+    moduleName: "Test Module",
+    message: "Resolved",
+    spec: {
+      status: "success",
+      language: "cpp",
+      domain: "data_structure",
+      intent: "code_generation",
+      structure: { type: "singly_linked_list", confidence_basis: "exact_rule_match" },
+      operation: { action: "insert", position: "tail", combined: "insert_end", negated: false },
+      compound: { is_compound: false, detected_actions: [] },
+      numerical: { method: null, category: null },
+      confidence: 1.0,
+      confidence_basis: "exact_rule_match",
+      error_code: null,
+      message: "",
+      raw_query: "Insert a node at the end of a singly linked list.",
+      normalized_query: "insert a node at the end of a singly linked list"
+    }
+  };
+}
 
 export function runGeneratorTests(): { passed: number; failed: number } {
   let passed = 0;
@@ -19,31 +44,23 @@ export function runGeneratorTests(): { passed: number; failed: number } {
     }
   }
 
-  console.log("\n[TypeScript Tests: C++ Generator]");
+  console.log("\n[TypeScript Tests: C++ Generator V1]");
 
-  const spec: ProblemSpec = {
-    status: "success",
-    language: "cpp",
-    domain: "data_structure",
-    structure: "singly_linked_list",
-    operation: "insert_end",
-    confidence: 1.0,
-    confidence_basis: "exact_rule_match",
-    raw_query: "Insert a node at the end of a singly linked list."
+  // Test 1: Generate SLL insert_end
+  const code = generateCpp(makeResolution("singly_linked_list.insert_end.cpp"));
+  assert(code.includes("#include"), "Generated code has includes");
+  assert(code.includes("int main()"), "Generated code has main()");
+  assert(code.includes("cin") || code.includes("std::cin"), "Generated code uses cin input (not hardcoded)");
+  assert(!code.includes("CodeForge"), "Generated code has no CodeForge branding");
+
+  // Test 2: Non-success resolution
+  const failRes: ResolutionResult = {
+    code: "UNSUPPORTED_OPERATION",
+    message: "Not supported",
+    spec: makeResolution("x").spec
   };
-
-  const code = generateSinglyLinkedListInsertEnd(spec);
-
-  assert(code.includes("#include <iostream>"), "Includes <iostream>");
-  assert(code.includes("struct Node"), "Defines Node struct");
-  assert(code.includes("Node* next;"), "Node contains next pointer");
-  assert(code.includes("int data;"), "Node contains data member");
-  assert(code.includes("createNode(int data)"), "Defines createNode helper");
-  assert(code.includes("insertAtEnd(Node*& head, int data)"), "Defines insertAtEnd function");
-  assert(code.includes("displayList(const Node* head)"), "Defines displayList traversal function");
-  assert(code.includes("freeList(Node*& head)"), "Defines freeList memory management function");
-  assert(code.includes("int main()"), "Contains runnable main() function");
-  assert(code.includes("Time Complexity"), "Contains educational complexity metadata");
+  const failCode = generateCpp(failRes);
+  assert(failCode.includes("//") || failCode.includes("Failed"), "Non-success returns comment/error");
 
   return { passed, failed };
 }

@@ -1,0 +1,135 @@
+{
+  "id": "ode",
+  "displayName": "ODE",
+  "domain": "numerical",
+  "category": "ode",
+  "description": "ODE methods.",
+  "methods": [
+    {
+      "id": "euler",
+      "name": "Euler",
+      "aliases": [
+        "euler"
+      ],
+      "verified": true,
+      "moduleId": "numerical.ode.euler.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "euler.",
+      "runtime_input": {
+        "function_mode": "predefined_menu",
+        "parameters": [
+          {
+            "name": "function_choice",
+            "type": "int",
+            "prompt": "Enter function choice"
+          },
+          {
+            "name": "x0",
+            "type": "double",
+            "prompt": "Enter x0"
+          },
+          {
+            "name": "y0",
+            "type": "double",
+            "prompt": "Enter y0"
+          },
+          {
+            "name": "x_target",
+            "type": "double",
+            "prompt": "Enter target x"
+          },
+          {
+            "name": "step_size",
+            "type": "double",
+            "prompt": "Enter step size h"
+          }
+        ]
+      }
+    },
+    {
+      "id": "modified_euler",
+      "name": "Modified Euler",
+      "aliases": [
+        "modifiedeuler"
+      ],
+      "verified": true,
+      "moduleId": "numerical.ode.modified_euler.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "modified euler.",
+      "runtime_input": {
+        "function_mode": "predefined_menu",
+        "parameters": [
+          {
+            "name": "function_choice",
+            "type": "int",
+            "prompt": "Enter function choice"
+          },
+          {
+            "name": "x0",
+            "type": "double",
+            "prompt": "Enter x0"
+          },
+          {
+            "name": "y0",
+            "type": "double",
+            "prompt": "Enter y0"
+          },
+          {
+            "name": "x_target",
+            "type": "double",
+            "prompt": "Enter target x"
+          },
+          {
+            "name": "step_size",
+            "type": "double",
+            "prompt": "Enter step size h"
+          }
+        ]
+      }
+    },
+    {
+      "id": "runge_kutta_4",
+      "name": "Runge Kutta 4",
+      "aliases": [
+        "rungekutta4"
+      ],
+      "verified": true,
+      "moduleId": "numerical.ode.runge_kutta_4.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "runge kutta 4.",
+      "runtime_input": {
+        "function_mode": "predefined_menu",
+        "parameters": [
+          {
+            "name": "function_choice",
+            "type": "int",
+            "prompt": "Enter function choice"
+          },
+          {
+            "name": "x0",
+            "type": "double",
+            "prompt": "Enter x0"
+          },
+          {
+            "name": "y0",
+            "type": "double",
+            "prompt": "Enter y0"
+          },
+          {
+            "name": "x_target",
+            "type": "double",
+            "prompt": "Enter target x"
+          },
+          {
+            "name": "step_size",
+            "type": "double",
+            "prompt": "Enter step size h"
+          }
+        ]
+      }
+    }
+  ]
+}

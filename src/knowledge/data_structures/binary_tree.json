@@ -1,0 +1,110 @@
+{
+  "id": "binary_tree",
+  "displayName": "Binary Tree",
+  "domain": "data_structure",
+  "description": "A tree where each node has at most two children.",
+  "aliases": [
+    "binary tree",
+    "bt"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs create."
+    },
+    {
+      "id": "inorder",
+      "name": "Inorder",
+      "action": "inorder",
+      "position": null,
+      "aliases": [
+        "inorder"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.inorder.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs inorder."
+    },
+    {
+      "id": "preorder",
+      "name": "Preorder",
+      "action": "preorder",
+      "position": null,
+      "aliases": [
+        "preorder"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.preorder.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs preorder."
+    },
+    {
+      "id": "postorder",
+      "name": "Postorder",
+      "action": "postorder",
+      "position": null,
+      "aliases": [
+        "postorder"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.postorder.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs postorder."
+    },
+    {
+      "id": "height",
+      "name": "Height",
+      "action": "height",
+      "position": null,
+      "aliases": [
+        "height"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.height.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs height."
+    },
+    {
+      "id": "leaf_count",
+      "name": "Leaf Count",
+      "action": "leaf",
+      "position": null,
+      "aliases": [
+        "leafcount"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.leaf_count.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs leaf count."
+    },
+    {
+      "id": "node_count",
+      "name": "Node Count",
+      "action": "node",
+      "position": null,
+      "aliases": [
+        "nodecount"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.node_count.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs node count."
+    }
+  ]
+}

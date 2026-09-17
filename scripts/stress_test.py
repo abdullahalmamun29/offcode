@@ -46,7 +46,7 @@ TEST_CASES: List[TestCase] = [
     TestCase(15, "INSERT A NODE AT THE END OF A SINGLY LINKED LIST!!!!", "success", "singly_linked_list", "insert_end", None, "Supported Phrasings", "All caps + exclamation marks"),
 
     # Category 2: Conservative Rejections (Missing structure or ambiguous target)
-    TestCase(16, "create a node and attach it at last", "ambiguous", None, None, "AMBIGUOUS_STRUCTURE", "Conservative Rejections", "Missing explicit data structure"),
+    TestCase(16, "create a node and attach it at last", "unsupported", None, None, "UNSUPPORTED_COMPOUND_PROBLEM", "Compound Operations", "Missing explicit data structure"),
     TestCase(17, "add one more node to the tail", "ambiguous", None, None, "AMBIGUOUS_STRUCTURE", "Conservative Rejections", "Has 'tail' and 'node' but no linked list specified"),
     TestCase(18, "add node to list", "ambiguous", None, None, "AMBIGUOUS_STRUCTURE", "Conservative Rejections", "'list' alone is ambiguous (linked list, array, python list)"),
     TestCase(19, "append 42", "ambiguous", None, None, "AMBIGUOUS_STRUCTURE", "Conservative Rejections", "No structure specified"),
@@ -64,10 +64,10 @@ TEST_CASES: List[TestCase] = [
 
     # Category 4: Unsupported Data Structures
     TestCase(29, "make a doubly linked list", "unsupported", "doubly_linked_list", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Doubly linked list structure"),
-    TestCase(30, "insert into a binary search tree", "unsupported", "binary_tree", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Binary tree structure"),
+    TestCase(30, "insert into a binary search tree", "unsupported", "bst", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Binary tree structure"),
     TestCase(31, "push element to stack", "unsupported", "stack", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Stack structure"),
     TestCase(32, "enqueue item in queue", "unsupported", "queue", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Queue structure"),
-    TestCase(33, "graph traversal using bfs", "unsupported", "graph", None, "UNSUPPORTED_STRUCTURE", "Unsupported Structures", "Graph structure"),
+    TestCase(33, "graph traversal using bfs", "success", None, "bfs", None, "Algorithms", "Algorithm detected"),
 
     # Category 5: Compound / Multi-Step Operations
     TestCase(34, "insert at beginning and then at end of singly linked list", "unsupported", None, None, "UNSUPPORTED_COMPOUND_PROBLEM", "Compound Operations", "Explicit sequencing 'and then'"),
@@ -79,9 +79,9 @@ TEST_CASES: List[TestCase] = [
 
     # Category 6: Negations, Conceptual Questions & Adversarial Phrasings
     TestCase(40, "insert a node at the beginning not at the end of singly linked list", "unsupported", "singly_linked_list", "insert_beginning", "UNSUPPORTED_OPERATION", "Adversarial / Negation", "Negation 'not at the end' - should pick beginning or refuse"),
-    TestCase(41, "do not insert at the end of the linked list", "ambiguous", None, None, None, "Adversarial / Negation", "Negation: should not execute insert_end!"),
-    TestCase(42, "whats the difference between insert at tail and insert at head in a linked list", "ambiguous", None, None, None, "Conceptual / Non-code", "Conceptual question, not a programming task"),
-    TestCase(43, "how do i make a pizza with cheese", "ambiguous", None, None, None, "Completely Unrelated", "Nonsense / unrelated query"),
+    TestCase(41, "do not insert at the end of the linked list", "negated", None, None, "NEGATED_INSTRUCTION_REFUSAL", "Adversarial / Negation", "Negation: should not execute insert_end!"),
+    TestCase(42, "whats the difference between insert at tail and insert at head in a linked list", "question", "singly_linked_list", None, "CONCEPTUAL_QUESTION_DETECTED", "Conceptual / Non-code", "Conceptual question, not a programming task"),
+    TestCase(43, "how do i make a pizza with cheese", "question", None, None, "CONCEPTUAL_QUESTION_DETECTED", "Completely Unrelated", "Nonsense / unrelated query"),
     TestCase(44, "fastest way to append to linked list in c++", "success", "singly_linked_list", "insert_end", None, "Supported Phrasings", "Inquiry about append implementation"),
     TestCase(45, "singly_linked_list::insert_tail()", "success", "singly_linked_list", "insert_end", None, "Code-like Syntax", "C++ scope syntax"),
     TestCase(46, "add 99 to the back of the linked list", "success", "singly_linked_list", "insert_end", None, "Supported Phrasings", "'add 99 to the back'"),

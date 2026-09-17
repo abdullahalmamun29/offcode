@@ -1,0 +1,126 @@
+{
+  "id": "differentiation",
+  "displayName": "Differentiation",
+  "domain": "numerical",
+  "category": "differentiation",
+  "description": "Differentiation methods.",
+  "methods": [
+    {
+      "id": "forward_difference",
+      "name": "Forward Difference",
+      "aliases": [
+        "forwarddifference"
+      ],
+      "verified": true,
+      "moduleId": "numerical.differentiation.forward_difference.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "forward difference.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "target_x",
+            "type": "double",
+            "prompt": "Enter target x"
+          }
+        ]
+      }
+    },
+    {
+      "id": "backward_difference",
+      "name": "Backward Difference",
+      "aliases": [
+        "backwarddifference"
+      ],
+      "verified": true,
+      "moduleId": "numerical.differentiation.backward_difference.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "backward difference.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "target_x",
+            "type": "double",
+            "prompt": "Enter target x"
+          }
+        ]
+      }
+    },
+    {
+      "id": "central_difference",
+      "name": "Central Difference",
+      "aliases": [
+        "centraldifference"
+      ],
+      "verified": true,
+      "moduleId": "numerical.differentiation.central_difference.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "central difference.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "target_x",
+            "type": "double",
+            "prompt": "Enter target x"
+          }
+        ]
+      }
+    }
+  ]
+}

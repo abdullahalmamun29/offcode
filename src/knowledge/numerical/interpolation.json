@@ -1,0 +1,165 @@
+{
+  "id": "interpolation",
+  "displayName": "Interpolation",
+  "domain": "numerical",
+  "category": "interpolation",
+  "description": "Interpolation methods.",
+  "methods": [
+    {
+      "id": "newton_forward",
+      "name": "Newton Forward",
+      "aliases": [
+        "newtonforward"
+      ],
+      "verified": true,
+      "moduleId": "numerical.interpolation.newton_forward.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N)",
+      "description": "newton forward.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "interpolation_point",
+            "type": "double",
+            "prompt": "Enter interpolation point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "newton_backward",
+      "name": "Newton Backward",
+      "aliases": [
+        "newtonbackward"
+      ],
+      "verified": true,
+      "moduleId": "numerical.interpolation.newton_backward.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N)",
+      "description": "newton backward.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "interpolation_point",
+            "type": "double",
+            "prompt": "Enter interpolation point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lagrange",
+      "name": "Lagrange",
+      "aliases": [
+        "lagrange"
+      ],
+      "verified": true,
+      "moduleId": "numerical.interpolation.lagrange.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N)",
+      "description": "lagrange.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "interpolation_point",
+            "type": "double",
+            "prompt": "Enter interpolation point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "divided_difference",
+      "name": "Divided Difference",
+      "aliases": [
+        "divideddifference"
+      ],
+      "verified": true,
+      "moduleId": "numerical.interpolation.divided_difference.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(N)",
+      "description": "divided difference.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "interpolation_point",
+            "type": "double",
+            "prompt": "Enter interpolation point"
+          }
+        ]
+      }
+    }
+  ]
+}

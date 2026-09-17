@@ -1,0 +1,209 @@
+{
+  "id": "arrays",
+  "displayName": "Array",
+  "domain": "data_structure",
+  "description": "A collection of elements identified by index.",
+  "aliases": [
+    "array",
+    "list",
+    "vector"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create"
+      ],
+      "verified": true,
+      "moduleId": "arrays.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs create."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "arrays.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    },
+    {
+      "id": "linear_search",
+      "name": "Linear Search",
+      "action": "linear",
+      "position": null,
+      "aliases": [
+        "linearsearch"
+      ],
+      "verified": true,
+      "moduleId": "arrays.linear_search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs linear search."
+    },
+    {
+      "id": "insert_position",
+      "name": "Insert Position",
+      "action": "insert",
+      "position": "index",
+      "aliases": [
+        "insertposition"
+      ],
+      "verified": true,
+      "moduleId": "arrays.insert_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert position."
+    },
+    {
+      "id": "delete_position",
+      "name": "Delete Position",
+      "action": "delete",
+      "position": "index",
+      "aliases": [
+        "deleteposition"
+      ],
+      "verified": true,
+      "moduleId": "arrays.delete_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete position."
+    },
+    {
+      "id": "delete_value",
+      "name": "Delete Value",
+      "action": "delete",
+      "position": null,
+      "aliases": [
+        "deletevalue"
+      ],
+      "verified": true,
+      "moduleId": "arrays.delete_value.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete value."
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse",
+      "action": "reverse",
+      "position": null,
+      "aliases": [
+        "reverse"
+      ],
+      "verified": true,
+      "moduleId": "arrays.reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs reverse."
+    },
+    {
+      "id": "rotate_left",
+      "name": "Rotate Left",
+      "action": "rotate",
+      "position": null,
+      "aliases": [
+        "rotateleft"
+      ],
+      "verified": true,
+      "moduleId": "arrays.rotate_left.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs rotate left."
+    },
+    {
+      "id": "rotate_right",
+      "name": "Rotate Right",
+      "action": "rotate",
+      "position": null,
+      "aliases": [
+        "rotateright"
+      ],
+      "verified": true,
+      "moduleId": "arrays.rotate_right.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs rotate right."
+    },
+    {
+      "id": "merge",
+      "name": "Merge",
+      "action": "merge",
+      "position": null,
+      "aliases": [
+        "merge"
+      ],
+      "verified": true,
+      "moduleId": "arrays.merge.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs merge."
+    },
+    {
+      "id": "frequency_count",
+      "name": "Frequency Count",
+      "action": "frequency",
+      "position": null,
+      "aliases": [
+        "frequencycount"
+      ],
+      "verified": true,
+      "moduleId": "arrays.frequency_count.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs frequency count."
+    },
+    {
+      "id": "find_min",
+      "name": "Find Min",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmin"
+      ],
+      "verified": true,
+      "moduleId": "arrays.find_min.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find min."
+    },
+    {
+      "id": "find_max",
+      "name": "Find Max",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmax"
+      ],
+      "verified": true,
+      "moduleId": "arrays.find_max.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find max."
+    },
+    {
+      "id": "update",
+      "name": "Update",
+      "action": "update",
+      "position": null,
+      "aliases": [
+        "update"
+      ],
+      "verified": true,
+      "moduleId": "arrays.update.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs update."
+    }
+  ]
+}

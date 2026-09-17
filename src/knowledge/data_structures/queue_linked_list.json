@@ -1,0 +1,110 @@
+{
+  "id": "queue_linked_list",
+  "displayName": "Queue (Linked List Implementation)",
+  "domain": "data_structure",
+  "description": "A dynamic FIFO queue using a linked list with front and rear pointers.",
+  "aliases": [
+    "queue linked list",
+    "queue using linked list",
+    "linked list queue",
+    "queue with linked list"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create Queue",
+      "action": "create",
+      "position": null,
+      "aliases": ["initialize", "make", "construct"],
+      "verified": true,
+      "moduleId": "queue_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Initializes linked-list queue with elements from stdin."
+    },
+    {
+      "id": "enqueue",
+      "name": "Enqueue",
+      "action": "enqueue",
+      "position": "tail",
+      "aliases": ["insert", "insert_end", "push", "add"],
+      "verified": true,
+      "moduleId": "queue_linked_list.enqueue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Appends a new node to the rear of the linked-list queue."
+    },
+    {
+      "id": "dequeue",
+      "name": "Dequeue",
+      "action": "dequeue",
+      "position": "head",
+      "aliases": ["delete", "delete_beginning", "pop", "remove"],
+      "verified": true,
+      "moduleId": "queue_linked_list.dequeue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Removes and deallocates the front node from the linked-list queue."
+    },
+    {
+      "id": "front",
+      "name": "Front",
+      "action": "front",
+      "position": "head",
+      "aliases": ["peek", "head", "get_front"],
+      "verified": true,
+      "moduleId": "queue_linked_list.front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns value at the front node."
+    },
+    {
+      "id": "rear",
+      "name": "Rear",
+      "action": "rear",
+      "position": "tail",
+      "aliases": ["back", "tail", "get_rear"],
+      "verified": true,
+      "moduleId": "queue_linked_list.rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns value at the rear node."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is_empty",
+      "position": null,
+      "aliases": ["isempty", "empty"],
+      "verified": true,
+      "moduleId": "queue_linked_list.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Checks if the linked-list queue is empty."
+    },
+    {
+      "id": "size",
+      "name": "Size",
+      "action": "count",
+      "position": "all",
+      "aliases": ["count", "length"],
+      "verified": true,
+      "moduleId": "queue_linked_list.size.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns the number of elements in the linked-list queue."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse"],
+      "verified": true,
+      "moduleId": "queue_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Traverses and displays all elements of the linked-list queue."
+    }
+  ]
+}

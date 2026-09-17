@@ -1,134 +1,122 @@
-# CodeForge (Prototype V0)
+# CodeForge ⚡
 
-**CodeForge** is a deterministic educational programming assistant implemented as a standalone VS Code extension. It translates natural-language programming problems into verified, beginner-friendly C++ implementations using a rule-based NLP pipeline—without relying on any LLMs or external generative AI APIs.
+**CodeForge** is a deterministic, educational programming assistant built as a Visual Studio Code extension. It translates natural language programming prompts into verified, production-grade, beginner-friendly **C++17** implementations—completely offline and without relying on large language models (LLMs) or external generative APIs.
 
 ---
 
-## Architecture
+## Key Highlights
+
+- **Zero LLM Hallucinations**: 100% deterministic NLP parsing and code generation. Every generated fragment is statically verified, compilable, and standards-compliant.
+- **Strict Scope Discipline**: When generating menu-driven programs, CodeForge generates menus containing **only** the operations requested by the user, avoiding unwanted menu bloat.
+- **Dynamic Memory Safety**: Automatically generates proper memory deallocation routines (`freeList`, destructor cleanup) for linked lists and dynamic structures to prevent memory leaks.
+- **Interactive Terminal Input**: Programs accept input dynamically via standard terminal I/O (`cin` / `cout`) with clean, educational prompts.
+- **Zero External Runtime Dependencies**: The core NLP engine relies exclusively on Python standard library modules (`difflib`, `re`, `json`).
+
+---
+
+## Supported Domains & Operations
+
+### 1. Data Structures
+- **Singly Linked Lists (SLL)**: Insert (beginning, end, after node, position), Delete (beginning, end, value, position), Display, Reverse, Search, Count, and Scoped Menu programs.
+- **Doubly Linked Lists (DLL)**: Two-way pointer manipulation, Insert, Delete, Forward & Backward Display, and Scoped Menus.
+- **Circular Linked Lists (CLL)**: Cycle preservation, Insert, Delete, Display, Search.
+- **Doubly Circular Linked Lists (DCLL)**: Full circular doubly-linked pointer rewiring, Insert After, Create/Initialize List, Display, Scoped Menus.
+- **Stacks & Queues**: Array-based and Linked-List-based implementations (Push, Pop, Peek, Enqueue, Dequeue, Circular Queue).
+
+### 2. Algorithms
+- **Searching**: Linear Search, Binary Search.
+- **Sorting**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort.
+- **Polynomial Arithmetic**: Linked-list-based polynomial addition and evaluation.
+
+### 3. Numerical Methods
+- **Linear Systems**:
+  - Doolittle LU Decomposition (Singularity & zero-pivot protection, $L\mathbf{y}=\mathbf{b}$, $U\mathbf{x}=\mathbf{y}$)
+  - Gaussian Elimination (with partial pivoting)
+  - Gauss-Jordan Elimination
+  - Jacobi Iteration
+  - Gauss-Seidel Iteration
+- **Root Finding**: Bisection Method, Regula Falsi (False Position), Newton-Raphson, Secant Method.
+- **Interpolation**: Lagrange Interpolation, Newton Forward / Backward Difference, Newton Divided Difference.
+- **Numerical Calculus & ODEs**: Trapezoidal Rule, Simpson's 1/3 and 3/8 Rules, Euler's Method, Modified Euler, Runge-Kutta 4th Order (RK4), Power Method for Eigenvalues.
+
+---
+
+## How It Works
 
 ```text
-Natural Language (User Input in VS Code)
-         ↓
-TypeScript VS Code Extension (`src/extension.ts`)
-         ↓ (stdin JSON)
-Local Python NLP Parser (`python_parser/parser.py`)
-         ↓ (stdout JSON)
-Structured `ProblemSpec` JSON
-         ↓
+Natural Language Query (User Input in VS Code Command Palette)
+                     ↓
+VS Code TypeScript Extension (`src/extension.ts`)
+                     ↓ (stdin JSON)
+Deterministic Python NLP Engine (`python_parser/parser.py`)
+                     ↓ (stdout JSON)
+Structured `ProblemSpec` Specification
+                     ↓
 TypeScript Operation Resolver (`src/resolver/operationResolver.ts`)
-         ↓
-Verified C++ Code Generator (`src/generator/cppGenerator.ts`)
-         ↓
-VS Code Editor (Opens Untitled C++ Document)
+                     ↓
+Verified C++ Code Generator (`src/generator/cppGenerator.ts` & `menuGenerator.ts`)
+                     ↓
+Active VS Code Editor Tab (Opens Clean, Ready-to-Compile C++17 Solution)
 ```
 
 ---
 
-## Features & Principles
+## Installation
 
-1. **Strict Determinism**: Zero LLMs. Rule-based parsing with controlled fuzzy spelling matching (`rapidfuzz` / Damerau-Levenshtein).
-2. **Conservative Parsing**: Does not guess data structures when none is provided (e.g., `"Append a new node."` is treated as ambiguous).
-3. **Compound Problem Rejection**: Multi-step queries (e.g., `"Reverse a singly linked list and then insert a node at the end."`) are rejected as `UNSUPPORTED_COMPOUND_PROBLEM` rather than partially solved.
-4. **Transparent Confidence**: Uses `confidence_basis` (`exact_rule_match`, `synonym_match`, `fuzzy_match`, `ambiguous`, `unsupported`) rather than fake statistical probabilities.
-5. **Verified C++ Code**: Verified, beginner-friendly, memory-safe, compilable C++ code for Singly Linked List Insert at End.
+### Method A: Install via VSIX (Direct)
 
----
+1. Download the latest `codeforge-x.x.x.vsix` release from [GitHub Releases](https://github.com/mamun-cse-ku/codeForge/releases).
+2. In VS Code, open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+3. Click the **`...`** (Views and More Actions) menu in the top-right corner of the Extensions panel.
+4. Select **Install from VSIX...** and choose the downloaded `.vsix` file.
 
-## Directory Structure
-
-```text
-codeForge/
-├── .vscode/
-│   ├── launch.json              # F5 launch configuration for VS Code Extension Host
-│   └── tasks.json               # Build tasks (npm compile)
-├── python_parser/
-│   ├── __init__.py
-│   ├── normalizer.py            # Text normalization & tokenization
-│   ├── spell_corrector.py       # Domain-specific Damerau-Levenshtein fuzzy corrector
-│   ├── parser.py                # Deterministic NLP classifier & CLI/stdin interface
-│   ├── requirements.txt         # Python dependencies (rapidfuzz, pytest)
-│   └── test_parser.py           # 17 Python unit tests
-├── src/
-│   ├── extension.ts             # VS Code extension activation & command handler
-│   ├── models/
-│   │   └── problemSpec.ts       # TypeScript interfaces (ProblemSpec, ResolutionResult)
-│   ├── knowledge/
-│   │   └── linkedList.json      # Linked list knowledge base metadata
-│   ├── parser/
-│   │   └── pythonBridge.ts      # Python child_process stdin/stdout bridge
-│   ├── resolver/
-│   │   └── operationResolver.ts # Module resolver & registry
-│   ├── generator/
-│   │   ├── codeComposer.ts      # Code layout & header formatting
-│   │   └── cppGenerator.ts      # Verified Singly Linked List C++ generator
-│   └── tests/
-│       ├── parser.test.ts       # PythonBridge TypeScript integration tests
-│       ├── resolver.test.ts     # Operation resolver unit tests
-│       ├── generator.test.ts    # C++ generator structure tests
-│       ├── e2e.test.ts          # Full pipeline: NL -> Python -> TS -> C++ -> g++ -> binary
-│       └── runAllTests.ts       # Test suite runner
-├── package.json
-├── tsconfig.json
-├── .gitignore
-└── README.md
-```
-
----
-
-## Setup & Installation
-
-### 1. Prerequisites
-- **Node.js**: v18+ (tested on v24)
-- **Python**: 3.8+ (tested on 3.12)
-- **g++**: For C++ compilation (tested on g++ 13.3)
-
-### 2. Install Dependencies
+### Method B: Build from Source
 
 ```bash
-# Clone or navigate to the repository
+# 1. Clone the repository
+git clone https://github.com/mamun-cse-ku/codeForge.git
 cd codeForge
 
-# Install TypeScript / Node dependencies
+# 2. Install TypeScript dependencies
 npm install
 
-# Setup Python virtual environment & dependencies
-python3 -m venv .venv
-.venv/bin/pip install -r python_parser/requirements.txt
+# 3. Compile the extension
+npm run compile
 ```
+
+To run and debug locally:
+1. Open the project folder in VS Code.
+2. Press `F5` to open the **Extension Development Host** window.
 
 ---
 
-## Running the Test Suites
+## Usage
 
-### 1. Python Parser Unit Tests (17 tests)
-```bash
-.venv/bin/pytest python_parser/test_parser.py -v
-```
+1. In VS Code, press **`Ctrl + Shift + P`** (or `Cmd + Shift + P` on macOS) to open the Command Palette.
+2. Type **`CodeForge: Generate C++ Solution`** and hit **Enter**.
+3. Enter your natural language prompt. Examples:
+   - *"generate a menu driven program for creating, inserting a value after a given node and displaying the list in a doubly circular linked list."*
+   - *"implement Lu decomposition Method"*
+   - *"create a singly linked list with insert at beginning and delete at end make it menu driven"*
+   - *"bisection method with user input"*
+4. A new tab opens instantly with complete, verified C++ code ready to compile and run.
 
-### 2. TypeScript Unit & Integration Tests (23 tests)
+---
+
+## Testing & Quality Assurance
+
+CodeForge is tested against a comprehensive 395-case test matrix covering interpretation, scope boundaries, menu overreach prevention, and edge cases:
+
 ```bash
+# Run the 892-assertion comprehensive regression suite
+python3 scripts/evaluate_user_suite.py
+
+# Run TypeScript unit & integration tests
 npm test
 ```
 
-### 3. Full End-to-End Pipeline Test (`g++` Compilation & Runtime Verification)
-```bash
-npm run test:e2e
-```
-
 ---
 
-## Launching the Extension in VS Code
+## License
 
-1. Open this repository (`codeForge`) in VS Code.
-2. Ensure dependencies are compiled:
-   ```bash
-   npm run compile
-   ```
-3. Press **F5** (or navigate to **Run and Debug** in the sidebar and select **Run CodeForge Extension**).
-4. A new **Extension Development Host** VS Code window will open.
-5. In the Extension Development Host window:
-   - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) to open the Command Palette.
-   - Run: `CodeForge: Generate C++ Solution`.
-   - Enter a problem statement, e.g.:
-     `Insert a node at the end of a singly linked list.`
-   - CodeForge will parse the statement, display notification metadata, and open a new editor tab containing the generated, verified C++ program.
+This project is licensed under the [MIT License](LICENSE).

@@ -1,0 +1,82 @@
+{
+  "id": "heap",
+  "displayName": "Heap",
+  "domain": "data_structure",
+  "description": "A specialized tree-based data structure satisfying the heap property.",
+  "aliases": [
+    "heap",
+    "priority queue"
+  ],
+  "operations": [
+    {
+      "id": "insert",
+      "name": "Insert",
+      "action": "insert",
+      "position": null,
+      "aliases": [
+        "insert"
+      ],
+      "verified": true,
+      "moduleId": "heap.insert.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert."
+    },
+    {
+      "id": "extract_min",
+      "name": "Extract Min",
+      "action": "extract",
+      "position": null,
+      "aliases": [
+        "extractmin"
+      ],
+      "verified": true,
+      "moduleId": "heap.extract_min.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs extract min."
+    },
+    {
+      "id": "extract_max",
+      "name": "Extract Max",
+      "action": "extract",
+      "position": null,
+      "aliases": [
+        "extractmax"
+      ],
+      "verified": true,
+      "moduleId": "heap.extract_max.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs extract max."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "heap.display.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    },
+    {
+      "id": "heap_sort",
+      "name": "Heap Sort",
+      "action": "heap",
+      "position": null,
+      "aliases": [
+        "heapsort"
+      ],
+      "verified": true,
+      "moduleId": "heap.heap_sort.cpp",
+      "timeComplexity": "O(log N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs heap sort."
+    }
+  ]
+}

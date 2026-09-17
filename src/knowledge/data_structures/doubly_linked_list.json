@@ -1,0 +1,138 @@
+{
+  "id": "doubly_linked_list",
+  "displayName": "Doubly Linked List",
+  "domain": "data_structure",
+  "description": "A linked list where nodes have both next and previous pointers.",
+  "aliases": [
+    "dll",
+    "doubly linked"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs create."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    },
+    {
+      "id": "display_reverse",
+      "name": "Display Reverse",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "displayreverse"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.display_reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display reverse."
+    },
+    {
+      "id": "insert_beginning",
+      "name": "Insert Beginning",
+      "action": "insert",
+      "position": "head",
+      "aliases": [
+        "insertbeginning"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.insert_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert beginning."
+    },
+    {
+      "id": "insert_end",
+      "name": "Insert End",
+      "action": "insert",
+      "position": "tail",
+      "aliases": [
+        "insertend"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.insert_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert end."
+    },
+    {
+      "id": "delete_beginning",
+      "name": "Delete Beginning",
+      "action": "delete",
+      "position": "head",
+      "aliases": [
+        "deletebeginning"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.delete_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete beginning."
+    },
+    {
+      "id": "delete_end",
+      "name": "Delete End",
+      "action": "delete",
+      "position": "tail",
+      "aliases": [
+        "deleteend"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.delete_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete end."
+    },
+    {
+      "id": "search",
+      "name": "Search",
+      "action": "search",
+      "position": null,
+      "aliases": [
+        "search"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs search."
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse",
+      "action": "reverse",
+      "position": null,
+      "aliases": [
+        "reverse"
+      ],
+      "verified": true,
+      "moduleId": "doubly_linked_list.reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs reverse."
+    }
+  ]
+}

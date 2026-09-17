@@ -12,6 +12,21 @@
     "Education",
     "Other"
   ],
+  "keywords": [
+    "cpp",
+    "c++",
+    "data-structures",
+    "algorithms",
+    "numerical-methods",
+    "menu-driven",
+    "education"
+  ],
+  "author": "Abdullah Al Mamun <mamun.cse.ku@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mamun-cse-ku/codeForge"
+  },
   "activationEvents": [
     "onCommand:codeforge.generateCppSolution"
   ],

@@ -1,0 +1,32 @@
+{
+  "id": "searching",
+  "displayName": "Searching Algorithms",
+  "domain": "algorithm",
+  "description": "Algorithms to find an element within a data structure.",
+  "methods": [
+    {
+      "id": "linear_search",
+      "name": "Linear Search",
+      "aliases": [
+        "linearsearch"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.searching.linear_search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs linear search."
+    },
+    {
+      "id": "binary_search",
+      "name": "Binary Search",
+      "aliases": [
+        "binarysearch"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.searching.binary_search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs binary search."
+    }
+  ]
+}

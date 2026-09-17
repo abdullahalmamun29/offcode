@@ -5,3 +5,5 @@ dist_test/
 __pycache__/
 *.pyc
 .pytest_cache/
+*.vsix
+.vscode-test/

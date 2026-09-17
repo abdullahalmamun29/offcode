@@ -1,0 +1,271 @@
+{
+  "id": "singly_linked_list",
+  "displayName": "Singly Linked List",
+  "domain": "data_structure",
+  "description": "A linear collection of nodes where each node points to the next.",
+  "aliases": [
+    "linked list",
+    "sll",
+    "singly linked"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create",
+      "action": "create",
+      "position": null,
+      "aliases": [
+        "create"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs create."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    },
+    {
+      "id": "insert_beginning",
+      "name": "Insert Beginning",
+      "action": "insert",
+      "position": "head",
+      "aliases": [
+        "insertbeginning"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.insert_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert beginning."
+    },
+    {
+      "id": "insert_end",
+      "name": "Insert End",
+      "action": "insert",
+      "position": "tail",
+      "aliases": [
+        "insertend"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.insert_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert end."
+    },
+    {
+      "id": "insert_position",
+      "name": "Insert Position",
+      "action": "insert",
+      "position": "index",
+      "aliases": [
+        "insertposition"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.insert_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert position."
+    },
+    {
+      "id": "delete_beginning",
+      "name": "Delete Beginning",
+      "action": "delete",
+      "position": "head",
+      "aliases": [
+        "deletebeginning"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.delete_beginning.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete beginning."
+    },
+    {
+      "id": "delete_end",
+      "name": "Delete End",
+      "action": "delete",
+      "position": "tail",
+      "aliases": [
+        "deleteend"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.delete_end.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete end."
+    },
+    {
+      "id": "delete_value",
+      "name": "Delete Value",
+      "action": "delete",
+      "position": null,
+      "aliases": [
+        "deletevalue"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.delete_value.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete value."
+    },
+    {
+      "id": "delete_position",
+      "name": "Delete Position",
+      "action": "delete",
+      "position": "index",
+      "aliases": [
+        "deleteposition"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.delete_position.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete position."
+    },
+    {
+      "id": "search",
+      "name": "Search",
+      "action": "search",
+      "position": null,
+      "aliases": [
+        "search"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.search.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs search."
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse",
+      "action": "reverse",
+      "position": null,
+      "aliases": [
+        "reverse"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.reverse.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs reverse."
+    },
+    {
+      "id": "count",
+      "name": "Count",
+      "action": "count",
+      "position": null,
+      "aliases": [
+        "count"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.count.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs count."
+    },
+    {
+      "id": "find_min",
+      "name": "Find Min",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmin"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.find_min.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find min."
+    },
+    {
+      "id": "find_max",
+      "name": "Find Max",
+      "action": "find",
+      "position": null,
+      "aliases": [
+        "findmax"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.find_max.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs find max."
+    },
+    {
+      "id": "sorted_insert",
+      "name": "Sorted Insert",
+      "action": "sorted",
+      "position": null,
+      "aliases": [
+        "sortedinsert"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.sorted_insert.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs sorted insert."
+    },
+    {
+      "id": "middle_element",
+      "name": "Middle Element",
+      "action": "middle",
+      "position": null,
+      "aliases": [
+        "middleelement"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.middle_element.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs middle element."
+    },
+    {
+      "id": "insert_after",
+      "name": "Insert After Node",
+      "action": "insert",
+      "position": "after",
+      "aliases": [
+        "insert_after",
+        "insertafter",
+        "insert_after_node",
+        "insert_after_value"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.insert_after.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Inserts a new node after a node with the specified target value."
+    },
+    {
+      "id": "delete_after",
+      "name": "Delete After Node",
+      "action": "delete",
+      "position": "after",
+      "aliases": [
+        "delete_after",
+        "deleteafter",
+        "delete_after_node",
+        "delete_after_value"
+      ],
+      "verified": true,
+      "moduleId": "singly_linked_list.delete_after.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Deletes the node immediately following the node with the target value."
+    }
+  ]
+}

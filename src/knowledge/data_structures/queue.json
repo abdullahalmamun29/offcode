@@ -1,0 +1,112 @@
+{
+  "id": "queue",
+  "displayName": "Circular Queue (Array Implementation)",
+  "domain": "data_structure",
+  "description": "A FIFO queue using a fixed circular buffer array to prevent space wastage.",
+  "aliases": [
+    "queue",
+    "fifo",
+    "circular queue",
+    "circular queue array",
+    "queue array",
+    "array queue"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create Queue",
+      "action": "create",
+      "position": null,
+      "aliases": ["initialize", "make", "construct"],
+      "verified": true,
+      "moduleId": "queue.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Initializes circular queue and enqueues elements from stdin."
+    },
+    {
+      "id": "enqueue",
+      "name": "Enqueue",
+      "action": "enqueue",
+      "position": "tail",
+      "aliases": ["insert", "insert_end", "push", "add", "push_back"],
+      "verified": true,
+      "moduleId": "queue.enqueue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Enqueues an element into the circular queue."
+    },
+    {
+      "id": "dequeue",
+      "name": "Dequeue",
+      "action": "dequeue",
+      "position": "head",
+      "aliases": ["delete", "delete_beginning", "pop", "remove", "pop_front"],
+      "verified": true,
+      "moduleId": "queue.dequeue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Dequeues an element from the circular queue."
+    },
+    {
+      "id": "front",
+      "name": "Front",
+      "action": "front",
+      "position": "head",
+      "aliases": ["peek", "head", "get_front"],
+      "verified": true,
+      "moduleId": "queue.front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inspects the front element of the queue."
+    },
+    {
+      "id": "rear",
+      "name": "Rear",
+      "action": "rear",
+      "position": "tail",
+      "aliases": ["back", "tail", "get_rear"],
+      "verified": true,
+      "moduleId": "queue.rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inspects the rear element of the queue."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is_empty",
+      "position": null,
+      "aliases": ["isempty", "empty"],
+      "verified": true,
+      "moduleId": "queue.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Checks if the queue is empty."
+    },
+    {
+      "id": "size",
+      "name": "Size",
+      "action": "count",
+      "position": "all",
+      "aliases": ["count", "length"],
+      "verified": true,
+      "moduleId": "queue.size.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns current number of elements in the circular queue."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse"],
+      "verified": true,
+      "moduleId": "queue.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Displays all elements currently stored in the circular queue."
+    }
+  ]
+}

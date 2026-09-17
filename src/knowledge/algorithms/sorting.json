@@ -1,0 +1,120 @@
+{
+  "id": "sorting",
+  "displayName": "Sorting Algorithms",
+  "domain": "algorithm",
+  "description": "Algorithms for arranging elements in a specific order.",
+  "methods": [
+    {
+      "id": "bubble_sort",
+      "name": "Bubble Sort",
+      "aliases": [
+        "bubblesort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.bubble_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs bubble sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "selection_sort",
+      "name": "Selection Sort",
+      "aliases": [
+        "selectionsort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.selection_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs selection sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "insertion_sort",
+      "name": "Insertion Sort",
+      "aliases": [
+        "insertionsort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.insertion_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insertion sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "merge_sort",
+      "name": "Merge Sort",
+      "aliases": [
+        "mergesort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.merge_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs merge sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "quick_sort",
+      "name": "Quick Sort",
+      "aliases": [
+        "quicksort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.quick_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs quick sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "heap_sort",
+      "name": "Heap Sort",
+      "aliases": [
+        "heapsort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.heap_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs heap sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "counting_sort",
+      "name": "Counting Sort",
+      "aliases": [
+        "countingsort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.counting_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs counting sort.",
+      "stable": true,
+      "inPlace": true
+    },
+    {
+      "id": "radix_sort",
+      "name": "Radix Sort",
+      "aliases": [
+        "radixsort"
+      ],
+      "verified": true,
+      "moduleId": "algorithm.sorting.radix_sort.cpp",
+      "timeComplexity": "O(N^2)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs radix sort.",
+      "stable": true,
+      "inPlace": true
+    }
+  ]
+}

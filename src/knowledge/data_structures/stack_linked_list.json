@@ -1,0 +1,99 @@
+{
+  "id": "stack_linked_list",
+  "displayName": "Stack (Linked List Implementation)",
+  "domain": "data_structure",
+  "description": "A LIFO collection of elements implemented using a dynamic singly linked list.",
+  "aliases": [
+    "stack linked list",
+    "stack using linked list",
+    "linked list stack",
+    "stack with linked list",
+    "stack as linked list"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create Stack",
+      "action": "create",
+      "position": null,
+      "aliases": ["initialize", "make", "construct"],
+      "verified": true,
+      "moduleId": "stack_linked_list.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Initializes a linked-list stack with elements read from stdin."
+    },
+    {
+      "id": "push",
+      "name": "Push",
+      "action": "push",
+      "position": "head",
+      "aliases": ["insert", "add"],
+      "verified": true,
+      "moduleId": "stack_linked_list.push.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Pushes a new node onto the linked-list stack."
+    },
+    {
+      "id": "pop",
+      "name": "Pop",
+      "action": "pop",
+      "position": "head",
+      "aliases": ["delete", "remove"],
+      "verified": true,
+      "moduleId": "stack_linked_list.pop.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Pops and deallocates the top node of the linked-list stack."
+    },
+    {
+      "id": "peek",
+      "name": "Peek",
+      "action": "peek",
+      "position": "head",
+      "aliases": ["top", "get_top"],
+      "verified": true,
+      "moduleId": "stack_linked_list.peek.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns the value of the top node of the linked-list stack."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is_empty",
+      "position": null,
+      "aliases": ["isempty", "empty"],
+      "verified": true,
+      "moduleId": "stack_linked_list.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Checks whether the linked-list stack top is null."
+    },
+    {
+      "id": "size",
+      "name": "Stack Size",
+      "action": "count",
+      "position": "all",
+      "aliases": ["count", "length"],
+      "verified": true,
+      "moduleId": "stack_linked_list.size.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Counts total nodes in the linked-list stack."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse"],
+      "verified": true,
+      "moduleId": "stack_linked_list.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Displays all elements of the linked-list stack from top to bottom."
+    }
+  ]
+}

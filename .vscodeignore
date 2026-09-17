@@ -1,0 +1,13 @@
+.vscode/**
+src/**
+scripts/**
+dist_test/**
+generate_modules.py
+tsconfig.json
+**/*.map
+.gitignore
+.git/**
+.venv/**
+__pycache__/**
+*.pyc
+.pytest_cache/**

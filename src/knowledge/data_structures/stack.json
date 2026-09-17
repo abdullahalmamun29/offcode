@@ -1,0 +1,99 @@
+{
+  "id": "stack",
+  "displayName": "Stack (Array Implementation)",
+  "domain": "data_structure",
+  "description": "A LIFO collection of elements implemented using a contiguous array.",
+  "aliases": [
+    "stack",
+    "lifo",
+    "stack array",
+    "stack using array",
+    "array stack"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create Stack",
+      "action": "create",
+      "position": null,
+      "aliases": ["initialize", "make", "construct"],
+      "verified": true,
+      "moduleId": "stack.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Initializes stack and reads N elements from stdin."
+    },
+    {
+      "id": "push",
+      "name": "Push",
+      "action": "push",
+      "position": "head",
+      "aliases": ["insert", "add", "append"],
+      "verified": true,
+      "moduleId": "stack.push.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Pushes an element onto the stack."
+    },
+    {
+      "id": "pop",
+      "name": "Pop",
+      "action": "pop",
+      "position": "head",
+      "aliases": ["delete", "remove", "drop"],
+      "verified": true,
+      "moduleId": "stack.pop.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Pops the top element from the stack."
+    },
+    {
+      "id": "peek",
+      "name": "Peek",
+      "action": "peek",
+      "position": "head",
+      "aliases": ["top", "get_top"],
+      "verified": true,
+      "moduleId": "stack.peek.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inspects the top element without removing it."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is_empty",
+      "position": null,
+      "aliases": ["isempty", "empty", "check_empty"],
+      "verified": true,
+      "moduleId": "stack.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Checks whether the stack is empty."
+    },
+    {
+      "id": "size",
+      "name": "Stack Size",
+      "action": "count",
+      "position": "all",
+      "aliases": ["count", "length"],
+      "verified": true,
+      "moduleId": "stack.size.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns the number of elements in the stack."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse"],
+      "verified": true,
+      "moduleId": "stack.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Displays all elements currently on the stack from top to bottom."
+    }
+  ]
+}

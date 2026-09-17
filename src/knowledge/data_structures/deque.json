@@ -1,0 +1,124 @@
+{
+  "id": "deque",
+  "displayName": "Deque",
+  "domain": "data_structure",
+  "description": "A double-ended queue.",
+  "aliases": [
+    "deque",
+    "double ended queue"
+  ],
+  "operations": [
+    {
+      "id": "insert_front",
+      "name": "Insert Front",
+      "action": "insert",
+      "position": "head",
+      "aliases": [
+        "insertfront"
+      ],
+      "verified": true,
+      "moduleId": "deque.insert_front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert front."
+    },
+    {
+      "id": "insert_rear",
+      "name": "Insert Rear",
+      "action": "insert",
+      "position": "tail",
+      "aliases": [
+        "insertrear"
+      ],
+      "verified": true,
+      "moduleId": "deque.insert_rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs insert rear."
+    },
+    {
+      "id": "delete_front",
+      "name": "Delete Front",
+      "action": "delete",
+      "position": "head",
+      "aliases": [
+        "deletefront"
+      ],
+      "verified": true,
+      "moduleId": "deque.delete_front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete front."
+    },
+    {
+      "id": "delete_rear",
+      "name": "Delete Rear",
+      "action": "delete",
+      "position": "tail",
+      "aliases": [
+        "deleterear"
+      ],
+      "verified": true,
+      "moduleId": "deque.delete_rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs delete rear."
+    },
+    {
+      "id": "get_front",
+      "name": "Get Front",
+      "action": "get",
+      "position": "head",
+      "aliases": [
+        "getfront"
+      ],
+      "verified": true,
+      "moduleId": "deque.get_front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs get front."
+    },
+    {
+      "id": "get_rear",
+      "name": "Get Rear",
+      "action": "get",
+      "position": "tail",
+      "aliases": [
+        "getrear"
+      ],
+      "verified": true,
+      "moduleId": "deque.get_rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs get rear."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is",
+      "position": "tail",
+      "aliases": [
+        "isempty"
+      ],
+      "verified": true,
+      "moduleId": "deque.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs is empty."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": "tail",
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "deque.display.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Performs display."
+    }
+  ]
+}

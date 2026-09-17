@@ -1,0 +1,68 @@
+{
+  "id": "hash_table",
+  "displayName": "Hash Table",
+  "domain": "data_structure",
+  "description": "A data structure that implements an associative array abstract data type.",
+  "aliases": [
+    "hash table",
+    "hash map"
+  ],
+  "operations": [
+    {
+      "id": "insert",
+      "name": "Insert",
+      "action": "insert",
+      "position": null,
+      "aliases": [
+        "insert"
+      ],
+      "verified": true,
+      "moduleId": "hash_table.insert.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs insert."
+    },
+    {
+      "id": "search",
+      "name": "Search",
+      "action": "search",
+      "position": null,
+      "aliases": [
+        "search"
+      ],
+      "verified": true,
+      "moduleId": "hash_table.search.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs search."
+    },
+    {
+      "id": "delete",
+      "name": "Delete",
+      "action": "delete",
+      "position": null,
+      "aliases": [
+        "delete"
+      ],
+      "verified": true,
+      "moduleId": "hash_table.delete.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs delete."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "display",
+      "position": null,
+      "aliases": [
+        "display"
+      ],
+      "verified": true,
+      "moduleId": "hash_table.display.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs display."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "regression",
+  "displayName": "Regression",
+  "domain": "numerical",
+  "category": "regression",
+  "description": "Regression methods.",
+  "methods": [
+    {
+      "id": "linear_regression",
+      "name": "Linear Regression",
+      "aliases": [
+        "linear_regression"
+      ],
+      "verified": true,
+      "moduleId": "numerical.regression.linear_regression.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Linear Regression.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          }
+        ]
+      }
+    },
+    {
+      "id": "polynomial_regression",
+      "name": "Polynomial Regression",
+      "aliases": [
+        "polynomial_regression"
+      ],
+      "verified": true,
+      "moduleId": "numerical.regression.polynomial_regression.cpp",
+      "timeComplexity": "O(N^3)",
+      "spaceComplexity": "O(N)",
+      "description": "Polynomial Regression.",
+      "runtime_input": {
+        "function_mode": "points",
+        "parameters": [
+          {
+            "name": "n",
+            "type": "int",
+            "prompt": "Enter number of data points"
+          },
+          {
+            "name": "x",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter x values"
+          },
+          {
+            "name": "y",
+            "type": "double[]",
+            "count": "n",
+            "prompt": "Enter y values"
+          },
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter degree"
+          }
+        ]
+      }
+    }
+  ]
+}

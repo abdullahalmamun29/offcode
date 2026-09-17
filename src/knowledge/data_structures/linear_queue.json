@@ -1,0 +1,109 @@
+{
+  "id": "linear_queue",
+  "displayName": "Linear Queue (Array Implementation)",
+  "domain": "data_structure",
+  "description": "A standard linear FIFO queue using a contiguous array with front and rear pointers.",
+  "aliases": [
+    "linear queue",
+    "simple queue",
+    "linear queue array"
+  ],
+  "operations": [
+    {
+      "id": "create",
+      "name": "Create Linear Queue",
+      "action": "create",
+      "position": null,
+      "aliases": ["initialize", "make", "construct"],
+      "verified": true,
+      "moduleId": "linear_queue.create.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Initializes linear queue and reads initial values from stdin."
+    },
+    {
+      "id": "enqueue",
+      "name": "Enqueue",
+      "action": "enqueue",
+      "position": "tail",
+      "aliases": ["insert", "insert_end", "push", "add"],
+      "verified": true,
+      "moduleId": "linear_queue.enqueue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Enqueues an element at the rear of the linear queue."
+    },
+    {
+      "id": "dequeue",
+      "name": "Dequeue",
+      "action": "dequeue",
+      "position": "head",
+      "aliases": ["delete", "delete_beginning", "pop", "remove"],
+      "verified": true,
+      "moduleId": "linear_queue.dequeue.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Dequeues an element from the front of the linear queue."
+    },
+    {
+      "id": "front",
+      "name": "Front",
+      "action": "front",
+      "position": "head",
+      "aliases": ["peek", "head", "get_front"],
+      "verified": true,
+      "moduleId": "linear_queue.front.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inspects the front element."
+    },
+    {
+      "id": "rear",
+      "name": "Rear",
+      "action": "rear",
+      "position": "tail",
+      "aliases": ["back", "tail", "get_rear"],
+      "verified": true,
+      "moduleId": "linear_queue.rear.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Inspects the rear element."
+    },
+    {
+      "id": "is_empty",
+      "name": "Is Empty",
+      "action": "is_empty",
+      "position": null,
+      "aliases": ["isempty", "empty"],
+      "verified": true,
+      "moduleId": "linear_queue.is_empty.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Checks if the linear queue is empty."
+    },
+    {
+      "id": "size",
+      "name": "Size",
+      "action": "count",
+      "position": "all",
+      "aliases": ["count", "length"],
+      "verified": true,
+      "moduleId": "linear_queue.size.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "description": "Returns number of elements in the linear queue."
+    },
+    {
+      "id": "display",
+      "name": "Display",
+      "action": "traverse",
+      "position": "all",
+      "aliases": ["print", "show", "traverse"],
+      "verified": true,
+      "moduleId": "linear_queue.display.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(1)",
+      "description": "Displays all elements currently in the linear queue."
+    }
+  ]
+}
