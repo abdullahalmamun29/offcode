@@ -40,7 +40,19 @@
         "title": "Chup: Generate C++ Solution",
         "category": "Chup"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Chup",
+      "properties": {
+        "chup.typingSpeedMs": {
+          "type": "number",
+          "default": 5,
+          "minimum": 0,
+          "maximum": 50,
+          "description": "Delay in milliseconds between typing each character (0 for fast streaming, 5-15 for realistic human typing)."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
