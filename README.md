@@ -1,13 +1,13 @@
-# CodeForge ⚡
+# Chup ⚡
 
-**CodeForge** is a deterministic, educational programming assistant built as a Visual Studio Code extension. It translates natural language programming prompts into verified, production-grade, beginner-friendly **C++17** implementations—completely offline and without relying on large language models (LLMs) or external generative APIs.
+**Chup** is a deterministic, educational programming assistant built as a Visual Studio Code extension. It translates natural language programming prompts into verified, production-grade, beginner-friendly **C++17** implementations—completely offline and without relying on large language models (LLMs) or external generative APIs.
 
 ---
 
 ## Key Highlights
 
 - **Zero LLM Hallucinations**: 100% deterministic NLP parsing and code generation. Every generated fragment is statically verified, compilable, and standards-compliant.
-- **Strict Scope Discipline**: When generating menu-driven programs, CodeForge generates menus containing **only** the operations requested by the user, avoiding unwanted menu bloat.
+- **Strict Scope Discipline**: When generating menu-driven programs, Chup generates menus containing **only** the operations requested by the user, avoiding unwanted menu bloat.
 - **Dynamic Memory Safety**: Automatically generates proper memory deallocation routines (`freeList`, destructor cleanup) for linked lists and dynamic structures to prevent memory leaks.
 - **Interactive Terminal Input**: Programs accept input dynamically via standard terminal I/O (`cin` / `cout`) with clean, educational prompts.
 - **Zero External Runtime Dependencies**: The core NLP engine relies exclusively on Python standard library modules (`difflib`, `re`, `json`).
@@ -63,24 +63,25 @@ Active VS Code Editor Tab (Opens Clean, Ready-to-Compile C++17 Solution)
 
 ## Installation
 
-### Method A: Install via VSIX (Direct)
+### Method A: Install via VS Code Marketplace
+Search for **"Chup"** in the VS Code Extensions tab (`Ctrl+Shift+X`) and click **Install**.
 
-1. Download the latest `codeforge-x.x.x.vsix` release from [GitHub Releases](https://github.com/mamun-cse-ku/codeForge/releases).
+### Method B: Install via VSIX (Direct)
+
+1. Download the latest `chup-x.x.x.vsix` release from [GitHub Releases](https://github.com/abdullahalmamun29/chup/releases).
 2. In VS Code, open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
 3. Click the **`...`** (Views and More Actions) menu in the top-right corner of the Extensions panel.
 4. Select **Install from VSIX...** and choose the downloaded `.vsix` file.
 
-### Method B: Build from Source
+### Method C: Build from Source
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/mamun-cse-ku/codeForge.git
-cd codeForge
+git clone https://github.com/abdullahalmamun29/chup.git
+cd chup
 
-# 2. Install TypeScript dependencies
+# 2. Install dependencies & compile
 npm install
-
-# 3. Compile the extension
 npm run compile
 ```
 
@@ -93,7 +94,7 @@ To run and debug locally:
 ## Usage
 
 1. In VS Code, press **`Ctrl + Shift + P`** (or `Cmd + Shift + P` on macOS) to open the Command Palette.
-2. Type **`CodeForge: Generate C++ Solution`** and hit **Enter**.
+2. Type **`Chup: Generate C++ Solution`** and hit **Enter**.
 3. Enter your natural language prompt. Examples:
    - *"generate a menu driven program for creating, inserting a value after a given node and displaying the list in a doubly circular linked list."*
    - *"implement Lu decomposition Method"*
@@ -105,7 +106,7 @@ To run and debug locally:
 
 ## Testing & Quality Assurance
 
-CodeForge is tested against a comprehensive 395-case test matrix covering interpretation, scope boundaries, menu overreach prevention, and edge cases:
+Chup is tested against a comprehensive 395-case test matrix covering interpretation, scope boundaries, menu overreach prevention, and edge cases:
 
 ```bash
 # Run the 892-assertion comprehensive regression suite
