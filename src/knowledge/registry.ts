@@ -48,7 +48,13 @@ function loadJsonFiles(dir: string): any[] {
 }
 
 export function loadRegistry() {
-  const baseDir = path.join(__dirname, '..', '..', 'src', 'knowledge');
+  const candidateDirs = [
+    __dirname,
+    path.join(__dirname, '..', '..', 'src', 'knowledge'),
+    path.join(__dirname, '..', 'knowledge'),
+    path.join(__dirname, '..', '..', 'knowledge')
+  ];
+  const baseDir = candidateDirs.find(d => fs.existsSync(path.join(d, 'data_structures'))) || path.join(__dirname, '..', '..', 'src', 'knowledge');
   
   const dsDir = path.join(baseDir, 'data_structures');
   const dsData = loadJsonFiles(dsDir);

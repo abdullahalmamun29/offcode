@@ -56,10 +56,10 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "tsc -p ./ && node -e \"const fs=require('fs'); fs.cpSync('src/knowledge', 'out/knowledge', {recursive: true, force: true});\"",
     "watch": "tsc -watch -p ./",
-    "test": "tsc -p ./ && node ./out/tests/runAllTests.js",
-    "test:e2e": "tsc -p ./ && node ./out/tests/e2e.test.js"
+    "test": "npm run compile && node ./out/tests/runAllTests.js",
+    "test:e2e": "npm run compile && node ./out/tests/e2e.test.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

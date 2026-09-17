@@ -44,12 +44,14 @@ export class PythonBridge {
     const cwd = process.cwd();
     const candidatePaths = [
       path.join(cwd, "python_parser", "parser.py"),
-      path.join(__dirname, "..", "..", "python_parser", "parser.py")
+      path.join(__dirname, "..", "..", "python_parser", "parser.py"),
+      path.join(__dirname, "..", "python_parser", "parser.py"),
+      path.join(__dirname, "python_parser", "parser.py")
     ];
     for (const p of candidatePaths) {
       if (fs.existsSync(p)) { return p; }
     }
-    return path.join(cwd, "python_parser", "parser.py");
+    return path.join(__dirname, "..", "..", "python_parser", "parser.py");
   }
 
   public async parseQuery(query: string): Promise<ProblemSpecV1> {
