@@ -65,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
           const config = vscode.workspace.getConfiguration("chup");
           const typingDelayMs = config.get<number>("typingSpeedMs", 5);
 
-          await typeCodeCharacterByCharacter(editor, generatedCode, typingDelayMs);
+          await typeCodeCharacterByCharacter(doc, generatedCode, typingDelayMs);
         } catch (genErr) {
           vscode.window.showErrorMessage(
             `Chup Code Generation Error: ${(genErr as Error).message}`
@@ -83,12 +83,13 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 /**
- * Types the generated code into the active editor character-by-character.
- * Each character edit is executed with `undoStopBefore: true` and `undoStopAfter: true`,
- * ensuring that pressing Ctrl+Z (Undo) undoes one individual character at a time.
+ * Types the generated code into the target document character-by-character.
+ * Seamlessly continues typing even if the user switches to another file tab
+ * or switches outside of VS Code (e.g. to Code::Blocks).
+ * Each character edit is an atomic undo transaction, so Ctrl+Z undoes letter-by-letter.
  */
 async function typeCodeCharacterByCharacter(
-  editor: vscode.TextEditor,
+  targetDoc: vscode.TextDocument,
   rawCode: string,
   delayMs: number
 ): Promise<void> {
@@ -105,24 +106,51 @@ async function typeCodeCharacterByCharacter(
 
   try {
     for (let i = 0; i < code.length; i++) {
-      if (editor.document.isClosed) {
+      if (targetDoc.isClosed) {
         break;
       }
 
       const char = code[i];
       const insertPos = new vscode.Position(currentLine, currentChar);
 
-      const success = await editor.edit(
-        editBuilder => {
-          editBuilder.insert(insertPos, char);
-        },
-        { undoStopBefore: true, undoStopAfter: true }
+      // 1. Try to edit through visible editor if this document is currently displayed
+      const visibleEditor = vscode.window.visibleTextEditors.find(
+        e => e.document.uri.toString() === targetDoc.uri.toString()
       );
 
-      if (!success) {
+      let applied = false;
+      if (visibleEditor) {
+        try {
+          applied = await visibleEditor.edit(
+            editBuilder => {
+              editBuilder.insert(insertPos, char);
+            },
+            { undoStopBefore: true, undoStopAfter: true }
+          );
+        } catch {
+          applied = false;
+        }
+      }
+
+      // 2. If tab is in background or editor.edit did not apply (e.g. switched to another file or app),
+      // apply directly via WorkspaceEdit so typing NEVER stops!
+      if (!applied && !targetDoc.isClosed) {
+        try {
+          const wsEdit = new vscode.WorkspaceEdit();
+          wsEdit.insert(targetDoc.uri, insertPos, char);
+          applied = await vscode.workspace.applyEdit(wsEdit);
+        } catch {
+          if (targetDoc.isClosed) {
+            break;
+          }
+        }
+      }
+
+      if (targetDoc.isClosed) {
         break;
       }
 
+      // Advance cursor tracking
       if (char === "\n") {
         currentLine++;
         currentChar = 0;
@@ -130,13 +158,15 @@ async function typeCodeCharacterByCharacter(
         currentChar++;
       }
 
-      const nextPos = new vscode.Position(currentLine, currentChar);
-
-      // Follow cursor and viewport safely
-      if (vscode.window.visibleTextEditors.includes(editor)) {
-        editor.selection = new vscode.Selection(nextPos, nextPos);
-        if (char === "\n" || i % 20 === 0 || i === code.length - 1) {
-          editor.revealRange(
+      // 3. Keep cursor and viewport synced if currently visible in any editor split/tab
+      const activeEditor = vscode.window.visibleTextEditors.find(
+        e => e.document.uri.toString() === targetDoc.uri.toString()
+      );
+      if (activeEditor) {
+        const nextPos = new vscode.Position(currentLine, currentChar);
+        activeEditor.selection = new vscode.Selection(nextPos, nextPos);
+        if (char === "\n" || i % 15 === 0 || i === code.length - 1) {
+          activeEditor.revealRange(
             new vscode.Range(nextPos, nextPos),
             vscode.TextEditorRevealType.Default
           );
@@ -147,8 +177,17 @@ async function typeCodeCharacterByCharacter(
         await new Promise(resolve => setTimeout(resolve, delayMs));
       }
     }
+
+    if (!targetDoc.isClosed) {
+      statusBar.text = "$(check) Chup: Solution ready";
+      setTimeout(() => statusBar.dispose(), 3000);
+    }
+  } catch (err) {
+    console.error("Chup typing error:", err);
   } finally {
-    statusBar.dispose();
+    if (targetDoc.isClosed) {
+      statusBar.dispose();
+    }
   }
 }
 
