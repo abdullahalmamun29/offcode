@@ -40,6 +40,8 @@ import { stackLinkedList } from './modules/data_structures/stackLinkedList';
 import { linearQueue } from './modules/data_structures/linearQueue';
 import { queueLinkedList } from './modules/data_structures/queueLinkedList';
 import { polynomial } from './modules/data_structures/polynomial';
+import { stackApplications } from './modules/data_structures/stackApplications';
+import { queueApplications } from './modules/data_structures/queueApplications';
 
 // Registry mapping structure/category names to their module records
 const dataStructureModules: Record<string, Record<string, () => CodeFragment>> = {
@@ -51,11 +53,15 @@ const dataStructureModules: Record<string, Record<string, () => CodeFragment>> =
   'stack': stack,
   'stack_array': stack,
   'stack_linked_list': stackLinkedList,
+  'stack_applications': stackApplications,
   'queue': queue,
   'circular_queue': queue,
   'linear_queue': linearQueue,
   'queue_linked_list': queueLinkedList,
+  'queue_applications': queueApplications,
   'deque': deque,
+  'double_ended_queue': deque,
+  'priority_queue': queueApplications,
   'binary_tree': binaryTree,
   'bst': bst,
   'heap': heap,

@@ -1,4 +1,5 @@
 import { CodeFragment } from '../../codeComposer';
+import { queueApplications } from './queueApplications';
 
 const STRUCT = `const int MAX_SIZE = 100;
 struct Deque {
@@ -10,6 +11,7 @@ struct Deque {
 };`;
 
 export const deque: Record<string, () => CodeFragment> = {
+  'create': () => queueApplications['deque'](),
   'insert_front': () => ({
     includes: ['iostream'],
     structs: [STRUCT],

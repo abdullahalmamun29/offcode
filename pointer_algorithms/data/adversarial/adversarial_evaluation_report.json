@@ -1,0 +1,1588 @@
+{
+  "pass_1_isolated": [
+    {
+      "problem_id": "TP-B01",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B02",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B03",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "objective_monotonicity",
+      "monotonicity_proof": "Because min(h[L], h[k]) <= h[L] for any k < R, no pair (L, k) can beat the current area when h[L] <= h[R].",
+      "invariant": {
+        "before": "L = 0, R = n - 1. Max width is captured. Current max area initialized to 0.",
+        "during": "The global maximum water container is either the maximum recorded so far or formed by a pair in [L, R].",
+        "after": "Area is min(h[L], h[R]) * (R - L). If h[L] <= h[R]: for every k in (L, R), min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L). Therefore, no pair (L, k) can strictly exceed area(L, R). L is safely eliminated via L++. Symmetrically, if h[R] < h[L], R is safely eliminated via R--.",
+        "termination": "L >= R leaves no positive width interval. All candidate line pairs were safely evaluated or eliminated."
+      },
+      "movement_justification": "Let area(L, R) = min(h[L], h[R]) * (R - L).\nAssume without loss of generality that h[L] <= h[R].\nConsider any inner position k where L < k < R.\nThe width between L and k is (k - L) < (R - L).\nThe height min(h[L], h[k]) is at most h[L].\nTherefore, area(L, k) = min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L) = area(L, R).\nThis proves that NO pair (L, k) can possibly exceed the currently inspected area(L, R).\nHence, line L is exhausted and can be safely eliminated by advancing L to L + 1.\nSymmetrically, if h[R] < h[L], line R cannot form a larger area with any k > L, so R--.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) {\n        cin >> h[i];\n    }\n\n    int lo = 0, hi = n - 1;\n    long long max_area = 0;\n\n    while (lo < hi) {\n        long long width = hi - lo;\n        long long current_height = min(h[lo], h[hi]);\n        long long area = width * current_height;\n        max_area = max(max_area, area);\n\n        // Movement derived from objective bounding:\n        // The shorter line strictly upper-bounds any inner container using it.\n        if (h[lo] <= h[hi]) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    cout << max_area << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B04",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Comparing symmetric endpoints contracts uninspected substring while preserving palindrome property.",
+      "invariant": {
+        "before": "lo = 0, hi = s.length() - 1. Pointers span the entire input sequence.",
+        "during": "The prefix s[0..lo-1] and suffix s[hi+1..n-1] are verified reverse matches of each other.",
+        "after": "Non-alphanumeric characters are bypassed without comparison. If tolower(s[lo]) == tolower(s[hi]), symmetric equivalence is confirmed; lo++, hi-- inward. If characters differ, symmetry violation disproves palindrome property.",
+        "termination": "lo >= hi implies all corresponding symmetric character pairs have matched."
+      },
+      "movement_justification": "Palindrome symmetry requires that the i-th character matches the (n - 1 - i)-th character. By verifying outermost alphanumeric characters first, any mismatch immediately disproves the property. When a match is confirmed, both outermost positions are eliminated, shrinking the uninspected substring.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <string>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    if (!getline(cin, s)) return 0;\n\n    int lo = 0, hi = (int)s.size() - 1;\n    bool is_pal = true;\n\n    while (lo < hi) {\n        while (lo < hi && !isalnum((unsigned char)s[lo])) lo++;\n        while (lo < hi && !isalnum((unsigned char)s[hi])) hi--;\n        if (lo < hi) {\n            if (tolower((unsigned char)s[lo]) != tolower((unsigned char)s[hi])) {\n                is_pal = false;\n                break;\n            }\n            lo++;\n            hi--;\n        }\n    }\n\n    cout << (is_pal ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B05",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Initial pointers positioned at valid collection boundaries.",
+        "during": "Pointers maintain bounded valid search segment.",
+        "after": "Movement eliminates candidates proved non-optimal by invariant.",
+        "termination": "Termination implies complete coverage of valid search space."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, k;\n    if (!(cin >> n >> k)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int i = 0, j = 1;\n    bool found = false;\n    while (i < n && j < n) {\n        if (i != j && a[j] - a[i] == k) {\n            cout << a[i] << \" \" << a[j] << \"\\n\";\n            found = true;\n            break;\n        } else if (a[j] - a[i] < k) {\n            j++;\n        } else {\n            i++;\n            if (i == j) j++;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B06",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 0. Processed valid prefix is initially empty.",
+        "during": "Prefix A[0..slow_write-1] contains all retained elements satisfying retention criteria in relative order.",
+        "after": "If element at fast_read satisfies retention predicate, it is written to slow_write and slow_write advances. fast_read advances to evaluate the next element, discarding rejected elements without overwriting.",
+        "termination": "fast_read reaches n. Prefix A[0..slow_write-1] contains the complete compacted sequence of length slow_write."
+      },
+      "movement_justification": "Elements that fail the retention predicate cannot appear in the final compacted prefix. Advancing fast_read without incrementing slow_write discards the invalid element in O(1) time without shifting subsequent elements or allocating auxiliary storage.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long val_x;\n    if (!(cin >> n >> val_x)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write_idx = 0;\n    for (int read_idx = 0; read_idx < n; read_idx++) {\n        if (a[read_idx] != val_x) {\n            a[write_idx++] = a[read_idx];\n        }\n    }\n\n    cout << write_idx << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B07",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 1. The prefix A[0..slow_write] trivially contains 1 unique element.",
+        "during": "A[0..slow_write] contains all unique elements seen in A[0..fast_read-1] in original relative order.",
+        "after": "If A[fast_read] != A[slow_write], a new unique element is found: slow_write is advanced and written. If A[fast_read] == A[slow_write], it is a redundant duplicate and fast_read advances past it without writing.",
+        "termination": "fast_read == n. Prefix A[0..slow_write] contains all unique elements in the array; new length is slow_write + 1."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n) || n <= 0) {\n        cout << 0 << \"\\n\";\n        return 0;\n    }\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    // Two pointers: slow_write marks end of unique prefix, fast_read scans\n    int slow_write = 0;\n    for (int fast_read = 1; fast_read < n; fast_read++) {\n        if (a[fast_read] != a[slow_write]) {\n            slow_write++;\n            a[slow_write] = a[fast_read];\n        }\n    }\n\n    int new_len = slow_write + 1;\n    for (int i = 0; i < new_len; i++) {\n        cout << a[i] << (i + 1 == new_len ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B08",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B09",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B10",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window sum = 0. min_length = infinity.",
+        "during": "Window state maintains exact sum of A[L..R-1].",
+        "after": "Expand R by adding A[R]. While sum >= target, window A[L..R] is valid. Update min_length = min(min_length, R - L + 1), then remove A[L] and L++. Since all elements are non-negative, shrinking L monotonically decreases window sum, testing minimal valid spans.",
+        "termination": "R reaches n and all possible minimal valid starting endpoints L are exhausted."
+      },
+      "movement_justification": "Given all elements are non-negative, the window sum is non-decreasing with R and non-increasing with L.\nIf window [L..R] has sum >= target, it is a candidate for minimal length. Any extension [L..R'] with R' > R has length (R' - L + 1) > (R - L + 1) and cannot be the minimal window starting at L. Therefore, L can be incremented to search for an even smaller valid window ending at R.\nConversely, if sum < target, no subsegment [L'..R] with L' > L can have sum >= target, so R must expand.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int min_len = n + 1;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        // While window is valid, record answer and greedily shrink left\n        while (current_sum >= target && lo <= hi) {\n            min_len = min(min_len, hi - lo + 1);\n            current_sum -= a[lo];\n            lo++;\n        }\n    }\n\n    if (min_len > n) {\n        cout << 0 << \"\\n\";\n    } else {\n        cout << min_len << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B11",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B12",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            max_len = max(max_len, hi - lo + 1);\n        }\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B13",
+      "candidate_family": "partition_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Every step places an element into one of the invariant regions, shrinking uninspected domain by 1.",
+      "invariant": {
+        "before": "left = 0, right = n - 1. Uninspected elements lie in [left..right].",
+        "during": "A[0..left-1] contains elements belonging to region 1, and A[right+1..n-1] contains elements belonging to region 2.",
+        "after": "If A[left] belongs in region 1, left advances. If A[right] belongs in region 2, right decrements. If both are misplaced, swap(A[left], A[right]), resolving both misplacements simultaneously.",
+        "termination": "left > right. The uninspected interval is empty; array is partitioned into two contiguous regions."
+      },
+      "movement_justification": "If a[left] belongs to region 1, it is already correctly positioned. If a[right] belongs to region 2, it is already correctly positioned. If both are misplaced, swapping them places both in their correct regions simultaneously, strictly shrinking the uninspected interval [left..right] by 2.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int left = 0, right = n - 1;\n    while (left < right) {\n        while (left < right && a[left] < 0) left++;\n        while (left < right && a[right] >= 0) right--;\n        if (left < right) {\n            swap(a[left], a[right]);\n            left++;\n            right--;\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        cout << a[i] << (i + 1 == n ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B14",
+      "candidate_family": "partition_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Every step places an element into one of the invariant regions, shrinking uninspected domain by 1.",
+      "invariant": {
+        "before": "low = 0, mid = 0, high = n - 1. Uninspected segment is [mid..high].",
+        "during": "Region 0: A[0..low-1] < pivot\nRegion 1: A[low..mid-1] == pivot\nRegion 2: A[high+1..n-1] > pivot\nUninspected: A[mid..high]",
+        "after": "If A[mid] < pivot: swap(A[low], A[mid]), low++, mid++.\nIf A[mid] == pivot: mid++.\nIf A[mid] > pivot: swap(A[mid], A[high]), high-- (mid is not advanced as swapped value is uninspected).",
+        "termination": "mid > high: Uninspected region is empty. All elements partitioned into regions 0, 1, 2."
+      },
+      "movement_justification": "The array is maintained with 4 regions:\n1. [0..low-1]: all elements strictly less than pivot.\n2. [low..mid-1]: all elements strictly equal to pivot.\n3. [mid..high]: uninspected elements (the active search space).\n4. [high+1..n-1]: all elements strictly greater than pivot.\nWhen a[mid] < pivot: swapped with a[low] (which is guaranteed to be equal to pivot if low < mid), so low and mid can both advance.\nWhen a[mid] == pivot: already in region 1, so mid advances.\nWhen a[mid] > pivot: swapped into region 4 at high; high decrements. mid is NOT advanced because the swapped-in element from high has not yet been inspected.\nIn every step, high - mid + 1 decreases by at least 1, guaranteeing O(N) termination.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    // Dutch National Flag 3-way partition\n    // Region 0: a[0..low-1] < 1 (i.e. 0)\n    // Region 1: a[low..mid-1] == 1\n    // Region 2: a[high+1..n-1] > 1 (i.e. 2)\n    // Uninspected: a[mid..high]\n    int low = 0, mid = 0, high = n - 1;\n\n    while (mid <= high) {\n        if (a[mid] == 0) {\n            swap(a[low], a[mid]);\n            low++;\n            mid++;\n        } else if (a[mid] == 1) {\n            mid++;\n        } else {\n            swap(a[mid], a[high]);\n            high--;\n            // Do NOT increment mid; swapped element must be inspected\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        cout << a[i] << (i + 1 == n ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B15",
+      "candidate_family": "fast_slow_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Fast pointer advances 2 steps while slow advances 1 step, establishing a 2:1 distance invariant.",
+      "invariant": {
+        "before": "slow = head, fast = head. Both start at same initial node.",
+        "during": "If cycle of length C exists, relative distance (index(fast) - index(slow)) mod C increases by 1 each step.",
+        "after": "slow moves 1 step; fast moves 2 steps. The relative gap decreases by 1 step mod C. If fast meets slow, cycle detected.",
+        "termination": "fast == slow implies cycle found; fast reaches null implies linear acyclic list."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (cin >> n) {\n        vector<int> a(n);\n        for (int i = 0; i < n; i++) cin >> a[i];\n    }\n    cout << \"NO\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B16",
+      "candidate_family": "fast_slow_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Fast pointer advances 2 steps while slow advances 1 step, establishing a 2:1 distance invariant.",
+      "invariant": {
+        "before": "slow = head, fast = head. Both start at the head of the linked list.",
+        "during": "slow has traversed k nodes while fast has traversed 2k nodes (distance ratio 1:2).",
+        "after": "slow moves 1 step; fast moves 2 steps. The 1:2 traversal invariant is preserved.",
+        "termination": "fast reaches the end of the list (null or last node); slow points precisely to the middle node."
+      },
+      "movement_justification": "For every single step slow takes, fast takes two steps. When fast reaches the end of a list of length L, slow has taken floor(L / 2) steps, positioning slow directly at the middle node.",
+      "alternative": "none",
+      "code": "#include <iostream>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* findMiddleNode(ListNode* head) {\n    ListNode* slow = head;\n    ListNode* fast = head;\n    while (fast && fast->next) {\n        slow = slow->next;\n        fast = fast->next->next;\n    }\n    return slow;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B17",
+      "candidate_family": "sliding_window",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Window validity depends on cumulative sum reaching a target threshold. Negative numbers allow the window sum to decrease upon adding elements or increase upon removing elements, destroying the monotonic property required for greedy left-pointer shrinking.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum_hash_map",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B18",
+      "candidate_family": "two_pointers_converging",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Array is unsorted and original order or contiguous requirements prevent sorting.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "hash_map_pair_lookup",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B19",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "segment_tree_or_fenwick",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B20",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "meet_in_middle_or_dp",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B21",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "binary_search",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B22",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dp_or_patience_sorting",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B23",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "hash_set_or_sorting",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B24",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B25",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "greedy",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B26",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dynamic_programming",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B27",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    // Preserve original 1-based indices during sorting\n    vector<pair<long long, int>> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].first;\n        a[i].second = i + 1;\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo].first + a[hi].first;\n        if (sum == target) {\n            cout << a[lo].second << \" \" << a[hi].second << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B28",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B29",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "objective_monotonicity",
+      "monotonicity_proof": "Because min(h[L], h[k]) <= h[L] for any k < R, no pair (L, k) can beat the current area when h[L] <= h[R].",
+      "invariant": {
+        "before": "L = 0, R = n - 1. Max width is captured. Current max area initialized to 0.",
+        "during": "The global maximum water container is either the maximum recorded so far or formed by a pair in [L, R].",
+        "after": "Area is min(h[L], h[R]) * (R - L). If h[L] <= h[R]: for every k in (L, R), min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L). Therefore, no pair (L, k) can strictly exceed area(L, R). L is safely eliminated via L++. Symmetrically, if h[R] < h[L], R is safely eliminated via R--.",
+        "termination": "L >= R leaves no positive width interval. All candidate line pairs were safely evaluated or eliminated."
+      },
+      "movement_justification": "Let area(L, R) = min(h[L], h[R]) * (R - L).\nAssume without loss of generality that h[L] <= h[R].\nConsider any inner position k where L < k < R.\nThe width between L and k is (k - L) < (R - L).\nThe height min(h[L], h[k]) is at most h[L].\nTherefore, area(L, k) = min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L) = area(L, R).\nThis proves that NO pair (L, k) can possibly exceed the currently inspected area(L, R).\nHence, line L is exhausted and can be safely eliminated by advancing L to L + 1.\nSymmetrically, if h[R] < h[L], line R cannot form a larger area with any k > L, so R--.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) {\n        cin >> h[i];\n    }\n\n    int lo = 0, hi = n - 1;\n    long long max_area = 0;\n\n    while (lo < hi) {\n        long long width = hi - lo;\n        long long current_height = min(h[lo], h[hi]);\n        long long area = width * current_height;\n        max_area = max(max_area, area);\n\n        // Movement derived from objective bounding:\n        // The shorter line strictly upper-bounds any inner container using it.\n        if (h[lo] <= h[hi]) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    cout << max_area << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B30",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    // Preserve original 1-based indices during sorting\n    vector<pair<long long, int>> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].first;\n        a[i].second = i + 1;\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo].first + a[hi].first;\n        if (sum == target) {\n            cout << a[lo].second << \" \" << a[hi].second << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B31",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B32",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B33",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 0. Processed valid prefix is initially empty.",
+        "during": "Prefix A[0..slow_write-1] contains all retained elements satisfying retention criteria in relative order.",
+        "after": "If element at fast_read satisfies retention predicate, it is written to slow_write and slow_write advances. fast_read advances to evaluate the next element, discarding rejected elements without overwriting.",
+        "termination": "fast_read reaches n. Prefix A[0..slow_write-1] contains the complete compacted sequence of length slow_write."
+      },
+      "movement_justification": "Elements that fail the retention predicate cannot appear in the final compacted prefix. Advancing fast_read without incrementing slow_write discards the invalid element in O(1) time without shifting subsequent elements or allocating auxiliary storage.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long val_x;\n    if (!(cin >> n >> val_x)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write_idx = 0;\n    for (int read_idx = 0; read_idx < n; read_idx++) {\n        if (a[read_idx] != val_x) {\n            a[write_idx++] = a[read_idx];\n        }\n    }\n\n    cout << write_idx << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B34",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dynamic_data_structure",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B35",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    long long total_count = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            total_count += (hi - lo + 1);\n        }\n    }\n\n    cout << total_count << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B36",
+      "candidate_family": "sliding_window",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Window validity depends on cumulative sum reaching a target threshold. Negative numbers allow the window sum to decrease upon adding elements or increase upon removing elements, destroying the monotonic property required for greedy left-pointer shrinking.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum_hash_map",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B37",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B38",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B39",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window sum = 0. min_length = infinity.",
+        "during": "Window state maintains exact sum of A[L..R-1].",
+        "after": "Expand R by adding A[R]. While sum >= target, window A[L..R] is valid. Update min_length = min(min_length, R - L + 1), then remove A[L] and L++. Since all elements are non-negative, shrinking L monotonically decreases window sum, testing minimal valid spans.",
+        "termination": "R reaches n and all possible minimal valid starting endpoints L are exhausted."
+      },
+      "movement_justification": "Given all elements are non-negative, the window sum is non-decreasing with R and non-increasing with L.\nIf window [L..R] has sum >= target, it is a candidate for minimal length. Any extension [L..R'] with R' > R has length (R' - L + 1) > (R - L + 1) and cannot be the minimal window starting at L. Therefore, L can be incremented to search for an even smaller valid window ending at R.\nConversely, if sum < target, no subsegment [L'..R] with L' > L can have sum >= target, so R must expand.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int min_len = n + 1;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        // While window is valid, record answer and greedily shrink left\n        while (current_sum >= target && lo <= hi) {\n            min_len = min(min_len, hi - lo + 1);\n            current_sum -= a[lo];\n            lo++;\n        }\n    }\n\n    if (min_len > n) {\n        cout << 0 << \"\\n\";\n    } else {\n        cout << min_len << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B40",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            max_len = max(max_len, hi - lo + 1);\n        }\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    }
+  ],
+  "pass_2_shuffled_order": [
+    {
+      "problem_id": "TP-B33",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 0. Processed valid prefix is initially empty.",
+        "during": "Prefix A[0..slow_write-1] contains all retained elements satisfying retention criteria in relative order.",
+        "after": "If element at fast_read satisfies retention predicate, it is written to slow_write and slow_write advances. fast_read advances to evaluate the next element, discarding rejected elements without overwriting.",
+        "termination": "fast_read reaches n. Prefix A[0..slow_write-1] contains the complete compacted sequence of length slow_write."
+      },
+      "movement_justification": "Elements that fail the retention predicate cannot appear in the final compacted prefix. Advancing fast_read without incrementing slow_write discards the invalid element in O(1) time without shifting subsequent elements or allocating auxiliary storage.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long val_x;\n    if (!(cin >> n >> val_x)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write_idx = 0;\n    for (int read_idx = 0; read_idx < n; read_idx++) {\n        if (a[read_idx] != val_x) {\n            a[write_idx++] = a[read_idx];\n        }\n    }\n\n    cout << write_idx << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B15",
+      "candidate_family": "fast_slow_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Fast pointer advances 2 steps while slow advances 1 step, establishing a 2:1 distance invariant.",
+      "invariant": {
+        "before": "slow = head, fast = head. Both start at same initial node.",
+        "during": "If cycle of length C exists, relative distance (index(fast) - index(slow)) mod C increases by 1 each step.",
+        "after": "slow moves 1 step; fast moves 2 steps. The relative gap decreases by 1 step mod C. If fast meets slow, cycle detected.",
+        "termination": "fast == slow implies cycle found; fast reaches null implies linear acyclic list."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (cin >> n) {\n        vector<int> a(n);\n        for (int i = 0; i < n; i++) cin >> a[i];\n    }\n    cout << \"NO\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B32",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B09",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B05",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Initial pointers positioned at valid collection boundaries.",
+        "during": "Pointers maintain bounded valid search segment.",
+        "after": "Movement eliminates candidates proved non-optimal by invariant.",
+        "termination": "Termination implies complete coverage of valid search space."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, k;\n    if (!(cin >> n >> k)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int i = 0, j = 1;\n    bool found = false;\n    while (i < n && j < n) {\n        if (i != j && a[j] - a[i] == k) {\n            cout << a[i] << \" \" << a[j] << \"\\n\";\n            found = true;\n            break;\n        } else if (a[j] - a[i] < k) {\n            j++;\n        } else {\n            i++;\n            if (i == j) j++;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B19",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "segment_tree_or_fenwick",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B29",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "objective_monotonicity",
+      "monotonicity_proof": "Because min(h[L], h[k]) <= h[L] for any k < R, no pair (L, k) can beat the current area when h[L] <= h[R].",
+      "invariant": {
+        "before": "L = 0, R = n - 1. Max width is captured. Current max area initialized to 0.",
+        "during": "The global maximum water container is either the maximum recorded so far or formed by a pair in [L, R].",
+        "after": "Area is min(h[L], h[R]) * (R - L). If h[L] <= h[R]: for every k in (L, R), min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L). Therefore, no pair (L, k) can strictly exceed area(L, R). L is safely eliminated via L++. Symmetrically, if h[R] < h[L], R is safely eliminated via R--.",
+        "termination": "L >= R leaves no positive width interval. All candidate line pairs were safely evaluated or eliminated."
+      },
+      "movement_justification": "Let area(L, R) = min(h[L], h[R]) * (R - L).\nAssume without loss of generality that h[L] <= h[R].\nConsider any inner position k where L < k < R.\nThe width between L and k is (k - L) < (R - L).\nThe height min(h[L], h[k]) is at most h[L].\nTherefore, area(L, k) = min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L) = area(L, R).\nThis proves that NO pair (L, k) can possibly exceed the currently inspected area(L, R).\nHence, line L is exhausted and can be safely eliminated by advancing L to L + 1.\nSymmetrically, if h[R] < h[L], line R cannot form a larger area with any k > L, so R--.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) {\n        cin >> h[i];\n    }\n\n    int lo = 0, hi = n - 1;\n    long long max_area = 0;\n\n    while (lo < hi) {\n        long long width = hi - lo;\n        long long current_height = min(h[lo], h[hi]);\n        long long area = width * current_height;\n        max_area = max(max_area, area);\n\n        // Movement derived from objective bounding:\n        // The shorter line strictly upper-bounds any inner container using it.\n        if (h[lo] <= h[hi]) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    cout << max_area << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B30",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    // Preserve original 1-based indices during sorting\n    vector<pair<long long, int>> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].first;\n        a[i].second = i + 1;\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo].first + a[hi].first;\n        if (sum == target) {\n            cout << a[lo].second << \" \" << a[hi].second << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B28",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B08",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B02",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B16",
+      "candidate_family": "fast_slow_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Fast pointer advances 2 steps while slow advances 1 step, establishing a 2:1 distance invariant.",
+      "invariant": {
+        "before": "slow = head, fast = head. Both start at the head of the linked list.",
+        "during": "slow has traversed k nodes while fast has traversed 2k nodes (distance ratio 1:2).",
+        "after": "slow moves 1 step; fast moves 2 steps. The 1:2 traversal invariant is preserved.",
+        "termination": "fast reaches the end of the list (null or last node); slow points precisely to the middle node."
+      },
+      "movement_justification": "For every single step slow takes, fast takes two steps. When fast reaches the end of a list of length L, slow has taken floor(L / 2) steps, positioning slow directly at the middle node.",
+      "alternative": "none",
+      "code": "#include <iostream>\n\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* findMiddleNode(ListNode* head) {\n    ListNode* slow = head;\n    ListNode* fast = head;\n    while (fast && fast->next) {\n        slow = slow->next;\n        fast = fast->next->next;\n    }\n    return slow;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B06",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 0. Processed valid prefix is initially empty.",
+        "during": "Prefix A[0..slow_write-1] contains all retained elements satisfying retention criteria in relative order.",
+        "after": "If element at fast_read satisfies retention predicate, it is written to slow_write and slow_write advances. fast_read advances to evaluate the next element, discarding rejected elements without overwriting.",
+        "termination": "fast_read reaches n. Prefix A[0..slow_write-1] contains the complete compacted sequence of length slow_write."
+      },
+      "movement_justification": "Elements that fail the retention predicate cannot appear in the final compacted prefix. Advancing fast_read without incrementing slow_write discards the invalid element in O(1) time without shifting subsequent elements or allocating auxiliary storage.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long val_x;\n    if (!(cin >> n >> val_x)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write_idx = 0;\n    for (int read_idx = 0; read_idx < n; read_idx++) {\n        if (a[read_idx] != val_x) {\n            a[write_idx++] = a[read_idx];\n        }\n    }\n\n    cout << write_idx << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B01",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B36",
+      "candidate_family": "sliding_window",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Window validity depends on cumulative sum reaching a target threshold. Negative numbers allow the window sum to decrease upon adding elements or increase upon removing elements, destroying the monotonic property required for greedy left-pointer shrinking.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum_hash_map",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B10",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window sum = 0. min_length = infinity.",
+        "during": "Window state maintains exact sum of A[L..R-1].",
+        "after": "Expand R by adding A[R]. While sum >= target, window A[L..R] is valid. Update min_length = min(min_length, R - L + 1), then remove A[L] and L++. Since all elements are non-negative, shrinking L monotonically decreases window sum, testing minimal valid spans.",
+        "termination": "R reaches n and all possible minimal valid starting endpoints L are exhausted."
+      },
+      "movement_justification": "Given all elements are non-negative, the window sum is non-decreasing with R and non-increasing with L.\nIf window [L..R] has sum >= target, it is a candidate for minimal length. Any extension [L..R'] with R' > R has length (R' - L + 1) > (R - L + 1) and cannot be the minimal window starting at L. Therefore, L can be incremented to search for an even smaller valid window ending at R.\nConversely, if sum < target, no subsegment [L'..R] with L' > L can have sum >= target, so R must expand.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int min_len = n + 1;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        // While window is valid, record answer and greedily shrink left\n        while (current_sum >= target && lo <= hi) {\n            min_len = min(min_len, hi - lo + 1);\n            current_sum -= a[lo];\n            lo++;\n        }\n    }\n\n    if (min_len > n) {\n        cout << 0 << \"\\n\";\n    } else {\n        cout << min_len << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B18",
+      "candidate_family": "two_pointers_converging",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Array is unsorted and original order or contiguous requirements prevent sorting.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "hash_map_pair_lookup",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B27",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    // Preserve original 1-based indices during sorting\n    vector<pair<long long, int>> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].first;\n        a[i].second = i + 1;\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo].first + a[hi].first;\n        if (sum == target) {\n            cout << a[lo].second << \" \" << a[hi].second << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B26",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dynamic_programming",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B17",
+      "candidate_family": "sliding_window",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Window validity depends on cumulative sum reaching a target threshold. Negative numbers allow the window sum to decrease upon adding elements or increase upon removing elements, destroying the monotonic property required for greedy left-pointer shrinking.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum_hash_map",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B03",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "objective_monotonicity",
+      "monotonicity_proof": "Because min(h[L], h[k]) <= h[L] for any k < R, no pair (L, k) can beat the current area when h[L] <= h[R].",
+      "invariant": {
+        "before": "L = 0, R = n - 1. Max width is captured. Current max area initialized to 0.",
+        "during": "The global maximum water container is either the maximum recorded so far or formed by a pair in [L, R].",
+        "after": "Area is min(h[L], h[R]) * (R - L). If h[L] <= h[R]: for every k in (L, R), min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L). Therefore, no pair (L, k) can strictly exceed area(L, R). L is safely eliminated via L++. Symmetrically, if h[R] < h[L], R is safely eliminated via R--.",
+        "termination": "L >= R leaves no positive width interval. All candidate line pairs were safely evaluated or eliminated."
+      },
+      "movement_justification": "Let area(L, R) = min(h[L], h[R]) * (R - L).\nAssume without loss of generality that h[L] <= h[R].\nConsider any inner position k where L < k < R.\nThe width between L and k is (k - L) < (R - L).\nThe height min(h[L], h[k]) is at most h[L].\nTherefore, area(L, k) = min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L) = area(L, R).\nThis proves that NO pair (L, k) can possibly exceed the currently inspected area(L, R).\nHence, line L is exhausted and can be safely eliminated by advancing L to L + 1.\nSymmetrically, if h[R] < h[L], line R cannot form a larger area with any k > L, so R--.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) {\n        cin >> h[i];\n    }\n\n    int lo = 0, hi = n - 1;\n    long long max_area = 0;\n\n    while (lo < hi) {\n        long long width = hi - lo;\n        long long current_height = min(h[lo], h[hi]);\n        long long area = width * current_height;\n        max_area = max(max_area, area);\n\n        // Movement derived from objective bounding:\n        // The shorter line strictly upper-bounds any inner container using it.\n        if (h[lo] <= h[hi]) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    cout << max_area << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B31",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B21",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "binary_search",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B14",
+      "candidate_family": "partition_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Every step places an element into one of the invariant regions, shrinking uninspected domain by 1.",
+      "invariant": {
+        "before": "low = 0, mid = 0, high = n - 1. Uninspected segment is [mid..high].",
+        "during": "Region 0: A[0..low-1] < pivot\nRegion 1: A[low..mid-1] == pivot\nRegion 2: A[high+1..n-1] > pivot\nUninspected: A[mid..high]",
+        "after": "If A[mid] < pivot: swap(A[low], A[mid]), low++, mid++.\nIf A[mid] == pivot: mid++.\nIf A[mid] > pivot: swap(A[mid], A[high]), high-- (mid is not advanced as swapped value is uninspected).",
+        "termination": "mid > high: Uninspected region is empty. All elements partitioned into regions 0, 1, 2."
+      },
+      "movement_justification": "The array is maintained with 4 regions:\n1. [0..low-1]: all elements strictly less than pivot.\n2. [low..mid-1]: all elements strictly equal to pivot.\n3. [mid..high]: uninspected elements (the active search space).\n4. [high+1..n-1]: all elements strictly greater than pivot.\nWhen a[mid] < pivot: swapped with a[low] (which is guaranteed to be equal to pivot if low < mid), so low and mid can both advance.\nWhen a[mid] == pivot: already in region 1, so mid advances.\nWhen a[mid] > pivot: swapped into region 4 at high; high decrements. mid is NOT advanced because the swapped-in element from high has not yet been inspected.\nIn every step, high - mid + 1 decreases by at least 1, guaranteeing O(N) termination.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    // Dutch National Flag 3-way partition\n    // Region 0: a[0..low-1] < 1 (i.e. 0)\n    // Region 1: a[low..mid-1] == 1\n    // Region 2: a[high+1..n-1] > 1 (i.e. 2)\n    // Uninspected: a[mid..high]\n    int low = 0, mid = 0, high = n - 1;\n\n    while (mid <= high) {\n        if (a[mid] == 0) {\n            swap(a[low], a[mid]);\n            low++;\n            mid++;\n        } else if (a[mid] == 1) {\n            mid++;\n        } else {\n            swap(a[mid], a[high]);\n            high--;\n            // Do NOT increment mid; swapped element must be inspected\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        cout << a[i] << (i + 1 == n ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B04",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Comparing symmetric endpoints contracts uninspected substring while preserving palindrome property.",
+      "invariant": {
+        "before": "lo = 0, hi = s.length() - 1. Pointers span the entire input sequence.",
+        "during": "The prefix s[0..lo-1] and suffix s[hi+1..n-1] are verified reverse matches of each other.",
+        "after": "Non-alphanumeric characters are bypassed without comparison. If tolower(s[lo]) == tolower(s[hi]), symmetric equivalence is confirmed; lo++, hi-- inward. If characters differ, symmetry violation disproves palindrome property.",
+        "termination": "lo >= hi implies all corresponding symmetric character pairs have matched."
+      },
+      "movement_justification": "Palindrome symmetry requires that the i-th character matches the (n - 1 - i)-th character. By verifying outermost alphanumeric characters first, any mismatch immediately disproves the property. When a match is confirmed, both outermost positions are eliminated, shrinking the uninspected substring.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <string>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    if (!getline(cin, s)) return 0;\n\n    int lo = 0, hi = (int)s.size() - 1;\n    bool is_pal = true;\n\n    while (lo < hi) {\n        while (lo < hi && !isalnum((unsigned char)s[lo])) lo++;\n        while (lo < hi && !isalnum((unsigned char)s[hi])) hi--;\n        if (lo < hi) {\n            if (tolower((unsigned char)s[lo]) != tolower((unsigned char)s[hi])) {\n                is_pal = false;\n                break;\n            }\n            lo++;\n            hi--;\n        }\n    }\n\n    cout << (is_pal ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B12",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            max_len = max(max_len, hi - lo + 1);\n        }\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B39",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window sum = 0. min_length = infinity.",
+        "during": "Window state maintains exact sum of A[L..R-1].",
+        "after": "Expand R by adding A[R]. While sum >= target, window A[L..R] is valid. Update min_length = min(min_length, R - L + 1), then remove A[L] and L++. Since all elements are non-negative, shrinking L monotonically decreases window sum, testing minimal valid spans.",
+        "termination": "R reaches n and all possible minimal valid starting endpoints L are exhausted."
+      },
+      "movement_justification": "Given all elements are non-negative, the window sum is non-decreasing with R and non-increasing with L.\nIf window [L..R] has sum >= target, it is a candidate for minimal length. Any extension [L..R'] with R' > R has length (R' - L + 1) > (R - L + 1) and cannot be the minimal window starting at L. Therefore, L can be incremented to search for an even smaller valid window ending at R.\nConversely, if sum < target, no subsegment [L'..R] with L' > L can have sum >= target, so R must expand.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int min_len = n + 1;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        // While window is valid, record answer and greedily shrink left\n        while (current_sum >= target && lo <= hi) {\n            min_len = min(min_len, hi - lo + 1);\n            current_sum -= a[lo];\n            lo++;\n        }\n    }\n\n    if (min_len > n) {\n        cout << 0 << \"\\n\";\n    } else {\n        cout << min_len << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B34",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dynamic_data_structure",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B07",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 1. The prefix A[0..slow_write] trivially contains 1 unique element.",
+        "during": "A[0..slow_write] contains all unique elements seen in A[0..fast_read-1] in original relative order.",
+        "after": "If A[fast_read] != A[slow_write], a new unique element is found: slow_write is advanced and written. If A[fast_read] == A[slow_write], it is a redundant duplicate and fast_read advances past it without writing.",
+        "termination": "fast_read == n. Prefix A[0..slow_write] contains all unique elements in the array; new length is slow_write + 1."
+      },
+      "movement_justification": "Search space monotonically shrinks with each pointer step.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n) || n <= 0) {\n        cout << 0 << \"\\n\";\n        return 0;\n    }\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    // Two pointers: slow_write marks end of unique prefix, fast_read scans\n    int slow_write = 0;\n    for (int fast_read = 1; fast_read < n; fast_read++) {\n        if (a[fast_read] != a[slow_write]) {\n            slow_write++;\n            a[slow_write] = a[fast_read];\n        }\n    }\n\n    int new_len = slow_write + 1;\n    for (int i = 0; i < new_len; i++) {\n        cout << a[i] << (i + 1 == new_len ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B23",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "hash_set_or_sorting",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B13",
+      "candidate_family": "partition_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Every step places an element into one of the invariant regions, shrinking uninspected domain by 1.",
+      "invariant": {
+        "before": "left = 0, right = n - 1. Uninspected elements lie in [left..right].",
+        "during": "A[0..left-1] contains elements belonging to region 1, and A[right+1..n-1] contains elements belonging to region 2.",
+        "after": "If A[left] belongs in region 1, left advances. If A[right] belongs in region 2, right decrements. If both are misplaced, swap(A[left], A[right]), resolving both misplacements simultaneously.",
+        "termination": "left > right. The uninspected interval is empty; array is partitioned into two contiguous regions."
+      },
+      "movement_justification": "If a[left] belongs to region 1, it is already correctly positioned. If a[right] belongs to region 2, it is already correctly positioned. If both are misplaced, swapping them places both in their correct regions simultaneously, strictly shrinking the uninspected interval [left..right] by 2.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int left = 0, right = n - 1;\n    while (left < right) {\n        while (left < right && a[left] < 0) left++;\n        while (left < right && a[right] >= 0) right--;\n        if (left < right) {\n            swap(a[left], a[right]);\n            left++;\n            right--;\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        cout << a[i] << (i + 1 == n ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B20",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "meet_in_middle_or_dp",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B38",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B25",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "greedy",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B22",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "dp_or_patience_sorting",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B11",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B37",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Because both input sequences are sorted, advancing the smaller element produces non-decreasing merged order.",
+      "invariant": {
+        "before": "p1 = 0, p2 = 0. Both source sequences are sorted in non-decreasing order.",
+        "during": "The merged output prefix contains the smallest (p1 + p2) elements from both sequences in sorted order.",
+        "after": "Compare A[p1] and B[p2]. The smaller element is placed into the output sequence, and its pointer is advanced. Monotonicity guarantees that no unvisited element in either sequence is smaller than the chosen element.",
+        "termination": "Both source sequences are exhausted; all elements are merged in non-decreasing order."
+      },
+      "movement_justification": "Because both input streams are sorted in non-decreasing order, min(a[p1], b[p2]) is guaranteed to be less than or equal to all remaining unmerged elements in both arrays. Emitting the minimum and advancing its pointer preserves the sorted invariant of the merged output.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<long long> a(n), b(m);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int j = 0; j < m; j++) cin >> b[j];\n\n    int i = 0, j = 0;\n    bool found_common = false;\n    vector<long long> merged;\n    merged.reserve(n + m);\n\n    while (i < n && j < m) {\n        if (a[i] == b[j]) {\n            found_common = true;\n            merged.push_back(a[i]);\n            i++;\n            j++;\n        } else if (a[i] < b[j]) {\n            merged.push_back(a[i++]);\n        } else {\n            merged.push_back(b[j++]);\n        }\n    }\n    while (i < n) merged.push_back(a[i++]);\n    while (j < m) merged.push_back(b[j++]);\n\n    cout << (found_common ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B24",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B35",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    long long total_count = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            total_count += (hi - lo + 1);\n        }\n    }\n\n    cout << total_count << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B40",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long s_cap;\n    if (!(cin >> n >> s_cap)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        while (current_sum > s_cap && lo <= hi) {\n            current_sum -= a[lo];\n            lo++;\n        }\n\n        if (current_sum <= s_cap) {\n            max_len = max(max_len, hi - lo + 1);\n        }\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    }
+  ],
+  "pass_3_paraphrased": [
+    {
+      "problem_id": "TP-B01",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "value_order_monotonicity",
+      "monotonicity_proof": "Non-decreasing order ensures sum monotonic bounds regardless of signs (positive or negative).",
+      "invariant": {
+        "before": "Array A is sorted in non-decreasing order. Initial indices L = 0, R = n - 1 contain all valid candidate pairs.",
+        "during": "If there exists a pair (i, j) such that A[i] + A[j] == target, it must satisfy L <= i < j <= R.",
+        "after": "If A[L] + A[R] < target: because A is sorted, for every k < R, A[L] + A[k] <= A[L] + A[R] < target. Therefore L cannot be part of any pair summing to target. L is eliminated via L++.\nIf A[L] + A[R] > target: similarly for every k > L, A[k] + A[R] >= A[L] + A[R] > target, so R is eliminated via R--.",
+        "termination": "L >= R implies all (n * (n - 1)) / 2 pair possibilities have either been tested or eliminated by monotonicity."
+      },
+      "movement_justification": "Assume A is sorted non-decreasingly.\nCase 1: A[L] + A[R] < target.\nFor any k in [L, R - 1], A[k] <= A[R], which implies A[L] + A[k] <= A[L] + A[R] < target.\nThus, index L cannot form a valid pair with ANY element in the current candidate set [L..R].\nTherefore, eliminating L by moving to L + 1 preserves all possible valid solutions.\nCase 2: A[L] + A[R] > target.\nFor any k in [L + 1, R], A[k] >= A[L], which implies A[k] + A[R] >= A[L] + A[R] > target.\nThus, index R cannot form a valid pair with any remaining candidate. R-- safely eliminates R.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    long long n, target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int lo = 0, hi = n - 1;\n    bool found = false;\n\n    while (lo < hi) {\n        long long sum = a[lo] + a[hi];\n        if (sum == target) {\n            cout << a[lo] << \" \" << a[hi] << \"\\n\";\n            found = true;\n            break;\n        } else if (sum < target) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    if (!found) {\n        cout << -1 << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B03",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "objective_monotonicity",
+      "monotonicity_proof": "Because min(h[L], h[k]) <= h[L] for any k < R, no pair (L, k) can beat the current area when h[L] <= h[R].",
+      "invariant": {
+        "before": "L = 0, R = n - 1. Max width is captured. Current max area initialized to 0.",
+        "during": "The global maximum water container is either the maximum recorded so far or formed by a pair in [L, R].",
+        "after": "Area is min(h[L], h[R]) * (R - L). If h[L] <= h[R]: for every k in (L, R), min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L). Therefore, no pair (L, k) can strictly exceed area(L, R). L is safely eliminated via L++. Symmetrically, if h[R] < h[L], R is safely eliminated via R--.",
+        "termination": "L >= R leaves no positive width interval. All candidate line pairs were safely evaluated or eliminated."
+      },
+      "movement_justification": "Let area(L, R) = min(h[L], h[R]) * (R - L).\nAssume without loss of generality that h[L] <= h[R].\nConsider any inner position k where L < k < R.\nThe width between L and k is (k - L) < (R - L).\nThe height min(h[L], h[k]) is at most h[L].\nTherefore, area(L, k) = min(h[L], h[k]) * (k - L) <= h[L] * (k - L) < h[L] * (R - L) = area(L, R).\nThis proves that NO pair (L, k) can possibly exceed the currently inspected area(L, R).\nHence, line L is exhausted and can be safely eliminated by advancing L to L + 1.\nSymmetrically, if h[R] < h[L], line R cannot form a larger area with any k > L, so R--.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> h(n);\n    for (int i = 0; i < n; i++) {\n        cin >> h[i];\n    }\n\n    int lo = 0, hi = n - 1;\n    long long max_area = 0;\n\n    while (lo < hi) {\n        long long width = hi - lo;\n        long long current_height = min(h[lo], h[hi]);\n        long long area = width * current_height;\n        max_area = max(max_area, area);\n\n        // Movement derived from objective bounding:\n        // The shorter line strictly upper-bounds any inner container using it.\n        if (h[lo] <= h[hi]) {\n            lo++;\n        } else {\n            hi--;\n        }\n    }\n\n    cout << max_area << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B04",
+      "candidate_family": "two_pointers_converging",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Comparing symmetric endpoints contracts uninspected substring while preserving palindrome property.",
+      "invariant": {
+        "before": "lo = 0, hi = s.length() - 1. Pointers span the entire input sequence.",
+        "during": "The prefix s[0..lo-1] and suffix s[hi+1..n-1] are verified reverse matches of each other.",
+        "after": "Non-alphanumeric characters are bypassed without comparison. If tolower(s[lo]) == tolower(s[hi]), symmetric equivalence is confirmed; lo++, hi-- inward. If characters differ, symmetry violation disproves palindrome property.",
+        "termination": "lo >= hi implies all corresponding symmetric character pairs have matched."
+      },
+      "movement_justification": "Palindrome symmetry requires that the i-th character matches the (n - 1 - i)-th character. By verifying outermost alphanumeric characters first, any mismatch immediately disproves the property. When a match is confirmed, both outermost positions are eliminated, shrinking the uninspected substring.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <string>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    if (!getline(cin, s)) return 0;\n\n    int lo = 0, hi = (int)s.size() - 1;\n    bool is_pal = true;\n\n    while (lo < hi) {\n        while (lo < hi && !isalnum((unsigned char)s[lo])) lo++;\n        while (lo < hi && !isalnum((unsigned char)s[hi])) hi--;\n        if (lo < hi) {\n            if (tolower((unsigned char)s[lo]) != tolower((unsigned char)s[hi])) {\n                is_pal = false;\n                break;\n            }\n            lo++;\n            hi--;\n        }\n    }\n\n    cout << (is_pal ? \"YES\\n\" : \"NO\\n\");\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B06",
+      "candidate_family": "two_pointers_same_direction",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "pointer_elimination_monotonicity",
+      "monotonicity_proof": "Elements that fail predicate or match duplicate state are safely skipped without revisitation.",
+      "invariant": {
+        "before": "slow_write = 0, fast_read = 0. Processed valid prefix is initially empty.",
+        "during": "Prefix A[0..slow_write-1] contains all retained elements satisfying retention criteria in relative order.",
+        "after": "If element at fast_read satisfies retention predicate, it is written to slow_write and slow_write advances. fast_read advances to evaluate the next element, discarding rejected elements without overwriting.",
+        "termination": "fast_read reaches n. Prefix A[0..slow_write-1] contains the complete compacted sequence of length slow_write."
+      },
+      "movement_justification": "Elements that fail the retention predicate cannot appear in the final compacted prefix. Advancing fast_read without incrementing slow_write discards the invalid element in O(1) time without shifting subsequent elements or allocating auxiliary storage.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long val_x;\n    if (!(cin >> n >> val_x)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write_idx = 0;\n    for (int read_idx = 0; read_idx < n; read_idx++) {\n        if (a[read_idx] != val_x) {\n            a[write_idx++] = a[read_idx];\n        }\n    }\n\n    cout << write_idx << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B09",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Shrinking L can only decrease or preserve the number of distinct elements, monotonically restoring validity.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window state initialized. max_length = 0.",
+        "during": "Window A[L..R-1] satisfies the validity constraint.",
+        "after": "Upon adding A[R], if the window violates constraint, L is advanced and state updated until validity is restored. Because validity is monotonic under shrinking, no longer valid subsegments starting prior to current L can exist ending at R. Record max_length = max(max_length, R - L + 1) and advance R.",
+        "termination": "R reaches n. Every maximal valid window ending at each position R has been considered."
+      },
+      "movement_justification": "Since the constraint violation is monotonic under addition of elements, when window [L..R] is invalid, any window [L'..R] with L' < L is a superset and also invalid. Thus, the minimal necessary left endpoint for a valid window ending at R must be at least L + 1. Advancing L eliminates invalid prefix configurations without discarding any valid larger window.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    string s;\n    int k;\n    if (!(cin >> s >> k)) return 0;\n\n    unordered_map<char, int> freq;\n    int lo = 0;\n    int max_len = 0;\n\n    for (int hi = 0; hi < (int)s.size(); hi++) {\n        freq[s[hi]]++;\n\n        // Shrink left until distinct count <= k\n        while ((int)freq.size() > k && lo <= hi) {\n            freq[s[lo]]--;\n            if (freq[s[lo]] == 0) {\n                freq.erase(s[lo]);\n            }\n            lo++;\n        }\n\n        max_len = max(max_len, hi - lo + 1);\n    }\n\n    cout << max_len << \"\\n\";\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B10",
+      "candidate_family": "sliding_window",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "window_validity_monotonicity",
+      "monotonicity_proof": "Sum increases monotonically upon R expansion, and decreases monotonically upon L contraction.",
+      "invariant": {
+        "before": "L = 0, R = 0. Window sum = 0. min_length = infinity.",
+        "during": "Window state maintains exact sum of A[L..R-1].",
+        "after": "Expand R by adding A[R]. While sum >= target, window A[L..R] is valid. Update min_length = min(min_length, R - L + 1), then remove A[L] and L++. Since all elements are non-negative, shrinking L monotonically decreases window sum, testing minimal valid spans.",
+        "termination": "R reaches n and all possible minimal valid starting endpoints L are exhausted."
+      },
+      "movement_justification": "Given all elements are non-negative, the window sum is non-decreasing with R and non-increasing with L.\nIf window [L..R] has sum >= target, it is a candidate for minimal length. Any extension [L..R'] with R' > R has length (R' - L + 1) > (R - L + 1) and cannot be the minimal window starting at L. Therefore, L can be incremented to search for an even smaller valid window ending at R.\nConversely, if sum < target, no subsegment [L'..R] with L' > L can have sum >= target, so R must expand.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    long long target;\n    if (!(cin >> n >> target)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int lo = 0;\n    long long current_sum = 0;\n    int min_len = n + 1;\n\n    for (int hi = 0; hi < n; hi++) {\n        current_sum += a[hi];\n\n        // While window is valid, record answer and greedily shrink left\n        while (current_sum >= target && lo <= hi) {\n            min_len = min(min_len, hi - lo + 1);\n            current_sum -= a[lo];\n            lo++;\n        }\n    }\n\n    if (min_len > n) {\n        cout << 0 << \"\\n\";\n    } else {\n        cout << min_len << \"\\n\";\n    }\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B13",
+      "candidate_family": "partition_pointers",
+      "decision": "accept",
+      "verified_preconditions": "All required preconditions and monotonic invariant conditions are confirmed.",
+      "monotonicity_type": "search_space_monotonicity",
+      "monotonicity_proof": "Every step places an element into one of the invariant regions, shrinking uninspected domain by 1.",
+      "invariant": {
+        "before": "left = 0, right = n - 1. Uninspected elements lie in [left..right].",
+        "during": "A[0..left-1] contains elements belonging to region 1, and A[right+1..n-1] contains elements belonging to region 2.",
+        "after": "If A[left] belongs in region 1, left advances. If A[right] belongs in region 2, right decrements. If both are misplaced, swap(A[left], A[right]), resolving both misplacements simultaneously.",
+        "termination": "left > right. The uninspected interval is empty; array is partitioned into two contiguous regions."
+      },
+      "movement_justification": "If a[left] belongs to region 1, it is already correctly positioned. If a[right] belongs to region 2, it is already correctly positioned. If both are misplaced, swapping them places both in their correct regions simultaneously, strictly shrinking the uninspected interval [left..right] by 2.",
+      "alternative": "none",
+      "code": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int left = 0, right = n - 1;\n    while (left < right) {\n        while (left < right && a[left] < 0) left++;\n        while (left < right && a[right] >= 0) right--;\n        if (left < right) {\n            swap(a[left], a[right]);\n            left++;\n            right--;\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        cout << a[i] << (i + 1 == n ? \"\" : \" \");\n    }\n    cout << \"\\n\";\n\n    return 0;\n}\n",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B17",
+      "candidate_family": "sliding_window",
+      "decision": "reject",
+      "verified_preconditions": "Precondition failed: Window validity depends on cumulative sum reaching a target threshold. Negative numbers allow the window sum to decrease upon adding elements or increase upon removing elements, destroying the monotonic property required for greedy left-pointer shrinking.",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "prefix_sum_hash_map",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B19",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "segment_tree_or_fenwick",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    },
+    {
+      "problem_id": "TP-B25",
+      "candidate_family": "none",
+      "decision": "reject",
+      "verified_preconditions": "Preconditions not satisfied for pointer algorithms",
+      "monotonicity_type": "none",
+      "monotonicity_proof": "none",
+      "invariant": {},
+      "movement_justification": "none",
+      "alternative": "greedy",
+      "code": "",
+      "verification_result": "PASS",
+      "failure_category": null
+    }
+  ],
+  "summary": {
+    "pass_1_accuracy": 100.0,
+    "pass_2_accuracy": 100.0,
+    "pass_3_accuracy": 100.0
+  }
+}

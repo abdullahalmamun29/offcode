@@ -34,7 +34,7 @@ void powerMethod(const std::vector<std::vector<double>>& a, std::vector<double>&
         }
         lambda_old = lambda_new;
     }
-    std::cout << "\nDominant Eigenvalue: " << lambda_old << std::endl;
+    std::cout << "\\nDominant Eigenvalue: " << lambda_old << std::endl;
     std::cout << "Corresponding Eigenvector:" << std::endl;
     for (int i = 0; i < n; i++) {
         std::cout << "x[" << (i + 1) << "] = " << x[i] << std::endl;

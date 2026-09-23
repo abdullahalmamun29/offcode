@@ -1,0 +1,40 @@
+{"id": "TP-B01", "category": "unseen_converging", "problem": "Given a sorted integer array a and an integer X, determine whether there exist two distinct elements whose sum is exactly X. Return YES or NO. N can be up to 2e5."}
+{"id": "TP-B02", "category": "unseen_converging", "problem": "You are given a sorted array. Find the minimum absolute difference between the sum of two distinct elements and a target T. N can be 2e5."}
+{"id": "TP-B03", "category": "unseen_converging", "problem": "Given heights of vertical lines, find the maximum area of a container formed by choosing two lines."}
+{"id": "TP-B04", "category": "unseen_converging", "problem": "Given a string, determine whether it reads the same from left to right and right to left after removing non-alphanumeric characters and ignoring case."}
+{"id": "TP-B05", "category": "unseen_converging", "problem": "Given a sorted array of distinct integers and K, determine whether there are i < j such that a[j] - a[i] = K. Return one valid pair of original 1-based indices."}
+{"id": "TP-B06", "category": "unseen_compaction", "problem": "Given an array, remove all occurrences of value X in-place while preserving the relative order of the remaining elements. Return the new logical length."}
+{"id": "TP-B07", "category": "unseen_compaction", "problem": "Given a sorted array, keep at most two copies of each value in-place and return the resulting length."}
+{"id": "TP-B08", "category": "unseen_merge", "problem": "Merge two already sorted arrays into the first array in nondecreasing order. The destination has enough unused capacity at the end."}
+{"id": "TP-B09", "category": "unseen_window", "problem": "Given a string, find the length of the longest contiguous substring containing at most K distinct characters. N up to 2e5."}
+{"id": "TP-B10", "category": "unseen_window", "problem": "Given an array of positive integers and S, find the minimum length of a contiguous subarray whose sum is at least S. Return 0 if none exists."}
+{"id": "TP-B11", "category": "unseen_window", "problem": "Given a binary array, find the longest contiguous segment containing at most K zeros."}
+{"id": "TP-B12", "category": "unseen_window", "problem": "Given an array of nonnegative integers, find the longest contiguous subarray whose sum is at most S."}
+{"id": "TP-B13", "category": "unseen_partition", "problem": "Rearrange an array in-place so that all negative values come before all nonnegative values. The relative order inside each group does not matter."}
+{"id": "TP-B14", "category": "unseen_partition", "problem": "Given an array containing only 0, 1, and 2, sort it in-place in linear time and constant extra space."}
+{"id": "TP-B15", "category": "unseen_fast_slow", "problem": "Given a singly linked list, determine whether it contains a cycle using O(1) extra space."}
+{"id": "TP-B16", "category": "unseen_fast_slow", "problem": "Given a singly linked list, return its middle node. For even length, return the second middle node. Use O(1) extra space."}
+{"id": "TP-B17", "category": "negative_window", "problem": "Given an integer array containing both negative and positive values, find the minimum length of a contiguous subarray whose sum is at least S. N up to 2e5."}
+{"id": "TP-B18", "category": "negative_unsorted_pair", "problem": "Given an unsorted array, find whether two elements sum to X. Original order must remain unchanged and sorting the input is forbidden."}
+{"id": "TP-B19", "category": "negative_dynamic", "problem": "You have an array with point updates and range minimum queries. Both updates and queries occur online."}
+{"id": "TP-B20", "category": "negative_subset", "problem": "Given N arbitrary integers, determine whether some subset (not necessarily contiguous and not limited to two elements) sums to T. N can be 40."}
+{"id": "TP-B21", "category": "negative_order_statistics", "problem": "Given a sorted array and Q independent queries, return the first index whose value is at least X. N,Q up to 2e5."}
+{"id": "TP-B22", "category": "negative_lis", "problem": "Given an arbitrary integer sequence, find the length of the longest strictly increasing subsequence."}
+{"id": "TP-B23", "category": "confusion_hash", "problem": "Given an array, determine whether any value occurs more than once. N up to 2e5. No ordering requirement."}
+{"id": "TP-B24", "category": "confusion_prefix", "problem": "Given N static values and Q range-sum queries, return the sum for each [L,R]."}
+{"id": "TP-B25", "category": "confusion_greedy", "problem": "Given intervals, select the maximum number of mutually non-overlapping intervals."}
+{"id": "TP-B26", "category": "confusion_dp", "problem": "Given a matrix of positive weights, move only right or down from the top-left to the bottom-right and minimize total cost."}
+{"id": "TP-B27", "category": "index_preservation", "problem": "Given an unsorted array and target T, return the original 1-based indices of two distinct values summing to T. The output can be in any order. Sorting is allowed if original indices can be restored."}
+{"id": "TP-B28", "category": "duplicates", "problem": "Given a sorted array with many duplicate values, find whether there exists a pair whose sum is T. Return YES/NO only."}
+{"id": "TP-B29", "category": "overflow", "problem": "Given up to 2e5 heights, each up to 1e9, find the maximum container area. Use a 64-bit-safe implementation."}
+{"id": "TP-B30", "category": "boundary", "problem": "Given a sorted array of length 0 or more and target T, find two distinct positions with sum T, if they exist. Inputs include empty arrays, one-element arrays, and no-solution cases."}
+{"id": "TP-B31", "category": "transfer", "problem": "A sorted list of package weights is given. Determine whether two distinct packages have total weight exactly W. Do not reorder the list."}
+{"id": "TP-B32", "category": "transfer", "problem": "A log stream is represented as a string. Find the longest contiguous block containing no more than K different event types."}
+{"id": "TP-B33", "category": "transfer", "problem": "An array must be compacted in place so that every item satisfying predicate P occupies the first part of the array, preserving the order of kept items."}
+{"id": "TP-B34", "category": "transfer_negative", "problem": "A sorted list is given, but each query inserts or deletes values before asking whether a pair sums to T. There are 2e5 online updates and queries."}
+{"id": "TP-B35", "category": "tricky", "problem": "Given an array of nonnegative integers, count the number of contiguous subarrays whose sum is at most S. N up to 2e5."}
+{"id": "TP-B36", "category": "tricky", "problem": "Given an array of integers, count the number of contiguous subarrays whose sum equals S. Values may be negative, zero, or positive."}
+{"id": "TP-B37", "category": "tricky", "problem": "Given two sorted arrays, find whether they share a common value. Return YES or NO."}
+{"id": "TP-B38", "category": "tricky", "problem": "Given two unsorted arrays, determine whether they share a common value. Sorting is allowed and N,M up to 2e5."}
+{"id": "TP-B39", "category": "tricky", "problem": "Given a string, find the shortest substring containing every character from a required set at least once."}
+{"id": "TP-B40", "category": "tricky", "problem": "Given an array of integers, find the longest contiguous subarray with sum exactly S. All values are positive."}

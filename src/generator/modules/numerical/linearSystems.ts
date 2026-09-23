@@ -295,5 +295,79 @@ void gaussSeidel(const std::vector<std::vector<double>>& a, const std::vector<do
     std::cout << "Enter tolerance: ";
     std::cin >> tol;
     gaussSeidel(a, b, x, n, tol, max_iter);`
+  }),
+  'condition_number': () => ({
+    includes: ['iostream', 'vector', 'cmath', 'iomanip', 'algorithm'],
+    structs: [STRUCT],
+    functions: [
+`// Computes infinity norm (maximum row sum) of a square matrix.
+double matrixInfinityNorm(const std::vector<std::vector<double>>& a, int n) {
+    double norm = 0;
+    for (int i = 0; i < n; i++) {
+        double rowSum = 0;
+        for (int j = 0; j < n; j++) rowSum += std::abs(a[i][j]);
+        norm = std::max(norm, rowSum);
+    }
+    return norm;
+}
+
+// Inverts matrix using Gauss-Jordan elimination.
+bool invertMatrix(std::vector<std::vector<double>> a, int n, std::vector<std::vector<double>>& inv) {
+    inv.assign(n, std::vector<double>(n, 0.0));
+    for (int i = 0; i < n; i++) inv[i][i] = 1.0;
+
+    for (int i = 0; i < n; i++) {
+        int pivot = i;
+        for (int k = i + 1; k < n; k++) {
+            if (std::abs(a[k][i]) > std::abs(a[pivot][i])) pivot = k;
+        }
+        if (std::abs(a[pivot][i]) < 1e-12) return false;
+        std::swap(a[i], a[pivot]);
+        std::swap(inv[i], inv[pivot]);
+
+        double div = a[i][i];
+        for (int j = 0; j < n; j++) {
+            a[i][j] /= div;
+            inv[i][j] /= div;
+        }
+
+        for (int k = 0; k < n; k++) {
+            if (k == i) continue;
+            double factor = a[k][i];
+            for (int j = 0; j < n; j++) {
+                a[k][j] -= factor * a[i][j];
+                inv[k][j] -= factor * inv[i][j];
+            }
+        }
+    }
+    return true;
+}
+
+void computeConditionNumber(const std::vector<std::vector<double>>& a, int n) {
+    double normA = matrixInfinityNorm(a, n);
+    std::vector<std::vector<double>> inv;
+    if (!invertMatrix(a, n, inv)) {
+        std::cout << "Matrix is singular. Condition number is infinite." << std::endl;
+        return;
+    }
+    double normInv = matrixInfinityNorm(inv, n);
+    double cond = normA * normInv;
+    std::cout << std::fixed << std::setprecision(6);
+    std::cout << "Norm of A: " << normA << std::endl;
+    std::cout << "Norm of A^-1: " << normInv << std::endl;
+    std::cout << "Condition Number: " << cond << std::endl;
+}`],
+    mainCode: `int n;
+    std::cout << "Enter the order of the matrix: ";
+    if (!(std::cin >> n) || n <= 0) {
+        std::cout << "Invalid matrix order." << std::endl;
+        return 0;
+    }
+    std::vector<std::vector<double>> a(n, std::vector<double>(n));
+    std::cout << "Enter the elements of the matrix:" << std::endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) std::cin >> a[i][j];
+    }
+    computeConditionNumber(a, n);`
   })
 };

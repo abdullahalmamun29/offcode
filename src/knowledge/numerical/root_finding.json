@@ -191,6 +191,51 @@
           }
         ]
       }
+    },
+    {
+      "id": "fixed_point_iteration",
+      "name": "Fixed Point Iteration",
+      "aliases": [
+        "fixed_point",
+        "fixedpoint",
+        "fixed_point_iteration"
+      ],
+      "verified": true,
+      "moduleId": "numerical.root_finding.fixed_point_iteration.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Fixed point iteration method.",
+      "runtime_input": {
+        "function_mode": "polynomial_coefficients",
+        "parameters": [
+          {
+            "name": "degree",
+            "type": "int",
+            "prompt": "Enter the degree of the polynomial"
+          },
+          {
+            "name": "coefficients",
+            "type": "double[]",
+            "count": "degree+1",
+            "prompt": "Enter coefficients"
+          },
+          {
+            "name": "initial_guess",
+            "type": "double",
+            "prompt": "Enter initial guess (x0)"
+          },
+          {
+            "name": "tolerance",
+            "type": "double",
+            "prompt": "Enter tolerance"
+          },
+          {
+            "name": "max_iterations",
+            "type": "int",
+            "prompt": "Enter max iterations"
+          }
+        ]
+      }
     }
   ]
 }

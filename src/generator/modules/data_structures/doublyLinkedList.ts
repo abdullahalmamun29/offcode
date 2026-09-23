@@ -317,5 +317,105 @@ void display(Node* head) {
     reverse(head);
     std::cout << "Reversed List: ";
     display(head);`
+  }),
+  'insert_position': () => ({
+    includes: ['iostream'],
+    structs: [NODE_STRUCT],
+    functions: [
+`// Inserts at a given 1-based position in doubly linked list.
+void insertPosition(Node*& head, int val, int pos) {
+    Node* newNode = new Node(val);
+    if (pos <= 1 || head == nullptr) {
+        newNode->next = head;
+        if (head != nullptr) head->prev = newNode;
+        head = newNode;
+        return;
+    }
+    Node* temp = head;
+    for (int i = 1; temp->next != nullptr && i < pos - 1; ++i) {
+        temp = temp->next;
+    }
+    newNode->next = temp->next;
+    newNode->prev = temp;
+    if (temp->next != nullptr) temp->next->prev = newNode;
+    temp->next = newNode;
+}`,
+`// Displays all elements.
+void display(Node* head) {
+    Node* temp = head;
+    while (temp != nullptr) {
+        std::cout << temp->data << " ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}`],
+    mainCode: `Node* head = nullptr;
+    int n, val, pos, insertVal;
+    std::cout << "Enter number of elements: ";
+    if (!(std::cin >> n)) return 0;
+    Node* tail = nullptr;
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Enter value: ";
+        std::cin >> val;
+        Node* newNode = new Node(val);
+        if (head == nullptr) { head = newNode; tail = newNode; }
+        else { tail->next = newNode; newNode->prev = tail; tail = newNode; }
+    }
+    std::cout << "Enter value to insert and position: ";
+    std::cin >> insertVal >> pos;
+    insertPosition(head, insertVal, pos);
+    std::cout << "List after insertion: ";
+    display(head);`
+  }),
+  'delete_value': () => ({
+    includes: ['iostream'],
+    structs: [NODE_STRUCT],
+    functions: [
+`// Deletes first occurrence of a value from doubly linked list.
+void deleteValue(Node*& head, int key) {
+    if (head == nullptr) return;
+    Node* curr = head;
+    while (curr != nullptr && curr->data != key) {
+        curr = curr->next;
+    }
+    if (curr == nullptr) {
+        std::cout << "Value not found." << std::endl;
+        return;
+    }
+    if (curr == head) {
+        head = head->next;
+        if (head != nullptr) head->prev = nullptr;
+    } else {
+        if (curr->next != nullptr) curr->next->prev = curr->prev;
+        if (curr->prev != nullptr) curr->prev->next = curr->next;
+    }
+    delete curr;
+}`,
+`// Displays all elements.
+void display(Node* head) {
+    Node* temp = head;
+    while (temp != nullptr) {
+        std::cout << temp->data << " ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}`],
+    mainCode: `Node* head = nullptr;
+    int n, val, delVal;
+    std::cout << "Enter number of elements: ";
+    if (!(std::cin >> n)) return 0;
+    Node* tail = nullptr;
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Enter value: ";
+        std::cin >> val;
+        Node* newNode = new Node(val);
+        if (head == nullptr) { head = newNode; tail = newNode; }
+        else { tail->next = newNode; newNode->prev = tail; tail = newNode; }
+    }
+    std::cout << "Enter value to delete: ";
+    std::cin >> delVal;
+    deleteValue(head, delVal);
+    std::cout << "List after deletion: ";
+    display(head);`
   })
 };

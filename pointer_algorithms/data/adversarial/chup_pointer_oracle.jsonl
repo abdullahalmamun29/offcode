@@ -1,0 +1,40 @@
+{"id": "TP-B01", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "sorted value-order monotonicity permits elimination of one endpoint"}
+{"id": "TP-B02", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "ordered pair-sum relation allows inward elimination"}
+{"id": "TP-B03", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "shorter boundary is the limiting objective; eliminate it safely"}
+{"id": "TP-B04", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "symmetric positions can be checked while converging"}
+{"id": "TP-B05", "expected_family": "two_pointers.converging_or_same_direction", "expected_decision": "accept", "key_reason": "sorted order supports monotonic pointer advancement; original indices must be preserved"}
+{"id": "TP-B06", "expected_family": "two_pointers.same_direction", "expected_decision": "accept", "key_reason": "read/write roles maintain processed prefix invariant"}
+{"id": "TP-B07", "expected_family": "two_pointers.same_direction", "expected_decision": "accept", "key_reason": "fast read and slow write maintain valid prefix"}
+{"id": "TP-B08", "expected_family": "two_pointers.same_direction", "expected_decision": "accept", "key_reason": "ordered streams can be merged incrementally"}
+{"id": "TP-B09", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "window validity is recoverable by shrinking the left boundary"}
+{"id": "TP-B10", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "positive values make sum monotone under expansion/shrinking"}
+{"id": "TP-B11", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "window violation count is monotone under expansion and reversible by shrinking"}
+{"id": "TP-B12", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "nonnegative values preserve sum monotonicity"}
+{"id": "TP-B13", "expected_family": "pointer_algorithms.partition", "expected_decision": "accept", "key_reason": "maintain regions with known classification"}
+{"id": "TP-B14", "expected_family": "pointer_algorithms.partition", "expected_decision": "accept", "key_reason": "three-region invariant supports Dutch national flag partition"}
+{"id": "TP-B15", "expected_family": "pointer_algorithms.fast_slow", "expected_decision": "accept", "key_reason": "relative speed detects repeated node in linked structure"}
+{"id": "TP-B16", "expected_family": "pointer_algorithms.fast_slow", "expected_decision": "accept", "key_reason": "fast/slow traversal establishes relative position"}
+{"id": "TP-B17", "expected_family": "prefix_sum_or_alternative", "expected_decision": "reject_pointer_window", "key_reason": "ordinary shrinking is not justified by sum monotonicity with arbitrary negatives"}
+{"id": "TP-B18", "expected_family": "hash_map_or_set", "expected_decision": "reject_converging", "key_reason": "required sorted-order elimination is unavailable"}
+{"id": "TP-B19", "expected_family": "segment_tree_or_fenwick_variant", "expected_decision": "reject_pointer_scan", "key_reason": "dynamic updates destroy static pointer assumptions; per-query scan is too slow"}
+{"id": "TP-B20", "expected_family": "meet_in_middle_or_dp", "expected_decision": "reject_pointer", "key_reason": "search space is arbitrary subsets, not a monotone two-boundary search"}
+{"id": "TP-B21", "expected_family": "binary_search", "expected_decision": "reject_two_pointer_as_primary", "key_reason": "each query is an independent threshold search; binary search is the relevant monotone search"}
+{"id": "TP-B22", "expected_family": "dp_or_patience_sorting", "expected_decision": "reject_pointer", "key_reason": "non-contiguous subsequence optimization is not a two-pointer boundary problem"}
+{"id": "TP-B23", "expected_family": "hash_set_or_sorting", "expected_decision": "do_not_force_pointer", "key_reason": "duplicate detection has no required boundary-elimination structure"}
+{"id": "TP-B24", "expected_family": "prefix_sum", "expected_decision": "do_not_force_pointer", "key_reason": "prefix preprocessing answers each query directly"}
+{"id": "TP-B25", "expected_family": "greedy", "expected_decision": "do_not_force_pointer", "key_reason": "optimal ordering is by finishing time; this is interval scheduling"}
+{"id": "TP-B26", "expected_family": "dynamic_programming", "expected_decision": "do_not_force_pointer", "key_reason": "optimal substructure across two-dimensional states"}
+{"id": "TP-B27", "expected_family": "hash_map_or_sort_plus_two_pointers", "expected_decision": "multiple_valid_strategies", "key_reason": "index preservation matters; pointer approach requires carrying original indices"}
+{"id": "TP-B28", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "duplicates do not invalidate sum elimination when only existence is requested"}
+{"id": "TP-B29", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "same objective elimination; implementation must use 64-bit arithmetic"}
+{"id": "TP-B30", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "algorithm must handle termination boundaries correctly"}
+{"id": "TP-B31", "expected_family": "two_pointers.converging", "expected_decision": "accept", "key_reason": "surface vocabulary changed; structure matches sorted pair-sum elimination"}
+{"id": "TP-B32", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "surface vocabulary changed; state is a distinct-count window invariant"}
+{"id": "TP-B33", "expected_family": "two_pointers.same_direction", "expected_decision": "accept", "key_reason": "generic read/write compaction invariant"}
+{"id": "TP-B34", "expected_family": "dynamic_data_structure", "expected_decision": "reject_static_pointer_strategy", "key_reason": "the static search space changes between queries"}
+{"id": "TP-B35", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "for nonnegative values, for each right endpoint the valid left boundary is monotone"}
+{"id": "TP-B36", "expected_family": "prefix_sum_hash_map", "expected_decision": "reject_standard_window", "key_reason": "exact-sum validity is not monotone with arbitrary signs"}
+{"id": "TP-B37", "expected_family": "two_pointer.same_direction", "expected_decision": "accept", "key_reason": "two sorted streams can be advanced monotonically"}
+{"id": "TP-B38", "expected_family": "sort_plus_two_pointers_or_hash_set", "expected_decision": "multiple_valid_strategies", "key_reason": "two pointers becomes valid after sorting, but hashing is also valid"}
+{"id": "TP-B39", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "coverage state is maintained while shrinking a valid window"}
+{"id": "TP-B40", "expected_family": "two_pointers.sliding_window", "expected_decision": "accept", "key_reason": "positive values make sum monotone; exact target can be maintained by expansion/shrink"}

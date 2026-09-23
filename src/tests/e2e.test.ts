@@ -9,6 +9,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import * as os from "os";
 import { PythonBridge } from "../parser/pythonBridge";
 import { resolveProblemSpec } from "../resolver/operationResolver";
 import { generateCpp } from "../generator/cppGenerator";
@@ -21,9 +22,19 @@ export async function runE2EPipeline(): Promise<void> {
   console.log("=================================================\n");
 
   const projectRoot = path.resolve(__dirname, "..", "..");
-  const buildDir = path.join(projectRoot, "dist_test");
-  if (!fs.existsSync(buildDir)) {
-    fs.mkdirSync(buildDir, { recursive: true });
+  let buildDir = path.join(projectRoot, "dist_test");
+  try {
+    if (!fs.existsSync(buildDir)) {
+      fs.mkdirSync(buildDir, { recursive: true });
+    }
+    const probe = path.join(buildDir, ".write_probe");
+    fs.writeFileSync(probe, "ok");
+    fs.unlinkSync(probe);
+  } catch (_) {
+    buildDir = path.join(os.tmpdir(), "chup_dist_test");
+    if (!fs.existsSync(buildDir)) {
+      fs.mkdirSync(buildDir, { recursive: true });
+    }
   }
 
   const pythonBridge = new PythonBridge();

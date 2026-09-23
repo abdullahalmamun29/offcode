@@ -183,4 +183,42 @@ export const rootFinding: Record<string, () => CodeFragment> = {
 
     cout << "Root (after max iterations): " << x1 << endl;`
   }),
+
+  'fixed_point_iteration': () => ({
+    includes: ['iostream', 'vector', 'cmath', 'iomanip'],
+    functions: [POLY_EVAL, POLY_DERIV],
+    mainCode: `${READ_POLY}
+
+    double x0, tol;
+    int maxIter;
+    cout << "Enter initial guess (x0): "; cin >> x0;
+    cout << "Enter tolerance: "; cin >> tol;
+    cout << "Enter max iterations: "; cin >> maxIter;
+
+    cout << fixed << setprecision(6);
+    cout << "Iter\\tx\\t\\tf(x)" << endl;
+
+    double x = x0;
+    for (int i = 1; i <= maxIter; ++i) {
+        double fx = evaluate(coeff, degree, x);
+        cout << i << "\\t" << x << "\\t" << fx << endl;
+
+        if (abs(fx) < tol) {
+            cout << "Root: " << x << endl;
+            return 0;
+        }
+
+        double fpx = evaluateDerivative(coeff, degree, x);
+        if (abs(fpx) < 1e-12) fpx = 1.0;
+        double x_next = x - fx / fpx;
+
+        if (abs(x_next - x) < tol) {
+            cout << "Root: " << x_next << endl;
+            return 0;
+        }
+        x = x_next;
+    }
+
+    cout << "Root (after max iterations): " << x << endl;`
+  }),
 };

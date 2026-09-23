@@ -8,36 +8,42 @@ import { spawn } from "child_process";
 import * as path from "path";
 import * as fs from "fs";
 import { ProblemSpecV1, ConfidenceBasis } from "../models/problemSpec";
+import { PythonRuntimeManager } from "../runtime/pythonRuntimeManager";
+import { PythonRuntime } from "../runtime/types";
 
 export interface PythonBridgeOptions {
   pythonPath?: string;
+  runtimeManager?: PythonRuntimeManager;
   parserScriptPath?: string;
   timeoutMs?: number;
 }
 
 export class PythonBridge {
-  private pythonPath: string;
+  private explicitPythonPath?: string;
+  private runtimeManager?: PythonRuntimeManager;
   private parserScriptPath: string;
   private timeoutMs: number;
 
   constructor(options?: PythonBridgeOptions) {
-    this.pythonPath = options?.pythonPath || this.detectPythonPath();
+    this.explicitPythonPath = options?.pythonPath;
+    this.runtimeManager = options?.runtimeManager;
     this.parserScriptPath = options?.parserScriptPath || this.detectParserScriptPath();
     this.timeoutMs = options?.timeoutMs || 10000;
   }
 
-  private detectPythonPath(): string {
+  private detectProjectRoot(): string {
     const cwd = process.cwd();
-    const candidatePaths = [
-      path.join(cwd, ".venv", "bin", "python3"),
-      path.join(cwd, ".venv", "bin", "python"),
-      path.join(__dirname, "..", "..", ".venv", "bin", "python3"),
-      path.join(__dirname, "..", "..", ".venv", "bin", "python")
+    const candidateDirs = [
+      cwd,
+      path.join(__dirname, "..", ".."),
+      path.join(__dirname, "..")
     ];
-    for (const p of candidatePaths) {
-      if (fs.existsSync(p)) { return p; }
+    for (const d of candidateDirs) {
+      if (fs.existsSync(path.join(d, "python_parser", "parser.py"))) {
+        return d;
+      }
     }
-    return "python3";
+    return cwd;
   }
 
   private detectParserScriptPath(): string {
@@ -59,11 +65,88 @@ export class PythonBridge {
     return this.constructProblemSpecV1(flat, query);
   }
 
-  private async rawParse(query: string): Promise<any> {
-    return new Promise((resolve) => {
-      const child = spawn(this.pythonPath, [this.parserScriptPath], {
-        stdio: ["pipe", "pipe", "pipe"]
-      });
+  private async rawParse(query: string, isRetry = false): Promise<any> {
+    return new Promise(async (resolve) => {
+      let executable: string;
+      let args: string[];
+      let runtimeObj: any = null;
+      const manager = this.runtimeManager || PythonRuntimeManager.getInstance();
+
+      if (this.explicitPythonPath) {
+        executable = this.explicitPythonPath;
+        args = [this.parserScriptPath];
+      } else {
+        try {
+          const runtime = await manager.resolveRuntime();
+          runtimeObj = runtime;
+          // Invariant: downstream child-process execution consumes concreteExecutable
+          executable = runtime.concreteExecutable || runtime.executable;
+          args = runtime.concreteExecutable
+            ? [this.parserScriptPath]
+            : [...runtime.args, this.parserScriptPath];
+        } catch (runtimeErr: any) {
+          return resolve({
+            status: "ambiguous",
+            language: "cpp",
+            domain: "data_structure",
+            intent: "ambiguous",
+            confidence: 0,
+            confidence_basis: "ambiguous",
+            error_code: "PYTHON_RUNTIME_UNAVAILABLE",
+            message: `Python runtime unavailable: ${runtimeErr.message}`,
+            raw_query: query,
+            normalized_query: ""
+          });
+        }
+      }
+
+      const projectRoot = this.detectProjectRoot();
+      const delimiter = process.platform === "win32" ? ";" : ":";
+      const existingPythonPath = process.env.PYTHONPATH;
+      const combinedPythonPath =
+        existingPythonPath && existingPythonPath.trim().length > 0
+          ? `${projectRoot}${delimiter}${existingPythonPath.trim()}`
+          : projectRoot;
+
+      const handleSpawnFailure = async (err: any) => {
+        if (!isRetry && runtimeObj && err?.code === "ENOENT") {
+          manager.invalidateRuntime(runtimeObj);
+          try {
+            const retryResult = await this.rawParse(query, true);
+            return resolve(retryResult);
+          } catch (_) {
+            // fall through to error resolution
+          }
+        }
+        return resolve({
+          status: "ambiguous",
+          language: "cpp",
+          domain: "data_structure",
+          intent: "ambiguous",
+          confidence: 0,
+          confidence_basis: "ambiguous",
+          error_code: "PROCESS_SPAWN_ERROR",
+          message: `Failed to spawn Python process: ${err.message}`,
+          raw_query: query,
+          normalized_query: ""
+        });
+      };
+
+      let child: any;
+      try {
+        child = spawn(executable, args, {
+          cwd: projectRoot,
+          env: {
+            ...process.env,
+            PYTHONPATH: combinedPythonPath,
+            PYTHONDONTWRITEBYTECODE: "1"
+          },
+          shell: false,
+          stdio: ["pipe", "pipe", "pipe"]
+        });
+      } catch (spawnErr: any) {
+        return handleSpawnFailure(spawnErr);
+      }
 
       let stdoutData = "";
       let stderrData = "";
@@ -79,31 +162,31 @@ export class PythonBridge {
           finished = true;
           child.kill();
           resolve({
-            status: "ambiguous", language: "cpp", domain: "data_structure",
-            intent: "ambiguous", confidence: 0, confidence_basis: "ambiguous",
+            status: "ambiguous",
+            language: "cpp",
+            domain: "data_structure",
+            intent: "ambiguous",
+            confidence: 0,
+            confidence_basis: "ambiguous",
             error_code: "PARSER_TIMEOUT",
             message: `Python parser timed out after ${this.timeoutMs}ms.`,
-            raw_query: query, normalized_query: ""
+            raw_query: query,
+            normalized_query: ""
           });
         }
       }, this.timeoutMs);
 
-      child.stdout.on("data", (chunk) => { stdoutData += chunk.toString(); });
-      child.stderr.on("data", (chunk) => { stderrData += chunk.toString(); });
+      child.stdout.on("data", (chunk: any) => { stdoutData += chunk.toString(); });
+      child.stderr.on("data", (chunk: any) => { stderrData += chunk.toString(); });
 
-      child.on("error", (err) => {
+      child.on("error", (err: any) => {
         if (finished) return;
-        finished = true; cleanup();
-        resolve({
-          status: "ambiguous", language: "cpp", domain: "data_structure",
-          intent: "ambiguous", confidence: 0, confidence_basis: "ambiguous",
-          error_code: "PROCESS_SPAWN_ERROR",
-          message: `Failed to spawn Python process: ${err.message}`,
-          raw_query: query, normalized_query: ""
-        });
+        finished = true;
+        cleanup();
+        handleSpawnFailure(err);
       });
 
-      child.on("close", (code) => {
+      child.on("close", (code: number) => {
         if (finished) return;
         finished = true; cleanup();
         if (code !== 0 && !stdoutData.trim()) {

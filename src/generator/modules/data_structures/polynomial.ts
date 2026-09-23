@@ -106,7 +106,64 @@ void freePolynomial(Term*& poly) {
     }
 }`;
 
+const MULTIPLY_POLY_FN = `// Multiplies two polynomials using linked list.
+Term* multiplyPolynomials(Term* p1, Term* p2) {
+    Term* result = nullptr;
+    for (Term* t1 = p1; t1 != nullptr; t1 = t1->next) {
+        for (Term* t2 = p2; t2 != nullptr; t2 = t2->next) {
+            insertTerm(result, t1->coeff * t2->coeff, t1->exp + t2->exp);
+        }
+    }
+    return result;
+}`;
+
 export const polynomial: Record<string, () => CodeFragment> = {
+  'multiply': () => ({
+    includes: ['iostream', 'cmath'],
+    structs: [POLY_STRUCT],
+    functions: [INSERT_TERM_FN, DISPLAY_POLY_FN, MULTIPLY_POLY_FN, FREE_POLY_FN],
+    mainCode: `Term* poly1 = nullptr;
+    Term* poly2 = nullptr;
+
+    int n1, n2;
+    cout << "Enter number of terms for first polynomial: ";
+    if (!(cin >> n1) || n1 < 0) {
+        cout << "Invalid number of terms." << endl;
+        return 1;
+    }
+    for (int i = 0; i < n1; ++i) {
+        int c, e;
+        cout << "Enter coefficient and exponent for term " << (i + 1) << ": ";
+        cin >> c >> e;
+        insertTerm(poly1, c, e);
+    }
+
+    cout << "Enter number of terms for second polynomial: ";
+    if (!(cin >> n2) || n2 < 0) {
+        cout << "Invalid number of terms." << endl;
+        freePolynomial(poly1);
+        return 1;
+    }
+    for (int i = 0; i < n2; ++i) {
+        int c, e;
+        cout << "Enter coefficient and exponent for term " << (i + 1) << ": ";
+        cin >> c >> e;
+        insertTerm(poly2, c, e);
+    }
+
+    cout << "\\nPolynomial 1: ";
+    displayPolynomial(poly1);
+    cout << "Polynomial 2: ";
+    displayPolynomial(poly2);
+
+    Term* prod = multiplyPolynomials(poly1, poly2);
+    cout << "Product: ";
+    displayPolynomial(prod);
+
+    freePolynomial(poly1);
+    freePolynomial(poly2);
+    freePolynomial(prod);`
+  }),
   'add': () => ({
     includes: ['iostream', 'cmath'],
     structs: [POLY_STRUCT],

@@ -1,8 +1,9 @@
 {
-  "name": "chup",
-  "displayName": "Chup",
+  "name": "offcode",
+  "displayName": "Offcode",
   "description": "Deterministic educational programming assistant for C++ and data structures",
-  "version": "0.1.2",
+  "version": "2.2.8",
+  "icon": "icon.png",
   "publisher": "adullahALMamun",
   "engines": {
     "vscode": "^1.85.0"
@@ -20,6 +21,8 @@
     "numerical-methods",
     "menu-driven",
     "education",
+    "offcode",
+    "codeforge",
     "chup"
   ],
   "author": "Abdullah Al Mamun <mamun.cse.ku@gmail.com>",
@@ -29,27 +32,132 @@
     "url": "https://github.com/abdullahalmamun29/chup"
   },
   "activationEvents": [
+    "onCommand:offcode.generateCppSolution",
+    "onCommand:offcode.openUniversalInput",
+    "onCommand:offcode.showExplanation",
+    "onCommand:offcode.diagnoseEnvironment",
     "onCommand:chup.generateCppSolution",
-    "onCommand:codeforge.generateCppSolution"
+    "onCommand:codeforge.generateCppSolution",
+    "onCommand:chup.openUniversalInput",
+    "onCommand:chup.showExplanation",
+    "onCommand:chup.diagnoseEnvironment"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
+        "command": "offcode.generateCppSolution",
+        "title": "Offcode: Generate C++ Solution",
+        "category": "Offcode"
+      },
+      {
+        "command": "offcode.openUniversalInput",
+        "title": "Offcode: Open Problem Solver",
+        "category": "Offcode"
+      },
+      {
+        "command": "offcode.showExplanation",
+        "title": "Offcode: Show Proof & Explanation",
+        "category": "Offcode"
+      },
+      {
+        "command": "offcode.diagnoseEnvironment",
+        "title": "Offcode: Diagnose Environment",
+        "category": "Offcode"
+      },
+      {
         "command": "chup.generateCppSolution",
-        "title": "Chup: Generate C++ Solution",
-        "category": "Chup"
+        "title": "Offcode: Generate C++ Solution (Legacy alias)",
+        "category": "Offcode"
+      },
+      {
+        "command": "chup.openUniversalInput",
+        "title": "Offcode: Open Problem Solver (Legacy alias)",
+        "category": "Offcode"
+      },
+      {
+        "command": "chup.showExplanation",
+        "title": "Offcode: Show Proof & Explanation (Legacy alias)",
+        "category": "Offcode"
+      },
+      {
+        "command": "chup.diagnoseEnvironment",
+        "title": "Offcode: Diagnose Environment (Legacy alias)",
+        "category": "Offcode"
       }
     ],
     "configuration": {
-      "title": "Chup",
+      "title": "Offcode",
       "properties": {
-        "chup.typingSpeedMs": {
+        "offcode.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional absolute path to the Python executable used by Offcode. Must be an executable file path, not a shell command."
+        },
+        "offcode.typingSpeedMs": {
           "type": "number",
           "default": 5,
           "minimum": 0,
           "maximum": 50,
           "description": "Delay in milliseconds between typing each character (0 for fast streaming, 5-15 for realistic human typing)."
+        },
+        "offcode.defaultMode": {
+          "type": "string",
+          "default": "auto",
+          "enum": ["auto", "competitive_programming", "academic", "debug"],
+          "description": "Default problem classification mode. 'auto' detects automatically."
+        },
+        "offcode.maxRetries": {
+          "type": "number",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Maximum self-correction attempts when verification fails."
+        },
+        "offcode.autoVerify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically compile and run generated solutions against parsed examples."
+        },
+        "offcode.autoTypeToEditor": {
+          "type": "boolean",
+          "default": true,
+          "description": "When generating solutions in the Problem Solver panel, automatically type them into the C++ editor letter-by-letter with atomic Ctrl+Z undo."
+        },
+        "chup.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Legacy alias for offcode.pythonPath."
+        },
+        "chup.typingSpeedMs": {
+          "type": "number",
+          "default": 5,
+          "minimum": 0,
+          "maximum": 50,
+          "description": "Legacy alias for offcode.typingSpeedMs."
+        },
+        "chup.defaultMode": {
+          "type": "string",
+          "default": "auto",
+          "enum": ["auto", "competitive_programming", "academic", "debug"],
+          "description": "Legacy alias for offcode.defaultMode."
+        },
+        "chup.maxRetries": {
+          "type": "number",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Legacy alias for offcode.maxRetries."
+        },
+        "chup.autoVerify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Legacy alias for offcode.autoVerify."
+        },
+        "chup.autoTypeToEditor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Legacy alias for offcode.autoTypeToEditor."
         }
       }
     }
@@ -59,7 +167,8 @@
     "compile": "tsc -p ./ && node -e \"const fs=require('fs'); fs.cpSync('src/knowledge', 'out/knowledge', {recursive: true, force: true});\"",
     "watch": "tsc -watch -p ./",
     "test": "npm run compile && node ./out/tests/runAllTests.js",
-    "test:e2e": "npm run compile && node ./out/tests/e2e.test.js"
+    "test:e2e": "npm run compile && node ./out/tests/e2e.test.js",
+    "test:dataset": "npm run compile && node ./out/tests/datasetEvaluation.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

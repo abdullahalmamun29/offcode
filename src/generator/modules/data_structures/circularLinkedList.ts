@@ -217,5 +217,45 @@ void display(Node* last) {
     deleteEnd(last);
     std::cout << "List: ";
     display(last);`
+  }),
+
+  'josephus': () => ({
+    includes: ['iostream'],
+    structs: [NODE_STRUCT],
+    functions: [
+`// Solves the Josephus problem using circular linked list.
+int josephus(int n, int k) {
+    if (n <= 0 || k <= 0) return -1;
+    Node* head = new Node(1);
+    Node* prev = head;
+    for (int i = 2; i <= n; ++i) {
+        prev->next = new Node(i);
+        prev = prev->next;
+    }
+    prev->next = head; // Make circular
+
+    Node* curr = head;
+    while (curr->next != curr) {
+        for (int count = 1; count < k - 1; ++count) {
+            curr = curr->next;
+        }
+        Node* toDelete = curr->next;
+        curr->next = toDelete->next;
+        std::cout << "Eliminated person: " << toDelete->data << std::endl;
+        delete toDelete;
+        curr = curr->next;
+    }
+    int survivor = curr->data;
+    delete curr;
+    return survivor;
+}`
+    ],
+    mainCode: `int n, k;
+    std::cout << "Enter total number of persons (n): ";
+    std::cin >> n;
+    std::cout << "Enter step count for elimination (k): ";
+    std::cin >> k;
+    int survivor = josephus(n, k);
+    std::cout << "The survivor (safe position) is: " << survivor << std::endl;`
   })
 };

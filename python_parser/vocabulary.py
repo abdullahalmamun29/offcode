@@ -249,11 +249,13 @@ NUMERICAL_METHOD_ALIASES = {
     'false_position': ['false position', 'regula falsi', 'false position method'],
     'newton_raphson': ['newton raphson', 'newton', 'newton method', 'newton raphson method'],
     'secant': ['secant', 'secant method'],
+    'fixed_point_iteration': ['fixed point iteration', 'fixed point', 'fixed-point iteration', 'fixed-point', 'successive approximation'],
     'gauss_elimination': ['gauss elimination', 'gaussian elimination', 'gauss method', 'gaussian'],
     'gauss_jordan': ['gauss jordan', 'gauss jordan elimination', 'gauss jordan method'],
     'lu_decomposition': ['lu decomposition', 'lu factorization', 'lu method'],
     'jacobi': ['jacobi', 'jacobi iteration', 'jacobi method', 'jacobi iterative'],
     'gauss_seidel': ['gauss seidel', 'gauss seidel iteration', 'gauss seidel method'],
+    'condition_number': ['condition number', 'matrix condition', 'condition estimate', 'matrix condition estimate', 'matrix condition number'],
     'newton_forward': ['newton forward', 'newton forward interpolation', 'forward interpolation', 'forward difference interpolation'],
     'newton_backward': ['newton backward', 'newton backward interpolation', 'backward interpolation', 'backward difference interpolation'],
     'lagrange': ['lagrange', 'lagrange interpolation', 'lagrange method'],
@@ -273,8 +275,8 @@ NUMERICAL_METHOD_ALIASES = {
 }
 
 NUMERICAL_CATEGORIES = {
-    'root_finding': ['bisection', 'false_position', 'newton_raphson', 'secant'],
-    'linear_systems': ['gauss_elimination', 'gauss_jordan', 'lu_decomposition', 'jacobi', 'gauss_seidel'],
+    'root_finding': ['bisection', 'false_position', 'newton_raphson', 'secant', 'fixed_point_iteration'],
+    'linear_systems': ['gauss_elimination', 'gauss_jordan', 'lu_decomposition', 'jacobi', 'gauss_seidel', 'condition_number'],
     'interpolation': ['newton_forward', 'newton_backward', 'lagrange', 'divided_difference'],
     'differentiation': ['forward_difference', 'backward_difference', 'central_difference'],
     'integration': ['trapezoidal', 'simpson_1_3', 'simpson_3_8'],
@@ -307,9 +309,9 @@ GRAPH_ALGORITHM_ALIASES = {
 }
 
 NUMERICAL_DOMAIN_KEYWORDS = [
-    'bisection', 'false position', 'regula falsi', 'newton raphson', 'secant',
+    'bisection', 'false position', 'regula falsi', 'newton raphson', 'secant', 'fixed point',
     'gauss elimination', 'gaussian', 'gauss jordan', 'lu decomposition', 'lu factorization',
-    'jacobi', 'gauss seidel', 'interpolation', 'lagrange', 'divided difference',
+    'jacobi', 'gauss seidel', 'condition number', 'interpolation', 'lagrange', 'divided difference',
     'differentiation', 'numerical differentiation', 'forward difference', 'backward difference', 'central difference',
     'trapezoidal', 'simpson', 'numerical integration', 'integration',
     'regression', 'least squares', 'curve fitting', 'line fitting',

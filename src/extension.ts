@@ -1,19 +1,65 @@
 import * as vscode from "vscode";
 import { PythonBridge } from "./parser/pythonBridge";
-import { resolveProblemSpec } from "./resolver/operationResolver";
-import { generateCpp } from "./generator/cppGenerator";
-import { compileCpp } from "./verifier/compiler";
-import { executeProgram } from "./verifier/runner";
+import { UniversalInputPanel } from "./ui/universalInputPanel";
+import { normalizeInput } from "./pipeline/inputNormalizer";
+import { parseProblem } from "./pipeline/problemParser";
+import { UNIVERSAL_ROUTER } from "./pipeline/universalRouter";
+import { typeCodeCharacterByCharacter, typeSolutionIntoEditor } from "./utils/editorTyping";
+import { PythonRuntimeManager, EnvironmentManager, resolveVsCodePythonInterpreter } from "./runtime";
 import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 
+function getOffcodeConfig<T>(key: string, defaultValue: T): T {
+  const offcodeConfig = vscode.workspace.getConfiguration("offcode");
+  const val = offcodeConfig.get<T>(key);
+  if (val !== undefined && val !== "" && (typeof val !== "number" || !isNaN(val))) {
+    return val;
+  }
+  return vscode.workspace.getConfiguration("chup").get<T>(key, defaultValue);
+}
+
 export function activate(context: vscode.ExtensionContext) {
-  const pythonBridge = new PythonBridge();
+  // Query optional VS Code Python extension / defaultInterpreterPath configuration
+  const vscodePythonInterpreter = resolveVsCodePythonInterpreter();
+
+  const configuredPythonPath =
+    vscode.workspace.getConfiguration("offcode").get<string>("pythonPath", "").trim() ||
+    vscode.workspace.getConfiguration("chup").get<string>("pythonPath", "").trim() ||
+    undefined;
+
+  const runtimeManager = PythonRuntimeManager.getInstance({
+    projectRoot: context.extensionPath,
+    configuredPath: configuredPythonPath,
+    vscodePythonInterpreter
+  });
+
+  // Asynchronously prime the cache without blocking extension activation
+  runtimeManager.resolveRuntime().catch((err) => {
+    console.warn("[Offcode] Background Python runtime priming warning:", err.message);
+  });
+
+  // Invalidate and re-prime cache when pythonPath changes
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration("offcode.pythonPath") || e.affectsConfiguration("chup.pythonPath")) {
+        const newPath =
+          vscode.workspace.getConfiguration("offcode").get<string>("pythonPath", "").trim() ||
+          vscode.workspace.getConfiguration("chup").get<string>("pythonPath", "").trim() ||
+          undefined;
+        runtimeManager.onConfigurationChanged(newPath);
+        runtimeManager.resolveRuntime(true).catch((err) => {
+          vscode.window.showWarningMessage(`Offcode: Python runtime validation failed for configured path: ${err.message}`);
+        });
+      }
+    })
+  );
+
+  const pythonBridge = new PythonBridge({ runtimeManager });
 
   const handleGenerate = async () => {
     const query = await vscode.window.showInputBox({
-      title: "Chup: Generate C++ Solution",
+      title: "Offcode: Generate C++ Solution",
       prompt: "Enter a natural-language programming problem",
       placeHolder: "e.g., Insert a node at the end of a singly linked list."
     });
@@ -22,174 +68,109 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const spec = await vscode.window.withProgress(
+    const trimmed = query.trim();
+
+    // Parse problem for structured context, constraints, and limits
+    const normalized = normalizeInput(trimmed);
+    const parsedProblem = parseProblem(normalized, trimmed);
+
+    // Phase 4: Universal Capability-First Routing & Execution
+    const solverResult = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Chup: Analyzing problem statement...",
+        title: "Offcode: Resolving capability and generating solution...",
         cancellable: false
       },
       async () => {
-        return await pythonBridge.parseQuery(query.trim());
+        return UNIVERSAL_ROUTER.routeAndSolve(trimmed, parsedProblem);
       }
     );
 
-    const resolution = resolveProblemSpec(spec);
-
-    switch (resolution.code) {
-      case "NEGATED":
-      case "QUESTION":
-      case "COMPOUND_UNSUPPORTED":
-      case "AMBIGUOUS":
-      case "UNSUPPORTED_STRUCTURE":
-      case "UNSUPPORTED_OPERATION":
-      case "IDENTIFIED_UNSUPPORTED":
-        vscode.window.showWarningMessage(
-          `Chup: ${resolution.code}\n${resolution.message}`
+    if (solverResult.success && solverResult.code) {
+      vscode.window.showInformationMessage(
+        `Offcode Detected: ${solverResult.approach}\nGenerating verified solution...`
+      );
+      try {
+        const doc = await vscode.workspace.openTextDocument({
+          content: "",
+          language: "cpp"
+        });
+        await vscode.window.showTextDocument(doc);
+        const typingDelayMs = getOffcodeConfig<number>("typingSpeedMs", 5);
+        await typeCodeCharacterByCharacter(doc, solverResult.code, typingDelayMs);
+      } catch (genErr) {
+        vscode.window.showErrorMessage(
+          `Offcode Code Generation Error: ${(genErr as Error).message}`
         );
-        break;
-
-      case "SUCCESS": {
-        vscode.window.showInformationMessage(
-          `Chup Detected: ${resolution.moduleName}\nGenerating verified solution...`
-        );
-
-        try {
-          const generatedCode = generateCpp(resolution);
-
-          const doc = await vscode.workspace.openTextDocument({
-            content: "",
-            language: "cpp"
-          });
-          const editor = await vscode.window.showTextDocument(doc);
-
-          const config = vscode.workspace.getConfiguration("chup");
-          const typingDelayMs = config.get<number>("typingSpeedMs", 5);
-
-          await typeCodeCharacterByCharacter(doc, generatedCode, typingDelayMs);
-        } catch (genErr) {
-          vscode.window.showErrorMessage(
-            `Chup Code Generation Error: ${(genErr as Error).message}`
-          );
-        }
-        break;
       }
+      return;
+    }
+
+    // Unresolved or failure handling with multi-layer failure taxonomy
+    if (solverResult.failureCode) {
+      vscode.window.showWarningMessage(
+        `Offcode: ${solverResult.failureCode} [${solverResult.failureLayer || 'ROUTING'}]\n${solverResult.limitationMessage || solverResult.reasoning}`
+      );
+    } else {
+      vscode.window.showErrorMessage(
+        `Offcode: Unable to resolve solution.\n${solverResult.reasoning}`
+      );
+    }
+  };
+
+  const handleDiagnose = async () => {
+    const envManager = new EnvironmentManager({
+      pythonManager: runtimeManager,
+      vscodeVersion: vscode.version
+    });
+
+    const report = await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: "Offcode: Diagnosing Environment...",
+        cancellable: false
+      },
+      async () => envManager.diagnose()
+    );
+
+    const outputChannel = vscode.window.createOutputChannel("Offcode Diagnostics");
+    outputChannel.clear();
+    outputChannel.appendLine(envManager.formatReport(report));
+    outputChannel.show();
+
+    if (report.overallStatus === "READY") {
+      vscode.window.showInformationMessage("Offcode Environment is fully READY.");
+    } else if (report.overallStatus === "DEGRADED") {
+      vscode.window.showWarningMessage("Offcode Environment is DEGRADED: Python is ready, but C++ verification toolchain is missing.");
+    } else {
+      vscode.window.showErrorMessage(`Offcode Environment is BLOCKED: ${report.python.errorMessage || "Python runtime unavailable."}`);
     }
   };
 
   context.subscriptions.push(
+    // Primary Offcode commands
+    vscode.commands.registerCommand("offcode.generateCppSolution", handleGenerate),
+    vscode.commands.registerCommand("offcode.openUniversalInput", () => {
+      UniversalInputPanel.createOrShow(context.extensionUri, pythonBridge);
+    }),
+    vscode.commands.registerCommand("offcode.showExplanation", () => {
+      UniversalInputPanel.showExplanationSector(context.extensionUri, pythonBridge);
+    }),
+    vscode.commands.registerCommand("offcode.diagnoseEnvironment", handleDiagnose),
+
+    // Legacy backwards-compatible aliases
     vscode.commands.registerCommand("chup.generateCppSolution", handleGenerate),
-    vscode.commands.registerCommand("codeforge.generateCppSolution", handleGenerate)
+    vscode.commands.registerCommand("codeforge.generateCppSolution", handleGenerate),
+    vscode.commands.registerCommand("chup.openUniversalInput", () => {
+      UniversalInputPanel.createOrShow(context.extensionUri, pythonBridge);
+    }),
+    vscode.commands.registerCommand("chup.showExplanation", () => {
+      UniversalInputPanel.showExplanationSector(context.extensionUri, pythonBridge);
+    }),
+    vscode.commands.registerCommand("chup.diagnoseEnvironment", handleDiagnose)
   );
-}
-
-/**
- * Types the generated code into the target document character-by-character.
- * Seamlessly continues typing even if the user switches to another file tab
- * or switches outside of VS Code (e.g. to Code::Blocks).
- * Each character edit is an atomic undo transaction, so Ctrl+Z undoes letter-by-letter.
- */
-async function typeCodeCharacterByCharacter(
-  targetDoc: vscode.TextDocument,
-  rawCode: string,
-  delayMs: number
-): Promise<void> {
-  const code = rawCode.replace(/\r\n/g, "\n");
-  let currentLine = 0;
-  let currentChar = 0;
-
-  const statusBar = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left,
-    100
-  );
-  statusBar.text = "$(pencil) Chup: Writing solution...";
-  statusBar.show();
-
-  try {
-    for (let i = 0; i < code.length; i++) {
-      if (targetDoc.isClosed) {
-        break;
-      }
-
-      const char = code[i];
-      const insertPos = new vscode.Position(currentLine, currentChar);
-
-      // 1. Try to edit through visible editor if this document is currently displayed
-      const visibleEditor = vscode.window.visibleTextEditors.find(
-        e => e.document.uri.toString() === targetDoc.uri.toString()
-      );
-
-      let applied = false;
-      if (visibleEditor) {
-        try {
-          applied = await visibleEditor.edit(
-            editBuilder => {
-              editBuilder.insert(insertPos, char);
-            },
-            { undoStopBefore: true, undoStopAfter: true }
-          );
-        } catch {
-          applied = false;
-        }
-      }
-
-      // 2. If tab is in background or editor.edit did not apply (e.g. switched to another file or app),
-      // apply directly via WorkspaceEdit so typing NEVER stops!
-      if (!applied && !targetDoc.isClosed) {
-        try {
-          const wsEdit = new vscode.WorkspaceEdit();
-          wsEdit.insert(targetDoc.uri, insertPos, char);
-          applied = await vscode.workspace.applyEdit(wsEdit);
-        } catch {
-          if (targetDoc.isClosed) {
-            break;
-          }
-        }
-      }
-
-      if (targetDoc.isClosed) {
-        break;
-      }
-
-      // Advance cursor tracking
-      if (char === "\n") {
-        currentLine++;
-        currentChar = 0;
-      } else {
-        currentChar++;
-      }
-
-      // 3. Keep cursor and viewport synced if currently visible in any editor split/tab
-      const activeEditor = vscode.window.visibleTextEditors.find(
-        e => e.document.uri.toString() === targetDoc.uri.toString()
-      );
-      if (activeEditor) {
-        const nextPos = new vscode.Position(currentLine, currentChar);
-        activeEditor.selection = new vscode.Selection(nextPos, nextPos);
-        if (char === "\n" || i % 15 === 0 || i === code.length - 1) {
-          activeEditor.revealRange(
-            new vscode.Range(nextPos, nextPos),
-            vscode.TextEditorRevealType.Default
-          );
-        }
-      }
-
-      if (delayMs > 0) {
-        await new Promise(resolve => setTimeout(resolve, delayMs));
-      }
-    }
-
-    if (!targetDoc.isClosed) {
-      statusBar.text = "$(check) Chup: Solution ready";
-      setTimeout(() => statusBar.dispose(), 3000);
-    }
-  } catch (err) {
-    console.error("Chup typing error:", err);
-  } finally {
-    if (targetDoc.isClosed) {
-      statusBar.dispose();
-    }
-  }
 }
 
 export function deactivate() {}
+
 

@@ -193,6 +193,37 @@
           }
         ]
       }
+    },
+    {
+      "id": "condition_number",
+      "name": "Condition Number",
+      "aliases": [
+        "condition_number",
+        "matrix_condition",
+        "condition_estimate"
+      ],
+      "verified": true,
+      "moduleId": "numerical.linear_systems.condition_number.cpp",
+      "timeComplexity": "O(N^3)",
+      "spaceComplexity": "O(N^2)",
+      "description": "Calculates matrix condition number ||A|| * ||A^-1||.",
+      "runtime_input": {
+        "function_mode": "matrix",
+        "parameters": [
+          {
+            "name": "matrix_size",
+            "type": "int",
+            "prompt": "Enter matrix size n"
+          },
+          {
+            "name": "matrix",
+            "type": "double[][]",
+            "rows": "matrix_size",
+            "cols": "matrix_size",
+            "prompt": "Enter matrix elements"
+          }
+        ]
+      }
     }
   ]
 }
