@@ -82,17 +82,17 @@ Search for **"Offcode"** in the VS Code Extensions tab (`Ctrl+Shift+X`) and clic
 
 ### Method B: Install via VSIX (Direct)
 
-1. Download the latest `offcode-2.2.0.vsix` release from [GitHub Releases](https://github.com/abdullahalmamun29/chup/releases).
+1. Download the latest `offcode-2.2.8.vsix` release from [GitHub Releases](https://github.com/abdullahalmamun29/offcode/releases).
 2. In VS Code, open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
 3. Click the **`...`** (Views and More Actions) menu in the top-right corner of the Extensions panel.
-4. Select **Install from VSIX...** and choose `offcode-2.2.0.vsix`.
+4. Select **Install from VSIX...** and choose `offcode-2.2.8.vsix`.
 
 ### Method C: Build from Source
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/abdullahalmamun29/chup.git
-cd chup
+git clone https://github.com/abdullahalmamun29/offcode.git
+cd offcode
 
 # 2. Install dependencies & compile
 npm install
