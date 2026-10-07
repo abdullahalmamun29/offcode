@@ -2,7 +2,7 @@
   "name": "offcode",
   "displayName": "Offcode",
   "description": "Deterministic educational programming assistant for C++ and data structures",
-  "version": "2.2.8",
+  "version": "2.2.10",
   "icon": "icon.png",
   "publisher": "adullahALMamun",
   "engines": {

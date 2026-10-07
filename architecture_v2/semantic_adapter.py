@@ -960,6 +960,125 @@ class SemanticAdapter:
                 model.add_fact(Fact("domain.strictly_positive", True, FactStatus.KNOWN, ev_pos.source, scope=SemanticScope.CONSTRAINT))
                 model.add_fact(Fact("domain.value_positivity", "POSITIVE", FactStatus.KNOWN, ev_pos.source, scope=SemanticScope.CONSTRAINT))
 
+        # ── 7B. Universal Topology & Tree Contract Extraction ──
+        from architecture_v2.universal_contracts import (
+            TopologyClaim, TopologyKind, ConnectivityStatus, CyclicityStatus, DirectionKind,
+            ProofStatus, RootSpec, RootSemanticModel, AlgebraicStructure, AlgebraicOp,
+            CppTypeDescriptor, QueryRequirement, QueryScope, QueryAction, TargetDomain,
+            UpdateModel, InteractivityModel
+        )
+
+        is_tree_text = bool(re.search(r'\b(?:tree|trees|binary\s+tree|bst|root|rooted|vertices|vertex|edges|ancestor|subtree|leaves|leaf|depth|height|diameter|nodes|lca)\b', lower))
+        if is_tree_text:
+            n_val = model.constraints.n
+            m_val = model.constraints.m
+
+            has_neg_cycle_phrase = bool(re.search(r'\b(?:without|no|zero|free\s+of)\s+(?:any\s+)?(?:redundant\s+connection|cycle|cycles|loop|loops)\b', lower))
+            is_cyclic_contradiction = not has_neg_cycle_phrase and bool(re.search(r'\b(?:cycle|cyclic|redundant\s+connection|forming\s+a\s+cycle|contains\s+a\s+cycle)\b', lower))
+            is_disc_contradiction = bool(re.search(r'\b(?:disconnected|multiple\s+components)\b', lower))
+
+            if is_cyclic_contradiction:
+                model.topology_claim = TopologyClaim(
+                    vertices_bound=n_val,
+                    edges_bound=m_val,
+                    is_connected=ProofStatus.PROVEN if not is_disc_contradiction else ProofStatus.CONTRADICTED,
+                    is_acyclic=ProofStatus.CONTRADICTED,
+                    proof_status=ProofStatus.CONTRADICTED
+                )
+            elif is_disc_contradiction:
+                model.topology_claim = TopologyClaim(
+                    vertices_bound=n_val,
+                    edges_bound=m_val,
+                    is_connected=ProofStatus.CONTRADICTED,
+                    is_acyclic=ProofStatus.PROVEN,
+                    proof_status=ProofStatus.CONTRADICTED
+                )
+            else:
+                has_tree_axiom = bool(
+                    re.search(r'\b(?:tree|trees|rooted\s+tree|binary\s+tree|bst|subtree)\b', lower) or
+                    (re.search(r'\b(?:n-1|n\s*-\s*1)\b', lower) and re.search(r'\b(?:connected|reach\s+every)\b', lower)) or
+                    (has_neg_cycle_phrase and re.search(r'\b(?:connected|reach\s+every)\b', lower))
+                )
+                proof_st = ProofStatus.PROVEN if has_tree_axiom else ProofStatus.SUPPORTED
+                model.topology_claim = TopologyClaim(
+                    vertices_bound=n_val,
+                    edges_bound=m_val,
+                    is_connected=ProofStatus.PROVEN if has_tree_axiom else ProofStatus.SUPPORTED,
+                    is_acyclic=ProofStatus.PROVEN if has_tree_axiom else ProofStatus.SUPPORTED,
+                    proof_status=proof_st
+                )
+                if proof_st == ProofStatus.PROVEN:
+                    model.structural_properties.add(StructuralProperty.TREE_STRUCTURE)
+
+            # Root semantics
+            if re.search(r'\b(?:all\s+roots|each\s+vertex\s+as\s+root|every\s+vertex\s+as\s+root|for\s+(?:each|every)\s+root)\b', lower):
+                model.root_spec = RootSpec(RootSemanticModel.ALL_ROOTS_EVALUATED)
+            else:
+                r_match = re.search(r'\b(?:rooted\s+at\s+(\d+)|root\s+is\s+(?:vertex\s+|node\s+)?(\d+)|root\s+(\d+))\b', lower)
+                if r_match:
+                    r_val = int(r_match.group(1) or r_match.group(2) or r_match.group(3))
+                    model.root_spec = RootSpec(RootSemanticModel.INPUT_SPECIFIED, r_val)
+                elif re.search(r'\b(?:diameter|longest\s+path|mst|unrooted)\b', lower):
+                    model.root_spec = RootSpec(RootSemanticModel.INTRINSICALLY_UNROOTED)
+                elif hasattr(model, "input_spec") and model.input_spec.get("format") == "parent_array":
+                    model.root_spec = RootSpec(RootSemanticModel.STRUCTURALLY_DERIVED, 1)
+                elif model.topology_claim and model.topology_claim.is_proven_tree:
+                    model.root_spec = RootSpec(RootSemanticModel.ARBITRARY_COMPUTATIONAL, 1)
+                else:
+                    model.root_spec = RootSpec(RootSemanticModel.UNKNOWN)
+
+            # Algebraic Structure
+            carrier = CppTypeDescriptor.INT64
+            if re.search(r'\b(?:string|strings|label\s+is\s+a\s+string|names?)\b', lower):
+                carrier = CppTypeDescriptor.STRING
+            elif re.search(r'\b(?:double|float|real\s+numbers?)\b', lower):
+                carrier = CppTypeDescriptor.DOUBLE
+            elif re.search(r'\b(?:char|character|letters?)\b', lower):
+                carrier = CppTypeDescriptor.CHAR
+
+            op = AlgebraicOp.NONE
+            inv = False
+            if re.search(r'\bxor\b|bitwise\s+xor', lower):
+                op = AlgebraicOp.XOR
+                inv = True
+            elif re.search(r'\bminimum|min\b', lower):
+                op = AlgebraicOp.MIN
+            elif re.search(r'\bmaximum|max\b', lower):
+                op = AlgebraicOp.MAX
+            elif re.search(r'\bsum\b|total\s+weight', lower):
+                op = AlgebraicOp.SUM
+                inv = True
+
+            weights_non_neg = not bool(re.search(r'\bnegative\s+weights?\b', lower))
+            model.algebraic_payload = AlgebraicStructure(
+                carrier_type=carrier,
+                operator=op,
+                is_associative=(op != AlgebraicOp.NONE),
+                is_commutative=(op != AlgebraicOp.NONE),
+                is_invertible=inv,
+                weights_non_negative=weights_non_neg
+            )
+
+            # Query Requirements (Ordered carefully so specific queries match before general ones)
+            if re.search(r'\b(?:diameter|longest\s+(?:simple\s+)?path\s+(?:in|of)\s+(?:the\s+)?tree|maximum\s+distance\s+between\s+any\s+(?:two\s+)?(?:vertices|nodes))\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.GLOBAL, action=QueryAction.EXTREMUM, target_domain=TargetDomain.TOPOLOGY_ONLY))
+            elif re.search(r'\b(?:lowest\s+common\s+ancestor|lca|first\s+common\s+ancestor)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.PATH, action=QueryAction.ANCESTOR_CHECK))
+            elif re.search(r'\b(?:k-th\s+ancestor|kth\s+ancestor|\bk\s+ancestor)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.PATH, action=QueryAction.ANCESTOR_CHECK, kth_distance=1))
+            elif re.search(r'\b(?:distance\s+between|path\s+distance|distance\s+from\s+u\s+to\s+v|shortest\s+distance\s+between\s+(?:two\s+)?(?:nodes|vertices))\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.PATH, action=QueryAction.DISTANCE))
+            elif re.search(r'\b(?:subtree\s+size|size\s+of\s+(?:each|the|its)?\s*(?:subtree|team|component)|number\s+of\s+nodes\s+in\s+(?:the|each|its)?\s*subtree)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.SUBTREE, action=QueryAction.COUNT))
+            elif re.search(r'\b(?:preorder|inorder|postorder|level\s+order|traversal|traverse)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.GLOBAL, action=QueryAction.TRAVERSAL))
+            elif re.search(r'\b(?:offline\s+updates?|batch\s+updates?|add\s+(?:value\s+)?x\s+to\s+(?:all\s+)?(?:nodes|vertices)\s+on\s+(?:the\s+)?path)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.PATH, action=QueryAction.MUTATION, interactivity=InteractivityModel.OFFLINE_BATCH))
+            elif re.search(r'\b(?:independent\s+set|no\s+two\s+adjacent|vertex\s+cover)\b', lower):
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.GLOBAL, action=QueryAction.EXTREMUM, target_domain=TargetDomain.VERTEX_PAYLOAD))
+            elif model.root_spec and model.root_spec.model == RootSemanticModel.ALL_ROOTS_EVALUATED:
+                model.query_requirements.append(QueryRequirement(scope=QueryScope.GLOBAL, action=QueryAction.AGGREGATE))
+
         # ── 8. Run Derivation Engine ──
         engine = DerivationEngine()
         model = engine.run(model)

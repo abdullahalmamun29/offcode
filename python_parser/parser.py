@@ -112,6 +112,12 @@ def assemble_problem_spec(tags, compound, intent_result, domain, raw_query, norm
             elif 'push' in raw_lower_check or 'pop' in raw_lower_check or 'stack' in raw_lower_check:
                 tags['structure'] = 'stack'
                 spec['structure'] = 'stack'
+            elif 'queue' in raw_lower_check or 'enqueue' in raw_lower_check or 'dequeue' in raw_lower_check:
+                tags['structure'] = 'circular_queue'
+                spec['structure'] = 'circular_queue'
+            elif 'bst' in raw_lower_check or 'binary search tree' in raw_lower_check or 'tree' in raw_lower_check:
+                tags['structure'] = 'bst'
+                spec['structure'] = 'bst'
             elif 'sort' in raw_lower_check or 'sorting' in raw_lower_check:
                 spec['domain'] = 'algorithm'
                 spec['operation'] = 'menu'
@@ -137,6 +143,12 @@ def assemble_problem_spec(tags, compound, intent_result, domain, raw_query, norm
         found_ops = []
         for op_id, patterns in MENU_OPERATION_KEYWORDS:
             if op_id in excluded_ops:
+                continue
+            # If structure is a linked list, ignore generic 'insert' and 'delete'
+            if tags.get('structure') in ('singly_linked_list', 'doubly_linked_list', 'circular_linked_list', 'doubly_circular_linked_list') and op_id in ('insert', 'delete'):
+                continue
+            # If structure is a tree, ignore list-specific position operations
+            if tags.get('structure') in ('bst', 'binary_search_tree', 'binary_tree') and op_id in ('insert_beginning', 'insert_end', 'insert_after', 'insert_position', 'delete_beginning', 'delete_end', 'delete_after', 'delete_position'):
                 continue
             earliest_pos = -1
             for pat in patterns:

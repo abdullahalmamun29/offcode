@@ -399,6 +399,10 @@ class ProblemModel:
     facts: Dict[str, Fact] = field(default_factory=dict)
     hypotheses: Dict[str, Hypothesis] = field(default_factory=dict)
     uncertainty: Dict[str, str] = field(default_factory=dict)
+    topology_claim: Optional[Any] = None
+    root_spec: Optional[Any] = None
+    query_requirements: List[Any] = field(default_factory=list)
+    algebraic_payload: Optional[Any] = None
 
     def add_fact(self, fact: Fact) -> None:
         self.facts[fact.name] = fact

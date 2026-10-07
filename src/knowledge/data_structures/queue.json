@@ -107,6 +107,54 @@
       "timeComplexity": "O(N)",
       "spaceComplexity": "O(1)",
       "description": "Displays all elements currently stored in the circular queue."
+    },
+    {
+      "id": "lru_cache",
+      "name": "LRU Cache",
+      "action": "lru_cache",
+      "position": null,
+      "aliases": ["lru_cache", "lru cache", "least recently used cache"],
+      "verified": true,
+      "moduleId": "queue_applications.lru_cache.cpp",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(capacity)",
+      "description": "Least Recently Used (LRU) Cache using Deque/List and Hash Map."
+    },
+    {
+      "id": "multi_source_bfs_queue",
+      "name": "Multi-Source BFS Queue",
+      "action": "multi_source_bfs_queue",
+      "position": null,
+      "aliases": ["multi_source_bfs", "rotten_oranges", "multi source bfs"],
+      "verified": true,
+      "moduleId": "queue_applications.multi_source_bfs_queue.cpp",
+      "timeComplexity": "O(M * N)",
+      "spaceComplexity": "O(M * N)",
+      "description": "Multi-source BFS simulation using a queue (Rotten Oranges)."
+    },
+    {
+      "id": "sliding_window_minimum",
+      "name": "Sliding Window Minimum",
+      "action": "sliding_window_minimum",
+      "position": null,
+      "aliases": ["sliding_window_min", "sliding window minimum"],
+      "verified": true,
+      "moduleId": "queue_applications.sliding_window_minimum.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(K)",
+      "description": "Sliding window minimum in O(N) time using a monotonic deque."
+    },
+    {
+      "id": "circular_queue_expandable",
+      "name": "Expandable Circular Queue",
+      "action": "circular_queue_expandable",
+      "position": null,
+      "aliases": ["dynamic_circular_queue", "resizable_circular_queue"],
+      "verified": true,
+      "moduleId": "queue_applications.circular_queue_expandable.cpp",
+      "timeComplexity": "O(1) amortized",
+      "spaceComplexity": "O(N)",
+      "description": "Dynamically resizable circular queue with automatic capacity doubling."
     }
   ]
 }

@@ -74,6 +74,11 @@ export function resolveCapabilityRequest(
   // 2. Direct Algorithm / Capability Alias Scanning across Tokens
   const allAlgorithms = registry.getAllAlgorithms();
   for (const algo of allAlgorithms) {
+    // Prevent binary search on array from false-matching on binary search tree
+    if ((algo.id === 'binary_search_standard') &&
+        (/\bbinary\s+search\s+tree\b|\bbst\b/i.test(fullText) || (/\btree\b/i.test(fullText) && !/segment|fenwick/i.test(fullText)))) {
+      continue;
+    }
     for (const alias of algo.aliases) {
       const pattern = new RegExp(`\\b${alias.replace(/[-_]/g, '\\s+')}\\b`, 'i');
       if (pattern.test(fullText)) {
@@ -105,6 +110,11 @@ export function resolveCapabilityRequest(
   // Also scan canonical capability aliases
   const allCaps = registry.getAllCapabilities();
   for (const cap of allCaps) {
+    // Prevent binary search capability from false-matching on binary search tree
+    if (cap.id === 'binary_search' &&
+        (/\bbinary\s+search\s+tree\b|\bbst\b/i.test(fullText) || (/\btree\b/i.test(fullText) && !/segment|fenwick/i.test(fullText)))) {
+      continue;
+    }
     for (const alias of cap.aliases) {
       const pattern = new RegExp(`\\b${alias.replace(/[-_]/g, '\\s+')}\\b`, 'i');
       if (pattern.test(fullText)) {
@@ -205,6 +215,18 @@ export function resolveCapabilityRequest(
   }
   if (candidateScores.has('binary_search')) {
     candidateScores.delete('sort');
+  }
+  if (candidateScores.has('binary_search_tree') || /\bbinary\s+search\s+tree\b|\bbst\b/i.test(fullText)) {
+    candidateScores.delete('binary_search');
+    candidateScores.delete('binary_tree');
+    candidateScores.delete('tree_traversal');
+  }
+  if (candidateScores.has('polynomial') && /interpolation|lagrange|divided\s+difference/i.test(fullText)) {
+    candidateScores.delete('polynomial');
+  }
+  if (candidateScores.has('monotonic_stack') && /monotonic\s+stack/i.test(fullText)) {
+    candidateScores.delete('next_greater_element');
+    candidateScores.delete('next_smaller_element');
   }
 
   const sortedCandidates = Array.from(candidateScores.entries())
@@ -390,7 +412,8 @@ export function resolveCapabilityRequest(
     /bipartite/i.test(fullText) ||
     /longest\s+increasing\s+subsequence|\blis\b/i.test(fullText) ||
     /all\s*pairs\s+shortest\s+path|floyd\s+warshall/i.test(fullText) ||
-    /bridges\s+in\s+graph|tarjan/i.test(fullText)
+    /bridges\s+in\s+graph|tarjan/i.test(fullText) ||
+    /monotonic\s+deque/i.test(fullText)
   ) {
     status = 'CAPABILITY_UNSUPPORTED';
     failureCode = 'CAPABILITY_UNSUPPORTED';

@@ -639,7 +639,45 @@ class AlgorithmPlannerV2:
                     diagnostic_trace=trace
                 )
 
-        # Step 3: Single capability evaluation
+        # Step 3: Check Universal Capability Planner (e.g., Tree capability domain)
+        from architecture_v2.capability_planner import CapabilityPlanner
+        from architecture_v2.generator.cpp_plan_emitter import CppPlanEmitter
+        from architecture_v2.universal_contracts import ProofStatus
+
+        claim = getattr(model, "topology_claim", None)
+        if claim and claim.is_acyclic == ProofStatus.CONTRADICTED:
+            return AlgorithmPlan(
+                status=PlanStatus.UNSUPPORTED,
+                strategy_name="tree_cyclic_contradiction",
+                rejection_reasons=["TREE_CYCLIC_GRAPH: Graph contains cycles and is not an acyclic tree."],
+                diagnostic_trace=trace
+            )
+        if claim and claim.is_connected == ProofStatus.CONTRADICTED:
+            return AlgorithmPlan(
+                status=PlanStatus.UNSUPPORTED,
+                strategy_name="tree_disconnected_contradiction",
+                rejection_reasons=["TREE_DISCONNECTED_GRAPH: Graph is disconnected and not a single connected tree."],
+                diagnostic_trace=trace
+            )
+
+        tree_plan_ir = CapabilityPlanner.synthesize_tree_plan(model)
+        if tree_plan_ir is not None:
+            code = CppPlanEmitter.emit(tree_plan_ir)
+            established_obls = [c.obligation_name for c in tree_plan_ir.proof_certificates if c.status == ProofStatus.PROVEN]
+            return AlgorithmPlan(
+                status=PlanStatus.PROVEN,
+                primary_capability=tree_plan_ir.pipeline_steps[-1].provider_id if tree_plan_ir.pipeline_steps else "tree_capability",
+                strategy_name=tree_plan_ir.plan_id,
+                composed_capabilities=[s.provider_id for s in tree_plan_ir.pipeline_steps],
+                invariant="Acyclic tree hierarchy guarantees unique simple path and independent subproblems.",
+                established_obligations=established_obls,
+                unresolved_obligations=[],
+                implementation_backend="cpp_plan_emitter",
+                code=code,
+                diagnostic_trace=trace
+            )
+
+        # Step 4: Single capability evaluation
         if not accepted_decisions:
             unproven = [d for d in decisions if d.status == CandidateStatus.UNPROVEN]
             if unproven:

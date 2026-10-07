@@ -224,7 +224,17 @@ MENU_OPERATION_KEYWORDS = [
     ('rear', ['rear', 'rear element', 'get rear']),
     ('is_empty', ['check if empty', 'check empty', 'is_empty', 'isempty']),
     ('enqueue', ['enqueue', 'enqueue element']),
-    ('dequeue', ['dequeue', 'dequeue element'])
+    ('dequeue', ['dequeue', 'dequeue element']),
+    ('inorder', ['inorder', 'inorder traversal', 'in-order', 'in-order traversal']),
+    ('preorder', ['preorder', 'preorder traversal', 'pre-order', 'pre-order traversal']),
+    ('postorder', ['postorder', 'postorder traversal', 'post-order', 'post-order traversal']),
+    ('level_order', ['level order', 'level-order', 'level order traversal', 'levelorder']),
+    ('find_min', ['find min', 'find minimum', 'minimum value', 'find min value']),
+    ('find_max', ['find max', 'find maximum', 'maximum value', 'find max value']),
+    ('height', ['tree height', 'height of tree', 'height of the tree', 'height']),
+    ('leaf_count', ['leaf count', 'count leaves', 'leaf nodes', 'number of leaves', 'count leaf nodes']),
+    ('insert', ['insert into bst', 'insert into tree', 'insert node in bst', 'insert in bst', 'insert node', 'insert']),
+    ('delete', ['delete from bst', 'delete from tree', 'delete node from bst', 'delete in bst', 'delete node', 'delete'])
 ]
 
 CONTRASTIVE_MARKERS = ['not at', 'not in', 'not from', 'not to', 'instead of',

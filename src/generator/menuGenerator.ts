@@ -1971,6 +1971,269 @@ if (!poly.empty()) {
   }
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Binary Search Tree (BST)
+// ─────────────────────────────────────────────────────────────────────────────
+const BST_STRUCT = `struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};`;
+
+const BST_FREE_FN = `// Recursively frees memory allocated for the BST nodes.
+void freeTree(TreeNode*& root) {
+    if (!root) return;
+    freeTree(root->left);
+    freeTree(root->right);
+    delete root;
+    root = nullptr;
+}`;
+
+const BST_OPS: Record<string, OpDef> = {
+  'insert': {
+    id: 'insert',
+    label: 'Insert Node',
+    fn: `// Inserts a new value into the BST.
+TreeNode* insertNode(TreeNode* root, int val) {
+    if (!root) return new TreeNode(val);
+    if (val < root->data) root->left = insertNode(root->left, val);
+    else if (val > root->data) root->right = insertNode(root->right, val);
+    else cout << "Duplicate value: " << val << " not inserted." << endl;
+    return root;
+}`,
+    code: `int val;
+cout << "Enter value to insert: ";
+if (cin >> val) {
+    root = insertNode(root, val);
+    cout << "Inserted " << val << " into BST." << endl;
+}`
+  },
+  'delete': {
+    id: 'delete',
+    label: 'Delete Node',
+    fn: `// Deletes a node with the specified key from the BST.
+TreeNode* deleteNode(TreeNode* root, int key) {
+    if (!root) {
+        cout << "Value " << key << " not found in BST." << endl;
+        return nullptr;
+    }
+    if (key < root->data) {
+        root->left = deleteNode(root->left, key);
+    } else if (key > root->data) {
+        root->right = deleteNode(root->right, key);
+    } else {
+        if (!root->left) {
+            TreeNode* temp = root->right;
+            delete root;
+            return temp;
+        } else if (!root->right) {
+            TreeNode* temp = root->left;
+            delete root;
+            return temp;
+        }
+        TreeNode* succ = root->right;
+        while (succ->left) succ = succ->left;
+        root->data = succ->data;
+        root->right = deleteNode(root->right, succ->data);
+    }
+    return root;
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    int key;
+    cout << "Enter value to delete: ";
+    if (cin >> key) {
+        root = deleteNode(root, key);
+        cout << "Deletion attempt completed for " << key << "." << endl;
+    }
+}`
+  },
+  'search': {
+    id: 'search',
+    label: 'Search Node',
+    fn: `// Searches for a key in the BST.
+bool searchNode(TreeNode* root, int key) {
+    if (!root) return false;
+    if (root->data == key) return true;
+    if (key < root->data) return searchNode(root->left, key);
+    return searchNode(root->right, key);
+}`,
+    code: `int key;
+cout << "Enter value to search: ";
+if (cin >> key) {
+    if (searchNode(root, key)) cout << "Value " << key << " found in BST." << endl;
+    else cout << "Value " << key << " not found in BST." << endl;
+}`
+  },
+  'inorder': {
+    id: 'inorder',
+    label: 'Inorder Traversal',
+    fn: `// Inorder traversal (Left, Root, Right).
+void inorderTraversal(TreeNode* root) {
+    if (!root) return;
+    inorderTraversal(root->left);
+    cout << root->data << " ";
+    inorderTraversal(root->right);
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Inorder Traversal: ";
+    inorderTraversal(root);
+    cout << endl;
+}`
+  },
+  'preorder': {
+    id: 'preorder',
+    label: 'Preorder Traversal',
+    fn: `// Preorder traversal (Root, Left, Right).
+void preorderTraversal(TreeNode* root) {
+    if (!root) return;
+    cout << root->data << " ";
+    preorderTraversal(root->left);
+    preorderTraversal(root->right);
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Preorder Traversal: ";
+    preorderTraversal(root);
+    cout << endl;
+}`
+  },
+  'postorder': {
+    id: 'postorder',
+    label: 'Postorder Traversal',
+    fn: `// Postorder traversal (Left, Right, Root).
+void postorderTraversal(TreeNode* root) {
+    if (!root) return;
+    postorderTraversal(root->left);
+    postorderTraversal(root->right);
+    cout << root->data << " ";
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Postorder Traversal: ";
+    postorderTraversal(root);
+    cout << endl;
+}`
+  },
+  'level_order': {
+    id: 'level_order',
+    label: 'Level-Order Traversal',
+    fn: `// Level-order traversal (BFS) using a queue.
+void levelOrderTraversal(TreeNode* root) {
+    if (!root) return;
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* curr = q.front();
+        q.pop();
+        cout << curr->data << " ";
+        if (curr->left) q.push(curr->left);
+        if (curr->right) q.push(curr->right);
+    }
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Level-Order Traversal: ";
+    levelOrderTraversal(root);
+    cout << endl;
+}`
+  },
+  'find_min': {
+    id: 'find_min',
+    label: 'Find Minimum',
+    fn: `// Finds the minimum value in the BST.
+int findMinValue(TreeNode* root) {
+    if (!root) return -1;
+    TreeNode* curr = root;
+    while (curr->left) curr = curr->left;
+    return curr->data;
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Minimum value in BST: " << findMinValue(root) << endl;
+}`
+  },
+  'find_max': {
+    id: 'find_max',
+    label: 'Find Maximum',
+    fn: `// Finds the maximum value in the BST.
+int findMaxValue(TreeNode* root) {
+    if (!root) return -1;
+    TreeNode* curr = root;
+    while (curr->right) curr = curr->right;
+    return curr->data;
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "Maximum value in BST: " << findMaxValue(root) << endl;
+}`
+  },
+  'height': {
+    id: 'height',
+    label: 'Calculate Height',
+    fn: `// Calculates the height of the BST.
+int calculateHeight(TreeNode* root) {
+    if (!root) return 0;
+    return 1 + max(calculateHeight(root->left), calculateHeight(root->right));
+}`,
+    code: `cout << "Height of BST: " << calculateHeight(root) << endl;`
+  },
+  'leaf_count': {
+    id: 'leaf_count',
+    label: 'Count Leaf Nodes',
+    fn: `// Counts the number of leaf nodes in the BST.
+int countLeaves(TreeNode* root) {
+    if (!root) return 0;
+    if (!root->left && !root->right) return 1;
+    return countLeaves(root->left) + countLeaves(root->right);
+}`,
+    code: `cout << "Number of leaf nodes: " << countLeaves(root) << endl;`
+  },
+  'node_count': {
+    id: 'node_count',
+    label: 'Count Total Nodes',
+    fn: `// Counts the total number of nodes in the BST.
+int countNodes(TreeNode* root) {
+    if (!root) return 0;
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}`,
+    code: `cout << "Total nodes in BST: " << countNodes(root) << endl;`
+  },
+  'display': {
+    id: 'display',
+    label: 'Display BST',
+    fn: `// Displays the BST in sorted (inorder) sequence.
+void displayBST(TreeNode* root) {
+    if (!root) return;
+    displayBST(root->left);
+    cout << root->data << " ";
+    displayBST(root->right);
+}`,
+    code: `if (!root) {
+    cout << "Tree is empty." << endl;
+} else {
+    cout << "BST elements: ";
+    displayBST(root);
+    cout << endl;
+}`
+  }
+};
+
+BST_OPS['delete_node'] = BST_OPS['delete'];
+BST_OPS['delete_value'] = BST_OPS['delete'];
+BST_OPS['min'] = BST_OPS['find_min'];
+BST_OPS['max'] = BST_OPS['find_max'];
+BST_OPS['count'] = BST_OPS['node_count'];
+
 /**
  * Builds a menu-driven program strictly scoped to the requested operations.
  * If requestedOps is empty or omitted, it falls back to the canonical menu for that structure.
@@ -2351,6 +2614,37 @@ export function buildScopedMenu(structureId: string, requestedOps?: string[]): s
       entries,
       fns,
       "CircularQueue q;"
+    );
+  }
+
+  if (structureId === 'bst' || structureId === 'binary_search_tree' || structureId === 'binary_tree') {
+    const activeOpKeys = (requestedOps && requestedOps.length > 0)
+      ? requestedOps.filter(op => BST_OPS[op])
+      : ['insert', 'delete', 'search', 'inorder', 'display'];
+
+    const entries: MenuEntry[] = [];
+    const fns: string[] = [BST_FREE_FN];
+    const includes = new Set(['iostream', 'algorithm']);
+
+    for (const key of activeOpKeys) {
+      const op = BST_OPS[key];
+      if (op) {
+        entries.push({ label: op.label, code: op.code });
+        fns.push(op.fn);
+        if (key === 'level_order') {
+          includes.add('queue');
+        }
+      }
+    }
+
+    return generateMenuProgram(
+      "Binary Search Tree (BST)",
+      includes,
+      BST_STRUCT,
+      entries,
+      fns,
+      "TreeNode* root = nullptr;",
+      "freeTree(root);"
     );
   }
 

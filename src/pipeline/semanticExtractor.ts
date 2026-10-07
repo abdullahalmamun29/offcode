@@ -44,6 +44,7 @@ const DATA_STRUCTURE_SET = new Set([
   'priority_queue',
   'deque',
   'queue_linked_list',
+  'bst',
   'binary_search_tree',
   'binary_tree',
   'avl_tree',
@@ -75,7 +76,10 @@ const DATA_STRUCTURE_SET = new Set([
   'disjoint_set',
   'dsu',
   'segment_tree',
-  'fenwick_tree'
+  'fenwick_tree',
+  'monotonic_stack',
+  'lru_cache',
+  'lfu_cache'
 ]);
 
 const ALGORITHM_SET = new Set([
@@ -154,7 +158,12 @@ const ALGORITHM_SET = new Set([
   'kadane',
   'knapsack',
   'lcs',
-  'lis'
+  'lis',
+  'nearest_smaller_values',
+  'dynamic_programming',
+  'daily_temperatures',
+  'shortest_path',
+  'next_greater'
 ]);
 
 const NUMERICAL_SET = new Set([
@@ -178,7 +187,10 @@ const NUMERICAL_SET = new Set([
   'power_method',
   'qr_decomposition',
   'cholesky',
-  'regula_falsi'
+  'regula_falsi',
+  'newton_backward',
+  'newton_forward',
+  'fixed_point_iteration'
 ]);
 
 const MATHEMATICAL_OBJECT_SET = new Set([

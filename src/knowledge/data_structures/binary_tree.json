@@ -105,6 +105,160 @@
       "timeComplexity": "O(N)",
       "spaceComplexity": "O(N)",
       "description": "Performs node count."
+    },
+    {
+      "id": "level_order",
+      "name": "Level Order Traversal",
+      "action": "level_order",
+      "position": null,
+      "aliases": [
+        "level_order",
+        "level order",
+        "bfs traversal"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.level_order.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs level-order BFS traversal."
+    },
+    {
+      "id": "zigzag",
+      "name": "Zigzag Traversal",
+      "action": "zigzag",
+      "position": null,
+      "aliases": [
+        "zigzag",
+        "zigzag traversal",
+        "spiral traversal"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.zigzag.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs zigzag (spiral) level-order traversal."
+    },
+    {
+      "id": "diameter",
+      "name": "Diameter",
+      "action": "diameter",
+      "position": null,
+      "aliases": [
+        "diameter",
+        "tree diameter"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.diameter.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Calculates diameter of the binary tree."
+    },
+    {
+      "id": "is_balanced",
+      "name": "Check Balanced",
+      "action": "is_balanced",
+      "position": null,
+      "aliases": [
+        "is_balanced",
+        "balanced",
+        "check balanced"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.is_balanced.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Checks if the binary tree is height-balanced."
+    },
+    {
+      "id": "is_symmetric",
+      "name": "Check Symmetric",
+      "action": "is_symmetric",
+      "position": null,
+      "aliases": [
+        "is_symmetric",
+        "symmetric",
+        "mirror check"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.is_symmetric.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Checks if the binary tree is symmetric."
+    },
+    {
+      "id": "invert",
+      "name": "Invert Tree",
+      "action": "invert",
+      "position": null,
+      "aliases": [
+        "invert",
+        "mirror tree"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.invert.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Inverts the binary tree into its mirror."
+    },
+    {
+      "id": "lca",
+      "name": "Lowest Common Ancestor",
+      "action": "lca",
+      "position": null,
+      "aliases": [
+        "lca",
+        "lowest common ancestor"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.lca.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Finds lowest common ancestor of two nodes in binary tree."
+    },
+    {
+      "id": "path_sum",
+      "name": "Path Sum",
+      "action": "path_sum",
+      "position": null,
+      "aliases": [
+        "path_sum",
+        "path sum"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.path_sum.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Checks if root-to-leaf path sums to target."
+    },
+    {
+      "id": "left_view",
+      "name": "Left View",
+      "action": "left_view",
+      "position": null,
+      "aliases": [
+        "left_view",
+        "left view"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.left_view.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Prints left view of the binary tree."
+    },
+    {
+      "id": "right_view",
+      "name": "Right View",
+      "action": "right_view",
+      "position": null,
+      "aliases": [
+        "right_view",
+        "right view"
+      ],
+      "verified": true,
+      "moduleId": "binary_tree.right_view.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Prints right view of the binary tree."
     }
   ]
 }

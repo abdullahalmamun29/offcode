@@ -119,6 +119,113 @@
       "timeComplexity": "O(log N)",
       "spaceComplexity": "O(1)",
       "description": "Performs find max."
+    },
+    {
+      "id": "is_valid_bst",
+      "name": "Validate BST",
+      "action": "is_valid_bst",
+      "position": null,
+      "aliases": [
+        "is_valid_bst",
+        "validate_bst",
+        "check_bst"
+      ],
+      "verified": true,
+      "moduleId": "bst.is_valid_bst.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(H)",
+      "description": "Validates if binary tree satisfies BST property."
+    },
+    {
+      "id": "lca",
+      "name": "Lowest Common Ancestor BST",
+      "action": "lca",
+      "position": null,
+      "aliases": [
+        "lca",
+        "lowest common ancestor"
+      ],
+      "verified": true,
+      "moduleId": "bst.lca.cpp",
+      "timeComplexity": "O(H)",
+      "spaceComplexity": "O(1)",
+      "description": "Finds lowest common ancestor in BST in O(H) time."
+    },
+    {
+      "id": "kth_smallest",
+      "name": "K-th Smallest Element",
+      "action": "kth_smallest",
+      "position": null,
+      "aliases": [
+        "kth_smallest",
+        "kth smallest"
+      ],
+      "verified": true,
+      "moduleId": "bst.kth_smallest.cpp",
+      "timeComplexity": "O(H + k)",
+      "spaceComplexity": "O(H)",
+      "description": "Finds k-th smallest element in BST."
+    },
+    {
+      "id": "kth_largest",
+      "name": "K-th Largest Element",
+      "action": "kth_largest",
+      "position": null,
+      "aliases": [
+        "kth_largest",
+        "kth largest"
+      ],
+      "verified": true,
+      "moduleId": "bst.kth_largest.cpp",
+      "timeComplexity": "O(H + k)",
+      "spaceComplexity": "O(H)",
+      "description": "Finds k-th largest element in BST."
+    },
+    {
+      "id": "sorted_array_to_bst",
+      "name": "Sorted Array to Balanced BST",
+      "action": "sorted_array_to_bst",
+      "position": null,
+      "aliases": [
+        "sorted_array_to_bst",
+        "array to bst"
+      ],
+      "verified": true,
+      "moduleId": "bst.sorted_array_to_bst.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(log N)",
+      "description": "Converts sorted array into a height-balanced BST."
+    },
+    {
+      "id": "inorder_predecessor_successor",
+      "name": "Inorder Predecessor and Successor",
+      "action": "inorder_predecessor_successor",
+      "position": null,
+      "aliases": [
+        "inorder_predecessor_successor",
+        "predecessor",
+        "successor"
+      ],
+      "verified": true,
+      "moduleId": "bst.inorder_predecessor_successor.cpp",
+      "timeComplexity": "O(H)",
+      "spaceComplexity": "O(1)",
+      "description": "Finds inorder predecessor and successor of key in BST."
+    },
+    {
+      "id": "level_order",
+      "name": "Level Order Traversal",
+      "action": "level_order",
+      "position": null,
+      "aliases": [
+        "level_order",
+        "level order"
+      ],
+      "verified": true,
+      "moduleId": "bst.level_order.cpp",
+      "timeComplexity": "O(N)",
+      "spaceComplexity": "O(N)",
+      "description": "Performs level-order BFS traversal of BST."
     }
   ]
 }

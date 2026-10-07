@@ -675,6 +675,263 @@ bool checkQueueCanBeSorted(queue<int>& q, int n) {
     } else {
         cout << "NO, queue cannot be sorted." << endl;
     }`
+  }),
+
+  // ── 14. LRU Cache (Deque/List + Hash Map) ──────────────────────────────────
+  'lru_cache': () => ({
+    includes: ['iostream', 'list', 'unordered_map'],
+    structs: [
+`// LRU Cache implementation using std::list and std::unordered_map
+class LRUCache {
+private:
+    int capacity;
+    std::list<std::pair<int, int>> items; // pair<key, value>, most recent at front
+    std::unordered_map<int, std::list<std::pair<int, int>>::iterator> cacheMap;
+
+public:
+    LRUCache(int cap) : capacity(cap) {}
+
+    int get(int key) {
+        auto it = cacheMap.find(key);
+        if (it == cacheMap.end()) return -1;
+        items.splice(items.begin(), items, it->second);
+        return it->second->second;
+    }
+
+    void put(int key, int value) {
+        auto it = cacheMap.find(key);
+        if (it != cacheMap.end()) {
+            it->second->second = value;
+            items.splice(items.begin(), items, it->second);
+            return;
+        }
+        if ((int)items.size() == capacity) {
+            int lruKey = items.back().first;
+            items.pop_back();
+            cacheMap.erase(lruKey);
+        }
+        items.push_front({key, value});
+        cacheMap[key] = items.begin();
+    }
+
+    void display() const {
+        std::cout << "Cache (MRU to LRU): ";
+        for (const auto& kv : items) {
+            std::cout << "[" << kv.first << ":" << kv.second << "] ";
+        }
+        std::cout << "\\n";
+    }
+};`
+    ],
+    functions: [],
+    mainCode: `LRUCache cache(2);
+    cache.put(1, 10);
+    cache.put(2, 20);
+    cache.display();
+    std::cout << "get(1): " << cache.get(1) << "\\n";
+    cache.put(3, 30); // evicts key 2
+    cache.display();
+    std::cout << "get(2): " << cache.get(2) << " (evicted)\\n";
+    cache.put(4, 40); // evicts key 1
+    cache.display();
+    std::cout << "get(1): " << cache.get(1) << " (evicted)\\n";
+    std::cout << "get(3): " << cache.get(3) << "\\n";
+    std::cout << "get(4): " << cache.get(4) << "\\n";`
+  }),
+
+  // ── 15. Multi-Source BFS Queue (Rotten Oranges / Grid BFS) ────────────────
+  'multi_source_bfs_queue': () => ({
+    includes: ['iostream', 'vector', 'queue'],
+    structs: [],
+    functions: [
+`// Multi-source BFS to calculate time for all fresh oranges to rot in a grid.
+// 0: Empty cell, 1: Fresh orange, 2: Rotten orange.
+int orangesRotting(std::vector<std::vector<int>>& grid) {
+    if (grid.empty()) return 0;
+    int m = grid.size();
+    int n = grid[0].size();
+    std::queue<std::pair<int, int>> q;
+    int freshCount = 0;
+
+    for (int r = 0; r < m; ++r) {
+        for (int c = 0; c < n; ++c) {
+            if (grid[r][c] == 2) {
+                q.push({r, c});
+            } else if (grid[r][c] == 1) {
+                freshCount++;
+            }
+        }
+    }
+
+    if (freshCount == 0) return 0;
+
+    int minutes = 0;
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    while (!q.empty()) {
+        int sz = q.size();
+        bool rottedAny = false;
+        for (int i = 0; i < sz; ++i) {
+            auto [r, c] = q.front();
+            q.pop();
+            for (auto& dir : dirs) {
+                int nr = r + dir[0];
+                int nc = c + dir[1];
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] == 1) {
+                    grid[nr][nc] = 2;
+                    freshCount--;
+                    q.push({nr, nc});
+                    rottedAny = true;
+                }
+            }
+        }
+        if (rottedAny) minutes++;
+    }
+
+    return freshCount == 0 ? minutes : -1;
+}`
+    ],
+    mainCode: `std::vector<std::vector<int>> grid = {
+        {2, 1, 1},
+        {1, 1, 0},
+        {0, 1, 1}
+    };
+    int time = orangesRotting(grid);
+    if (time != -1) {
+        std::cout << "Time elapsed for all fresh oranges to rot: " << time << " minutes\\n";
+    } else {
+        std::cout << "All fresh oranges cannot rot (-1)\\n";
+    }`
+  }),
+
+  // ── 16. Sliding Window Minimum (Monotonic Deque) ───────────────────────────
+  'sliding_window_minimum': () => ({
+    includes: ['iostream', 'vector', 'deque'],
+    structs: [],
+    functions: [
+`// Finds the minimum element in every sliding window of size k using a monotonic deque.
+std::vector<int> slidingWindowMinimum(const std::vector<int>& arr, int k) {
+    std::vector<int> result;
+    if (arr.empty() || k <= 0 || k > (int)arr.size()) return result;
+
+    std::deque<int> dq; // stores indices in increasing order of values
+    for (int i = 0; i < (int)arr.size(); ++i) {
+        if (!dq.empty() && dq.front() <= i - k) {
+            dq.pop_front();
+        }
+        while (!dq.empty() && arr[dq.back()] >= arr[i]) {
+            dq.pop_back();
+        }
+        dq.push_back(i);
+        if (i >= k - 1) {
+            result.push_back(arr[dq.front()]);
+        }
+    }
+    return result;
+}`
+    ],
+    mainCode: `std::vector<int> arr = {4, 3, 2, 1, 5, 7, 6, 8};
+    int k = 3;
+    std::vector<int> mins = slidingWindowMinimum(arr, k);
+    std::cout << "Sliding window minimum (k=" << k << "): ";
+    for (int v : mins) {
+        std::cout << v << " ";
+    }
+    std::cout << "\\n";`
+  }),
+
+  // ── 17. Expandable Circular Queue (Dynamic Array Resizing) ────────────────
+  'circular_queue_expandable': () => ({
+    includes: ['iostream'],
+    structs: [
+`// Expandable Circular Queue using dynamic array with automatic capacity doubling.
+class ExpandableCircularQueue {
+private:
+    int* arr;
+    int capacity;
+    int front;
+    int rear;
+    int count;
+
+    void resize(int newCapacity) {
+        int* newArr = new int[newCapacity];
+        for (int i = 0; i < count; ++i) {
+            newArr[i] = arr[(front + i) % capacity];
+        }
+        delete[] arr;
+        arr = newArr;
+        capacity = newCapacity;
+        front = 0;
+        rear = count - 1;
+        std::cout << "[Resized capacity to " << capacity << "]\\n";
+    }
+
+public:
+    ExpandableCircularQueue(int initialCap = 4)
+        : capacity(initialCap), front(0), rear(-1), count(0) {
+        arr = new int[capacity];
+    }
+
+    ~ExpandableCircularQueue() {
+        delete[] arr;
+    }
+
+    bool isFull() const { return count == capacity; }
+    bool isEmpty() const { return count == 0; }
+    int size() const { return count; }
+
+    void enqueue(int val) {
+        if (isFull()) {
+            resize(capacity * 2);
+        }
+        rear = (rear + 1) % capacity;
+        arr[rear] = val;
+        count++;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            std::cout << "Queue underflow!\\n";
+            return -1;
+        }
+        int val = arr[front];
+        front = (front + 1) % capacity;
+        count--;
+        return val;
+    }
+
+    int peek() const {
+        if (isEmpty()) {
+            std::cout << "Queue is empty!\\n";
+            return -1;
+        }
+        return arr[front];
+    }
+
+    void display() const {
+        if (isEmpty()) {
+            std::cout << "Queue is empty.\\n";
+            return;
+        }
+        std::cout << "Queue (size=" << count << "/" << capacity << "): ";
+        for (int i = 0; i < count; ++i) {
+            std::cout << arr[(front + i) % capacity] << " ";
+        }
+        std::cout << "\\n";
+    }
+};`
+    ],
+    functions: [],
+    mainCode: `ExpandableCircularQueue q(2);
+    q.enqueue(10);
+    q.enqueue(20);
+    q.display();
+    q.enqueue(30); // triggers automatic resize
+    q.enqueue(40);
+    q.display();
+    std::cout << "Dequeued: " << q.dequeue() << "\\n";
+    q.enqueue(50);
+    q.display();`
   })
 };
 
@@ -689,3 +946,8 @@ queueApplications['reverse_first_k'] = queueApplications['reverse_first_k_queue'
 queueApplications['first_non_repeating'] = queueApplications['first_non_repeating_char'];
 queueApplications['first_negative_window_k'] = queueApplications['first_negative_window'];
 queueApplications['gas_station_tour'] = queueApplications['circular_tour'];
+queueApplications['rotten_oranges'] = queueApplications['multi_source_bfs_queue'];
+queueApplications['multi_source_bfs'] = queueApplications['multi_source_bfs_queue'];
+queueApplications['sliding_window_min'] = queueApplications['sliding_window_minimum'];
+queueApplications['dynamic_circular_queue'] = queueApplications['circular_queue_expandable'];
+queueApplications['resizable_circular_queue'] = queueApplications['circular_queue_expandable'];

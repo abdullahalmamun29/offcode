@@ -85,7 +85,35 @@ const QUEUE_APPLICATIONS = new Set([
   'reverse_first_k',
   'first_non_repeating',
   'first_negative_window_k',
-  'gas_station_tour'
+  'gas_station_tour',
+  'lru_cache',
+  'multi_source_bfs_queue',
+  'multi_source_bfs',
+  'rotten_oranges',
+  'sliding_window_minimum',
+  'sliding_window_min',
+  'circular_queue_expandable',
+  'dynamic_circular_queue',
+  'resizable_circular_queue'
+]);
+
+const TREE_APPLICATIONS = new Set([
+  'level_order_traversal',
+  'zigzag_traversal',
+  'diameter_binary_tree',
+  'is_balanced_binary_tree',
+  'is_symmetric_binary_tree',
+  'invert_binary_tree',
+  'lca_binary_tree',
+  'path_sum_binary_tree',
+  'left_view_binary_tree',
+  'right_view_binary_tree',
+  'is_valid_bst',
+  'lca_bst',
+  'kth_smallest_bst',
+  'kth_largest_bst',
+  'sorted_array_to_bst',
+  'inorder_predecessor_successor'
 ]);
 
 const LL_SPECIAL_ALGORITHMS: Record<string, { struct: string; op: string }> = {
@@ -241,6 +269,11 @@ export class ClassicalDataStructureAdapter {
       struct = 'queue_applications';
       op = rawCap;
     }
+    // 1c. Tree Applications (non-menu standalone algorithms)
+    else if (TREE_APPLICATIONS.has(rawCap) && !isMenu) {
+      struct = 'tree_applications';
+      op = rawCap;
+    }
     // 2. Linked List Special Algorithms
     else if (LL_SPECIAL_ALGORITHMS[rawCap]) {
       const mapping = LL_SPECIAL_ALGORITHMS[rawCap];
@@ -325,11 +358,73 @@ export class ClassicalDataStructureAdapter {
         op = 'create';
       }
     }
+    // 6c. Binary Tree & Binary Search Tree (BST)
+    else if (rawCap === 'binary_tree' || rawCap === 'binary_search_tree' || rawCap === 'bst') {
+      struct = (rawCap === 'binary_search_tree' || rawCap === 'bst') ? 'bst' : 'binary_tree';
+      if (isMenu) {
+        op = 'menu';
+      } else if (ops.includes('inorder') || probText.includes('inorder') || /print|display|ascending|sorted/i.test(probText)) {
+        op = 'inorder';
+      } else if (ops.includes('preorder') || probText.includes('preorder')) {
+        op = 'preorder';
+      } else if (ops.includes('postorder') || probText.includes('postorder')) {
+        op = 'postorder';
+      } else if (ops.includes('level_order') || probText.includes('level order') || probText.includes('level-order') || probText.includes('breadth first')) {
+        op = 'level_order';
+      } else if (ops.includes('zigzag') || probText.includes('zigzag') || probText.includes('spiral')) {
+        op = 'zigzag';
+      } else if (ops.includes('diameter') || probText.includes('diameter')) {
+        op = 'diameter';
+      } else if (ops.includes('is_balanced') || probText.includes('balanced')) {
+        op = 'is_balanced';
+      } else if (ops.includes('is_symmetric') || probText.includes('symmetric')) {
+        op = 'is_symmetric';
+      } else if (ops.includes('invert') || probText.includes('invert') || probText.includes('mirror')) {
+        op = 'invert';
+      } else if (ops.includes('is_valid_bst') || probText.includes('validate bst') || probText.includes('is valid bst') || probText.includes('check bst')) {
+        op = 'is_valid_bst';
+      } else if (ops.includes('lca') || probText.includes('lowest common ancestor') || probText.includes('common ancestor')) {
+        op = 'lca';
+      } else if (ops.includes('kth_smallest') || probText.includes('kth smallest')) {
+        op = 'kth_smallest';
+      } else if (ops.includes('kth_largest') || probText.includes('kth largest')) {
+        op = 'kth_largest';
+      } else if (ops.includes('path_sum') || probText.includes('path sum')) {
+        op = 'path_sum';
+      } else if (ops.includes('left_view') || probText.includes('left view')) {
+        op = 'left_view';
+      } else if (ops.includes('right_view') || probText.includes('right view')) {
+        op = 'right_view';
+      } else if (ops.includes('sorted_array_to_bst') || probText.includes('sorted array to bst')) {
+        op = 'sorted_array_to_bst';
+      } else if (ops.includes('predecessor') || ops.includes('successor') || probText.includes('predecessor') || probText.includes('successor')) {
+        op = 'inorder_predecessor_successor';
+      } else if (ops.includes('height') || probText.includes('height') || probText.includes('depth')) {
+        op = 'height';
+      } else if (ops.includes('leaf') || probText.includes('leaf')) {
+        op = 'leaf_count';
+      } else if (ops.includes('count') || probText.includes('count') || probText.includes('nodes')) {
+        op = 'node_count';
+      } else if ((ops.includes('search') && !probText.includes('binary search tree') && !probText.includes('search tree')) ||
+                 /search\s+for|search\s+in|search\s+a\s+value|lookup/i.test(probText)) {
+        op = 'search';
+      } else if (ops.includes('delete') || probText.includes('delete') || probText.includes('remove')) {
+        op = 'delete';
+      } else if (ops.includes('insert') || probText.includes('insert') || probText.includes('add')) {
+        op = 'insert';
+      } else if (probText.includes('min') || probText.includes('minimum')) {
+        op = 'find_min';
+      } else if (probText.includes('max') || probText.includes('maximum')) {
+        op = 'find_max';
+      } else if (ops.includes('display') || ops.includes('traverse') || probText.includes('display') || probText.includes('traverse')) {
+        op = 'inorder';
+      } else {
+        op = struct === 'bst' ? 'insert' : 'create';
+      }
+    }
     // 7. General Linked Lists (Singly, Doubly, Circular, DCLL)
     else {
-      if (rawCap === 'binary_search_tree') {
-        struct = 'bst';
-      } else if (rawCap === 'linked_list') {
+      if (rawCap === 'linked_list') {
         struct = 'singly_linked_list';
       }
 

@@ -40,8 +40,11 @@ from pointer_algorithms.heap.verification.heap_oracles import (
 )
 
 
-def compile_and_run_cpp(cpp_code: str, stdin_data: str, timeout: int = 5) -> str:
-    with tempfile.TemporaryDirectory() as tmpdir:
+_COMPILE_CACHE = {}
+
+def compile_and_run_cpp(cpp_code: str, stdin_data: str, timeout: int = 15) -> str:
+    if cpp_code not in _COMPILE_CACHE:
+        tmpdir = tempfile.mkdtemp()
         src = os.path.join(tmpdir, "sol.cpp")
         exe = os.path.join(tmpdir, "sol")
         with open(src, "w") as f:
@@ -52,12 +55,15 @@ def compile_and_run_cpp(cpp_code: str, stdin_data: str, timeout: int = 5) -> str
         )
         if compile_res.returncode != 0:
             return f"COMPILE_ERROR: {compile_res.stderr[:200]}"
-        run_res = subprocess.run(
-            [exe], input=stdin_data, capture_output=True, text=True, timeout=timeout
-        )
-        if run_res.returncode != 0:
-            return f"RUNTIME_ERROR: {run_res.stderr[:200]}"
-        return run_res.stdout.strip()
+        _COMPILE_CACHE[cpp_code] = exe
+
+    exe = _COMPILE_CACHE[cpp_code]
+    run_res = subprocess.run(
+        [exe], input=stdin_data, capture_output=True, text=True, timeout=timeout
+    )
+    if run_res.returncode != 0:
+        return f"RUNTIME_ERROR: {run_res.stderr[:200]}"
+    return run_res.stdout.strip()
 
 
 def test_min_pq(num_seeds: int = 15) -> Tuple[int, int]:

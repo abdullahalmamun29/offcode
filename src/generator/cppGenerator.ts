@@ -42,6 +42,7 @@ import { queueLinkedList } from './modules/data_structures/queueLinkedList';
 import { polynomial } from './modules/data_structures/polynomial';
 import { stackApplications } from './modules/data_structures/stackApplications';
 import { queueApplications } from './modules/data_structures/queueApplications';
+import { treeApplications } from './modules/data_structures/treeApplications';
 
 // Registry mapping structure/category names to their module records
 const dataStructureModules: Record<string, Record<string, () => CodeFragment>> = {
@@ -64,6 +65,9 @@ const dataStructureModules: Record<string, Record<string, () => CodeFragment>> =
   'priority_queue': queueApplications,
   'binary_tree': binaryTree,
   'bst': bst,
+  'tree_applications': treeApplications,
+  'binary_tree_applications': treeApplications,
+  'bst_applications': treeApplications,
   'heap': heap,
   'hash_table': hashTable,
   'graph': graph,
