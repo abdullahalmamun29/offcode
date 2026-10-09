@@ -2,7 +2,7 @@
   "name": "offcode",
   "displayName": "Offcode",
   "description": "Deterministic educational programming assistant for C++ and data structures",
-  "version": "2.2.10",
+  "version": "2.2.11",
   "icon": "icon.png",
   "publisher": "adullahALMamun",
   "engines": {
@@ -94,6 +94,11 @@
           "default": "",
           "description": "Optional absolute path to the Python executable used by Offcode. Must be an executable file path, not a shell command."
         },
+        "offcode.cxxCompilerPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional absolute path to the C++ compiler (g++, clang++) used by Offcode for solution verification."
+        },
         "offcode.typingSpeedMs": {
           "type": "number",
           "default": 5,
@@ -128,6 +133,11 @@
           "type": "string",
           "default": "",
           "description": "Legacy alias for offcode.pythonPath."
+        },
+        "chup.cxxCompilerPath": {
+          "type": "string",
+          "default": "",
+          "description": "Legacy alias for offcode.cxxCompilerPath."
         },
         "chup.typingSpeedMs": {
           "type": "number",

@@ -119,8 +119,14 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   const handleDiagnose = async () => {
+    const configuredCxxPath =
+      vscode.workspace.getConfiguration("offcode").get<string>("cxxCompilerPath", "").trim() ||
+      vscode.workspace.getConfiguration("chup").get<string>("cxxCompilerPath", "").trim() ||
+      undefined;
+
     const envManager = new EnvironmentManager({
       pythonManager: runtimeManager,
+      configuredCxxCompilerPath: configuredCxxPath,
       vscodeVersion: vscode.version
     });
 

@@ -408,7 +408,7 @@ export function resolveCapabilityRequest(
   }
   // Check 5.3: Explicitly Unsupported Algorithmic Domains -> CAPABILITY_UNSUPPORTED
   else if (
-    (!/linked\s*list/i.test(fullText) && /detect\s+cycle|cycle\s+detection|find\s+cycle\s+in\s+(?:directed|undirected)\s+graph/i.test(fullText)) ||
+    (/graph/i.test(fullText) && /detect\s+cycle|cycle\s+detection|find\s+cycle/i.test(fullText)) ||
     /bipartite/i.test(fullText) ||
     /longest\s+increasing\s+subsequence|\blis\b/i.test(fullText) ||
     /all\s*pairs\s+shortest\s+path|floyd\s+warshall/i.test(fullText) ||

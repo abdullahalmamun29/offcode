@@ -2549,7 +2549,7 @@ export class AuthoritativeCapabilityRegistry {
       domains: ['numerical_methods', 'calculus', 'academic'],
       supportedOperations: ['solve', 'find', 'compute', 'calculate'],
       representations: ['custom_struct'],
-      algorithms: ['bisection', 'newton_raphson', 'secant'],
+      algorithms: ['bisection', 'newton_raphson', 'secant', 'false_position', 'fixed_point_iteration'],
       requiredStates: ['CONTINUOUS_FUNCTION_F'],
       producedStates: ['ROOT_APPROXIMATION'],
       constraints: {}
@@ -2594,6 +2594,257 @@ export class AuthoritativeCapabilityRegistry {
       complexity: { time: 'O(log N) iterations', space: 'O(1)' }
     });
 
+    this.registerAlgorithm({
+      id: 'false_position',
+      name: 'False Position Method',
+      aliases: ['false position', 'regula falsi', 'false position method', 'regula falsi method', 'false_position'],
+      capabilityId: 'root_finding',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_function', 'opposite_signs_fA_fB_lt_0'],
+      invariants: ['root_bracketed_in_interval'],
+      postconditions: ['root_computed'],
+      complexity: { time: 'O(log N) iterations', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'fixed_point_iteration',
+      name: 'Fixed Point Iteration Method',
+      aliases: ['fixed point iteration', 'fixed point method', 'fixed_point_iteration'],
+      capabilityId: 'root_finding',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_function'],
+      invariants: ['approximations_converge'],
+      postconditions: ['root_computed'],
+      complexity: { time: 'O(log N) iterations', space: 'O(1)' }
+    });
+
+    this.registerCapability({
+      id: 'numerical_integration',
+      canonicalName: 'Numerical Integration',
+      aliases: ['numerical integration', 'quadrature', 'trapezoidal rule', 'trapezoidal', 'simpson 1/3 rule', 'simpson 1 3 rule', 'simpson 3/8 rule', 'simpson rule', 'simpsons rule'],
+      semanticDescription: 'Approximates the definite integral of a function using Newton-Cotes quadrature formulas',
+      domains: ['numerical_methods', 'calculus', 'academic'],
+      supportedOperations: ['integrate', 'compute', 'calculate', 'solve'],
+      representations: ['custom_struct', 'array_based'],
+      algorithms: ['trapezoidal', 'simpson_1_3', 'simpson_3_8'],
+      requiredStates: ['CONTINUOUS_FUNCTION_F'],
+      producedStates: ['INTEGRAL_APPROXIMATION'],
+      constraints: {}
+    });
+
+    this.registerAlgorithm({
+      id: 'trapezoidal',
+      name: 'Trapezoidal Rule',
+      aliases: ['trapezoidal rule', 'trapezoidal', 'trapezoid rule', 'trapezoidal method'],
+      capabilityId: 'numerical_integration',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_integrand'],
+      invariants: ['composite_intervals_summed'],
+      postconditions: ['integral_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'simpson_1_3',
+      name: 'Simpson 1/3 Rule',
+      aliases: ['simpson 1/3 rule', 'simpson 1 3 rule', 'simpson 1/3', 'simpson rule', 'simpsons rule', 'simpson_1_3'],
+      capabilityId: 'numerical_integration',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_integrand', 'even_intervals'],
+      invariants: ['quadratic_interpolants_summed'],
+      postconditions: ['integral_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'simpson_3_8',
+      name: 'Simpson 3/8 Rule',
+      aliases: ['simpson 3/8 rule', 'simpson 3 8 rule', 'simpson 3/8', 'simpson_3_8'],
+      capabilityId: 'numerical_integration',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_integrand', 'multiples_of_three_intervals'],
+      invariants: ['cubic_interpolants_summed'],
+      postconditions: ['integral_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerCapability({
+      id: 'interpolation',
+      canonicalName: 'Polynomial Interpolation',
+      aliases: ['interpolation', 'polynomial interpolation', 'lagrange interpolation', 'newton interpolation', 'divided difference', 'divided differences'],
+      semanticDescription: 'Constructs polynomial passing through discrete data points',
+      domains: ['numerical_methods', 'calculus', 'academic'],
+      supportedOperations: ['interpolate', 'compute', 'calculate', 'solve'],
+      representations: ['array_based', 'custom_struct'],
+      algorithms: ['lagrange', 'newton_forward', 'newton_backward', 'divided_difference'],
+      requiredStates: ['DATA_POINTS'],
+      producedStates: ['INTERPOLATED_VALUE'],
+      constraints: {}
+    });
+
+    this.registerAlgorithm({
+      id: 'lagrange',
+      name: 'Lagrange Interpolation',
+      aliases: ['lagrange', 'lagrange interpolation', 'lagrange polynomial'],
+      capabilityId: 'interpolation',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['distinct_x_points'],
+      invariants: ['basis_polynomials_evaluated'],
+      postconditions: ['interpolated_value_computed'],
+      complexity: { time: 'O(N^2)', space: 'O(N)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'newton_forward',
+      name: 'Newton Forward Interpolation',
+      aliases: ['newton forward', 'newton forward interpolation', 'newton_forward'],
+      capabilityId: 'interpolation',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['equispaced_points'],
+      invariants: ['forward_differences_computed'],
+      postconditions: ['interpolated_value_computed'],
+      complexity: { time: 'O(N^2)', space: 'O(N^2)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'newton_backward',
+      name: 'Newton Backward Interpolation',
+      aliases: ['newton backward', 'newton backward interpolation', 'newton_backward'],
+      capabilityId: 'interpolation',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['equispaced_points'],
+      invariants: ['backward_differences_computed'],
+      postconditions: ['interpolated_value_computed'],
+      complexity: { time: 'O(N^2)', space: 'O(N^2)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'divided_difference',
+      name: 'Newton Divided Difference Interpolation',
+      aliases: ['divided difference', 'newton divided difference', 'divided_difference'],
+      capabilityId: 'interpolation',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['distinct_x_points'],
+      invariants: ['divided_difference_table_built'],
+      postconditions: ['interpolated_value_computed'],
+      complexity: { time: 'O(N^2)', space: 'O(N^2)' }
+    });
+
+    this.registerCapability({
+      id: 'ode_solver',
+      canonicalName: 'ODE Initial Value Problem Solver',
+      aliases: ['ode solver', 'ordinary differential equation', 'euler method', 'runge kutta', 'runge kutta 4', 'rk4'],
+      semanticDescription: 'Numerically solves ordinary differential equation initial value problems',
+      domains: ['numerical_methods', 'calculus', 'academic'],
+      supportedOperations: ['solve', 'compute', 'calculate', 'step'],
+      representations: ['array_based', 'custom_struct'],
+      algorithms: ['euler', 'modified_euler', 'runge_kutta_4'],
+      requiredStates: ['INITIAL_VALUE'],
+      producedStates: ['ODE_TRAJECTORY'],
+      constraints: {}
+    });
+
+    this.registerAlgorithm({
+      id: 'euler',
+      name: 'Euler Method',
+      aliases: ['euler method', 'eulers method', 'forward euler', 'euler'],
+      capabilityId: 'ode_solver',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_f_xy'],
+      invariants: ['forward_step_applied'],
+      postconditions: ['approximate_solution_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'modified_euler',
+      name: 'Modified Euler Method',
+      aliases: ['modified euler', 'modified euler method', 'modified_euler'],
+      capabilityId: 'ode_solver',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_f_xy'],
+      invariants: ['predictor_corrector_step'],
+      postconditions: ['approximate_solution_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'runge_kutta_4',
+      name: '4th Order Runge-Kutta (RK4)',
+      aliases: ['runge kutta', 'runge kutta 4', 'rk4', 'runge_kutta', 'runge_kutta_4'],
+      capabilityId: 'ode_solver',
+      requiredComponents: ['interval_bisection'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['continuous_f_xy'],
+      invariants: ['four_slope_weighted_average'],
+      postconditions: ['approximate_solution_computed'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
+    });
+
+    this.registerCapability({
+      id: 'linear_systems_iterative',
+      canonicalName: 'Iterative Linear Systems Solver',
+      aliases: ['iterative linear solver', 'jacobi method', 'gauss seidel method', 'gauss seidel', 'gauss jordan', 'jacobi iteration'],
+      semanticDescription: 'Iterative methods for solving large square systems of linear equations',
+      domains: ['numerical_methods', 'linear_algebra', 'academic'],
+      supportedOperations: ['solve', 'compute', 'calculate'],
+      representations: ['matrix_dense'],
+      algorithms: ['jacobi', 'gauss_seidel', 'gauss_jordan'],
+      requiredStates: ['COEFFICIENT_MATRIX_A', 'CONSTANT_VECTOR_B'],
+      producedStates: ['SOLUTION_VECTOR_X'],
+      constraints: { square_matrix: true }
+    });
+
+    this.registerAlgorithm({
+      id: 'jacobi',
+      name: 'Jacobi Iteration Method',
+      aliases: ['jacobi', 'jacobi method', 'jacobi iteration'],
+      capabilityId: 'linear_systems_iterative',
+      requiredComponents: ['pivoting'],
+      supportedMechanisms: ['dense_matrix_vector'],
+      preconditions: ['strictly_diagonally_dominant'],
+      invariants: ['new_values_from_previous_iteration'],
+      postconditions: ['solution_vector_converged'],
+      complexity: { time: 'O(k * N^2)', space: 'O(N)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'gauss_seidel',
+      name: 'Gauss-Seidel Iteration Method',
+      aliases: ['gauss seidel', 'gauss seidel method', 'gauss_seidel', 'seidel method'],
+      capabilityId: 'linear_systems_iterative',
+      requiredComponents: ['pivoting'],
+      supportedMechanisms: ['dense_matrix_vector'],
+      preconditions: ['strictly_diagonally_dominant'],
+      invariants: ['updated_values_used_immediately'],
+      postconditions: ['solution_vector_converged'],
+      complexity: { time: 'O(k * N^2)', space: 'O(N)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'gauss_jordan',
+      name: 'Gauss-Jordan Elimination Method',
+      aliases: ['gauss jordan', 'gauss jordan elimination', 'gauss_jordan'],
+      capabilityId: 'linear_systems_iterative',
+      requiredComponents: ['pivoting'],
+      supportedMechanisms: ['dense_matrix_vector'],
+      preconditions: ['square_matrix', 'non_singular'],
+      invariants: ['reduced_row_echelon_form'],
+      postconditions: ['solution_vector_computed'],
+      complexity: { time: 'O(N^3)', space: 'O(N^2)' }
+    });
+
     // ── COMPETITIVE PROGRAMMING / SEARCH & AGGREGATION ──
     this.registerCapability({
       id: 'prefix_sum',
@@ -2631,7 +2882,7 @@ export class AuthoritativeCapabilityRegistry {
       domains: ['algorithms', 'sorting', 'competitive_programming'],
       supportedOperations: ['sort', 'order', 'arrange'],
       representations: ['stl', 'array_based'],
-      algorithms: ['standard_sort', 'bubble_sort', 'merge_sort', 'quick_sort'],
+      algorithms: ['standard_sort', 'bubble_sort', 'merge_sort', 'quick_sort', 'selection_sort', 'insertion_sort', 'heap_sort', 'radix_sort', 'counting_sort'],
       requiredStates: ['INPUT_SEQUENCE'],
       producedStates: ['SORTED_SEQUENCE'],
       constraints: { comparison_defined: true }
@@ -2687,6 +2938,98 @@ export class AuthoritativeCapabilityRegistry {
       invariants: ['elements_left_of_pivot_le', 'elements_right_of_pivot_ge'],
       postconditions: ['array_fully_sorted'],
       complexity: { time: 'O(N log N) expected', space: 'O(log N)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'selection_sort',
+      name: 'Selection Sort',
+      aliases: ['selection sort'],
+      capabilityId: 'sort',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: [],
+      invariants: ['prefix_is_sorted'],
+      postconditions: ['array_fully_sorted'],
+      complexity: { time: 'O(N^2)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'insertion_sort',
+      name: 'Insertion Sort',
+      aliases: ['insertion sort'],
+      capabilityId: 'sort',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: [],
+      invariants: ['prefix_is_sorted'],
+      postconditions: ['array_fully_sorted'],
+      complexity: { time: 'O(N^2)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'heap_sort',
+      name: 'Heap Sort',
+      aliases: ['heap sort', 'heapsort'],
+      capabilityId: 'sort',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: [],
+      invariants: ['max_heap_property_maintained'],
+      postconditions: ['array_fully_sorted'],
+      complexity: { time: 'O(N log N)', space: 'O(1)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'radix_sort',
+      name: 'Radix Sort',
+      aliases: ['radix sort'],
+      capabilityId: 'sort',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['non_negative_integers'],
+      invariants: ['sorted_by_least_significant_digits'],
+      postconditions: ['array_fully_sorted'],
+      complexity: { time: 'O(N * d)', space: 'O(N)' }
+    });
+
+    this.registerAlgorithm({
+      id: 'counting_sort',
+      name: 'Counting Sort',
+      aliases: ['counting sort'],
+      capabilityId: 'sort',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static'],
+      preconditions: ['bounded_integers'],
+      invariants: ['counts_accumulated'],
+      postconditions: ['array_fully_sorted'],
+      complexity: { time: 'O(N + K)', space: 'O(K)' }
+    });
+
+    this.registerCapability({
+      id: 'linear_search',
+      canonicalName: 'Linear Search',
+      aliases: ['linear search', 'sequential search', 'linear search in array', 'find element in array', 'linear_search'],
+      semanticDescription: 'Sequentially checks each element of sequence until target is found in O(N)',
+      domains: ['algorithms', 'searching', 'data_structures'],
+      supportedOperations: ['search', 'find', 'locate'],
+      representations: ['stl', 'array_based'],
+      algorithms: ['linear_search_standard'],
+      requiredStates: ['INPUT_SEQUENCE'],
+      producedStates: ['SEARCH_TARGET_INDEX'],
+      constraints: {}
+    });
+
+    this.registerAlgorithm({
+      id: 'linear_search_standard',
+      name: 'Linear Search',
+      aliases: ['linear search', 'linear_search', 'sequential search'],
+      capabilityId: 'linear_search',
+      requiredComponents: ['array_based_static'],
+      supportedMechanisms: ['array_based_static', 'stl_std_vector'],
+      preconditions: [],
+      invariants: ['target_not_in_prefix'],
+      postconditions: ['target_index_or_minus_one'],
+      complexity: { time: 'O(N)', space: 'O(1)' }
     });
 
     this.registerCapability({

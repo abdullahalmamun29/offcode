@@ -258,6 +258,111 @@ export class ClassicalDataStructureAdapter {
     let isMenu = plan.operationPlan.includes('menu') || probText.includes('menu');
     const ops = plan.operationPlan;
 
+    // 0a. Sorting Algorithms
+    const SORT_ALGO_MAP: Record<string, string> = {
+      'bubble_sort': 'bubble_sort',
+      'selection_sort': 'selection_sort',
+      'insertion_sort': 'insertion_sort',
+      'merge_sort': 'merge_sort',
+      'quick_sort': 'quick_sort',
+      'heap_sort': 'heap_sort',
+      'radix_sort': 'radix_sort',
+      'counting_sort': 'counting_sort'
+    };
+
+    if (rawCap === 'sort' || rawCap === 'sorting' || SORT_ALGO_MAP[rawCap] || (step.algorithmId && SORT_ALGO_MAP[step.algorithmId])) {
+      let sortAlgo = 'bubble_sort';
+      if (step.algorithmId && SORT_ALGO_MAP[step.algorithmId]) {
+        sortAlgo = SORT_ALGO_MAP[step.algorithmId];
+      } else if (SORT_ALGO_MAP[rawCap]) {
+        sortAlgo = SORT_ALGO_MAP[rawCap];
+      } else if (probText.includes('selection')) {
+        sortAlgo = 'selection_sort';
+      } else if (probText.includes('insertion')) {
+        sortAlgo = 'insertion_sort';
+      } else if (probText.includes('merge')) {
+        sortAlgo = 'merge_sort';
+      } else if (probText.includes('quick')) {
+        sortAlgo = 'quick_sort';
+      } else if (probText.includes('heap')) {
+        sortAlgo = 'heap_sort';
+      } else if (probText.includes('radix')) {
+        sortAlgo = 'radix_sort';
+      } else if (probText.includes('counting')) {
+        sortAlgo = 'counting_sort';
+      } else if (probText.includes('bubble')) {
+        sortAlgo = 'bubble_sort';
+      }
+
+      const sortModuleId = `algorithm.sorting.${sortAlgo}.cpp`;
+      const resolution: any = {
+        code: 'SUCCESS',
+        moduleId: sortModuleId,
+        moduleName: `Sorting (${sortAlgo})`,
+        message: 'Resolved via CapabilityPlan and BackendAdapter',
+        generationMode: 'single',
+        spec: {
+          domain: 'algorithm',
+          algorithm: { category: 'sorting', method: sortAlgo }
+        }
+      };
+
+      const code = generateCpp(resolution);
+      if (!code.startsWith('// Code generation failed') && !code.startsWith('// Code generation for module')) {
+        return {
+          status: 'SUCCESS',
+          backendId: 'classical_data_structure_backend',
+          capabilityId: step.capabilityId,
+          algorithmId: sortAlgo,
+          implementationMechanism: step.implementationMechanism,
+          generatedCode: code,
+          diagnostics: [`Emitted C++ module ${sortModuleId} via ClassicalDataStructureAdapter`],
+          metadata: {
+            moduleId: sortModuleId,
+            componentsUsed: step.requiredComponents,
+            mechanism: step.implementationMechanism
+          }
+        };
+      }
+    }
+
+    // 0b. Searching Algorithms
+    if (rawCap === 'linear_search' || rawCap === 'searching' || step.algorithmId === 'linear_search_standard' || (rawCap === 'binary_search' && step.implementationMechanism === 'array_based')) {
+      const isLinear = rawCap === 'linear_search' || step.algorithmId === 'linear_search_standard' || probText.includes('linear');
+      const searchAlgo = isLinear ? 'linear_search' : 'binary_search';
+      const searchModuleId = `algorithm.searching.${searchAlgo}.cpp`;
+
+      const resolution: any = {
+        code: 'SUCCESS',
+        moduleId: searchModuleId,
+        moduleName: `Searching (${searchAlgo})`,
+        message: 'Resolved via CapabilityPlan and BackendAdapter',
+        generationMode: 'single',
+        spec: {
+          domain: 'algorithm',
+          algorithm: { category: 'searching', method: searchAlgo }
+        }
+      };
+
+      const code = generateCpp(resolution);
+      if (!code.startsWith('// Code generation failed') && !code.startsWith('// Code generation for module')) {
+        return {
+          status: 'SUCCESS',
+          backendId: 'classical_data_structure_backend',
+          capabilityId: step.capabilityId,
+          algorithmId: searchAlgo,
+          implementationMechanism: step.implementationMechanism,
+          generatedCode: code,
+          diagnostics: [`Emitted C++ module ${searchModuleId} via ClassicalDataStructureAdapter`],
+          metadata: {
+            moduleId: searchModuleId,
+            componentsUsed: step.requiredComponents,
+            mechanism: step.implementationMechanism
+          }
+        };
+      }
+    }
+
     // 1. Stack Applications
     if (STACK_APPLICATIONS.has(rawCap)) {
       struct = 'stack_applications';

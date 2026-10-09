@@ -91,7 +91,8 @@ export class ClassicalDataStructureBackend implements Backend {
       'binary_search_tree',
       'heap',
       'hash_table',
-      'sort'
+      'sort',
+      'linear_search'
     ],
     supportedAlgorithms: [
       'singly_linked_list_standard',
@@ -167,8 +168,14 @@ export class ClassicalDataStructureBackend implements Backend {
       'binary_tree_standard',
       'bst_standard',
       'bubble_sort',
+      'selection_sort',
+      'insertion_sort',
+      'merge_sort',
       'quick_sort',
-      'merge_sort'
+      'heap_sort',
+      'radix_sort',
+      'counting_sort',
+      'linear_search_standard'
     ],
     supportedComponents: [
       'sll_node',

@@ -13,6 +13,7 @@ import { CxxToolchainManager } from "./cxxToolchainManager";
 export interface EnvironmentManagerOptions {
   pythonManager?: PythonRuntimeManager;
   cxxManager?: CxxToolchainManager;
+  configuredCxxCompilerPath?: string;
   vscodeVersion?: string;
   offcodeVersion?: string;
   chupVersion?: string;
@@ -27,7 +28,7 @@ export class EnvironmentManager {
 
   constructor(options?: EnvironmentManagerOptions) {
     this.pythonManager = options?.pythonManager || PythonRuntimeManager.getInstance();
-    this.cxxManager = options?.cxxManager || new CxxToolchainManager();
+    this.cxxManager = options?.cxxManager || new CxxToolchainManager({ configuredCompiler: options?.configuredCxxCompilerPath });
     this.vscodeVersion = options?.vscodeVersion;
     this.offcodeVersion = options?.offcodeVersion || options?.chupVersion || "2.2.0";
     this.chupVersion = this.offcodeVersion;

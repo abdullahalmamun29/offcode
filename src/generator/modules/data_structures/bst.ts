@@ -295,6 +295,104 @@ int findMax(Node* root) {
     freeTree(root);`
   }),
 
+  'height': () => ({
+    includes: ['iostream', 'algorithm'],
+    structs: [STRUCT],
+    functions: [
+      FREE_TREE_FN,
+`// Inserts node into BST.
+Node* insert(Node* root, int val) {
+    if (!root) return new Node(val);
+    if (val < root->data) root->left = insert(root->left, val);
+    else root->right = insert(root->right, val);
+    return root;
+}`,
+`// Calculates height of tree.
+int height(Node* root) {
+    if (!root) return 0;
+    return 1 + std::max(height(root->left), height(root->right));
+}`],
+    mainCode: `Node* root = nullptr;
+    int n;
+    if (std::cin >> n) {
+        for (int i = 0; i < n; i++) {
+            int val;
+            if (std::cin >> val) root = insert(root, val);
+        }
+    } else {
+        root = insert(root, 50);
+        root = insert(root, 30);
+        root = insert(root, 70);
+    }
+    std::cout << height(root) << "\\n";
+    freeTree(root);`
+  }),
+  'leaf_count': () => ({
+    includes: ['iostream'],
+    structs: [STRUCT],
+    functions: [
+      FREE_TREE_FN,
+`// Inserts node into BST.
+Node* insert(Node* root, int val) {
+    if (!root) return new Node(val);
+    if (val < root->data) root->left = insert(root->left, val);
+    else root->right = insert(root->right, val);
+    return root;
+}`,
+`// Counts leaf nodes in tree.
+int leafCount(Node* root) {
+    if (!root) return 0;
+    if (!root->left && !root->right) return 1;
+    return leafCount(root->left) + leafCount(root->right);
+}`],
+    mainCode: `Node* root = nullptr;
+    int n;
+    if (std::cin >> n) {
+        for (int i = 0; i < n; i++) {
+            int val;
+            if (std::cin >> val) root = insert(root, val);
+        }
+    } else {
+        root = insert(root, 50);
+        root = insert(root, 30);
+        root = insert(root, 70);
+    }
+    std::cout << leafCount(root) << "\\n";
+    freeTree(root);`
+  }),
+  'node_count': () => ({
+    includes: ['iostream'],
+    structs: [STRUCT],
+    functions: [
+      FREE_TREE_FN,
+`// Inserts node into BST.
+Node* insert(Node* root, int val) {
+    if (!root) return new Node(val);
+    if (val < root->data) root->left = insert(root->left, val);
+    else root->right = insert(root->right, val);
+    return root;
+}`,
+`// Counts all nodes in tree.
+int nodeCount(Node* root) {
+    if (!root) return 0;
+    return 1 + nodeCount(root->left) + nodeCount(root->right);
+}`],
+    mainCode: `Node* root = nullptr;
+    int n;
+    if (std::cin >> n) {
+        for (int i = 0; i < n; i++) {
+            int val;
+            if (std::cin >> val) root = insert(root, val);
+        }
+    } else {
+        root = insert(root, 50);
+        root = insert(root, 30);
+        root = insert(root, 70);
+    }
+    std::cout << nodeCount(root) << "\\n";
+    freeTree(root);`
+  }),
+
   // Delegations to tree applications
   'is_valid_bst': () => treeApplications['is_valid_bst'](),
   'lca': () => treeApplications['lca_bst'](),
@@ -306,5 +404,21 @@ int findMax(Node* root) {
   'sorted_array_to_bst': () => treeApplications['sorted_array_to_bst'](),
   'inorder_predecessor_successor': () => treeApplications['inorder_predecessor_successor'](),
   'level_order': () => treeApplications['level_order_traversal'](),
-  'level_order_traversal': () => treeApplications['level_order_traversal']()
+  'level_order_traversal': () => treeApplications['level_order_traversal'](),
+  'diameter': () => treeApplications['diameter_binary_tree'](),
+  'diameter_binary_tree': () => treeApplications['diameter_binary_tree'](),
+  'is_balanced': () => treeApplications['is_balanced_binary_tree'](),
+  'is_balanced_binary_tree': () => treeApplications['is_balanced_binary_tree'](),
+  'is_symmetric': () => treeApplications['is_symmetric_binary_tree'](),
+  'is_symmetric_binary_tree': () => treeApplications['is_symmetric_binary_tree'](),
+  'invert': () => treeApplications['invert_binary_tree'](),
+  'invert_binary_tree': () => treeApplications['invert_binary_tree'](),
+  'path_sum': () => treeApplications['path_sum_binary_tree'](),
+  'path_sum_binary_tree': () => treeApplications['path_sum_binary_tree'](),
+  'left_view': () => treeApplications['left_view_binary_tree'](),
+  'left_view_binary_tree': () => treeApplications['left_view_binary_tree'](),
+  'right_view': () => treeApplications['right_view_binary_tree'](),
+  'right_view_binary_tree': () => treeApplications['right_view_binary_tree'](),
+  'zigzag': () => treeApplications['zigzag_traversal'](),
+  'zigzag_traversal': () => treeApplications['zigzag_traversal']()
 };

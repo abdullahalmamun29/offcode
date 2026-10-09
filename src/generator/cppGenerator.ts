@@ -73,6 +73,10 @@ const dataStructureModules: Record<string, Record<string, () => CodeFragment>> =
   'graph': graph,
   'array': arrays,
   'polynomial': polynomial,
+  'sort': sorting,
+  'sorting': sorting,
+  'searching': searching,
+  'linear_search': searching,
 };
 
 const algorithmModules: Record<string, Record<string, () => CodeFragment>> = {
@@ -139,6 +143,12 @@ export function generateCpp(resolution: ResolutionResult): string {
     if (registry && registry[method]) {
       fragment = registry[method]();
     }
+  } else if ((parts[0] === 'sort' || parts[0] === 'sorting') && parts.length >= 2) {
+    const method = parts[1] === 'create' || parts[1] === 'insert_end' ? 'bubble_sort' : parts[1];
+    fragment = sorting[method] ? sorting[method]() : sorting['bubble_sort']();
+  } else if ((parts[0] === 'searching' || parts[0] === 'linear_search') && parts.length >= 2) {
+    const method = parts[1] === 'create' ? 'linear_search' : parts[1];
+    fragment = searching[method] ? searching[method]() : searching['linear_search']();
   } else if (parts.length >= 2) {
     // singly_linked_list.insert_end
     const structure = parts[0];

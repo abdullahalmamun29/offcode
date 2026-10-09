@@ -30,10 +30,45 @@ int main() {
 }
 `.trim();
 
+const STANDARD_WINDOWS_COMPILER_PATHS: string[] = [
+  // Code::Blocks MinGW (standard university lab installs)
+  "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.exe",
+  "C:\\Program Files (x86)\\CodeBlocks\\MinGW\\bin\\g++.exe",
+  "D:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.exe",
+  "D:\\Program Files (x86)\\CodeBlocks\\MinGW\\bin\\g++.exe",
+  // Dev-C++ / Embarcadero Dev-C++
+  "C:\\Program Files (x86)\\Dev-Cpp\\MinGW64\\bin\\g++.exe",
+  "C:\\Dev-Cpp\\MinGW64\\bin\\g++.exe",
+  "C:\\Dev-Cpp\\bin\\g++.exe",
+  "D:\\Dev-Cpp\\MinGW64\\bin\\g++.exe",
+  // Standalone MinGW / MinGW-w64
+  "C:\\MinGW\\bin\\g++.exe",
+  "C:\\MinGW\\bin\\c++.exe",
+  "C:\\MinGW64\\bin\\g++.exe",
+  "D:\\MinGW\\bin\\g++.exe",
+  // MSYS2 environments
+  "C:\\msys64\\ucrt64\\bin\\g++.exe",
+  "C:\\msys64\\mingw64\\bin\\g++.exe",
+  "C:\\msys64\\usr\\bin\\g++.exe",
+  "D:\\msys64\\ucrt64\\bin\\g++.exe",
+  "D:\\msys64\\mingw64\\bin\\g++.exe",
+  // TDM-GCC
+  "C:\\TDM-GCC-64\\bin\\g++.exe",
+  "C:\\TDM-GCC-32\\bin\\g++.exe",
+  "D:\\TDM-GCC-64\\bin\\g++.exe",
+  // LLVM / Clang on Windows
+  "C:\\Program Files\\LLVM\\bin\\clang++.exe",
+  "C:\\Program Files (x86)\\LLVM\\bin\\clang++.exe",
+  // w64devkit
+  "C:\\w64devkit\\bin\\g++.exe",
+  "D:\\w64devkit\\bin\\g++.exe"
+];
+
 export interface CxxToolchainManagerOptions {
   executor?: IProcessExecutor;
   compilers?: string[];
   tmpDir?: string;
+  configuredCompiler?: string;
 }
 
 export class CxxToolchainManager {
@@ -44,8 +79,31 @@ export class CxxToolchainManager {
 
   constructor(options?: CxxToolchainManagerOptions) {
     this.executor = options?.executor || new NodeProcessExecutor();
-    this.candidateCompilers = options?.compilers || ["g++", "clang++", "c++"];
     this.tmpDir = options?.tmpDir || os.tmpdir();
+
+    if (options?.compilers) {
+      this.candidateCompilers = [...options.compilers];
+    } else {
+      const candidates: string[] = [];
+      if (options?.configuredCompiler && options.configuredCompiler.trim()) {
+        candidates.push(options.configuredCompiler.trim());
+      }
+      candidates.push("g++", "clang++", "c++");
+
+      if (process.platform === "win32") {
+        for (const winPath of STANDARD_WINDOWS_COMPILER_PATHS) {
+          try {
+            if (fs.existsSync(winPath) && !candidates.includes(winPath)) {
+              candidates.push(winPath);
+            }
+          } catch {
+            // ignore filesystem access errors
+          }
+        }
+      }
+
+      this.candidateCompilers = candidates;
+    }
   }
 
   public async validateToolchain(forceRefresh = false): Promise<CxxDiagnostic> {
@@ -184,6 +242,9 @@ export class CxxToolchainManager {
     try {
       if (fs.existsSync(fp)) {
         fs.unlinkSync(fp);
+      }
+      if (fs.existsSync(`${fp}.exe`)) {
+        fs.unlinkSync(`${fp}.exe`);
       }
     } catch (_) {
       // ignore

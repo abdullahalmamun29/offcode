@@ -424,43 +424,49 @@ export const HELD_OUT_BENCHMARK_CASES: BenchmarkCase[] = [
     id: 'NM-08',
     category: 'Numerical Methods',
     prompt: 'numerical integration using Simpson 1/3 rule',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'numerical_integration',
+    expectedAlgorithm: 'simpson_1_3'
   },
   {
     id: 'NM-09',
     category: 'Numerical Methods',
     prompt: 'numerical integration using composite trapezoidal rule',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'numerical_integration',
+    expectedAlgorithm: 'trapezoidal'
   },
   {
     id: 'NM-10',
     category: 'Numerical Methods',
     prompt: 'polynomial interpolation using Lagrange interpolating polynomial',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'interpolation',
+    expectedAlgorithm: 'lagrange'
   },
   {
     id: 'NM-11',
     category: 'Numerical Methods',
     prompt: 'Newton forward divided difference interpolation',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'interpolation',
+    expectedAlgorithm: 'newton_forward'
   },
   {
     id: 'NM-12',
     category: 'Numerical Methods',
     prompt: 'solve ordinary differential equation using 4th order Runge Kutta rk4',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'ode_solver',
+    expectedAlgorithm: 'runge_kutta_4'
   },
   {
     id: 'NM-13',
     category: 'Numerical Methods',
     prompt: 'matrix inversion using Gauss-Jordan elimination',
-    expectedStatus: 'CAPABILITY_UNSUPPORTED',
-    expectedFailureCode: 'CAPABILITY_UNSUPPORTED'
+    expectedStatus: 'CAPABILITY_RESOLVED',
+    expectedCapability: 'linear_systems_iterative',
+    expectedAlgorithm: 'gauss_jordan'
   },
   {
     id: 'NM-14',

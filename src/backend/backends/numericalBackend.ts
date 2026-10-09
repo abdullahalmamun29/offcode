@@ -18,14 +18,33 @@ export class NumericalBackend implements Backend {
     supportedCapabilities: [
       'lu_decomposition',
       'gauss_elimination',
-      'root_finding'
+      'root_finding',
+      'numerical_integration',
+      'interpolation',
+      'ode_solver',
+      'linear_systems_iterative'
     ],
     supportedAlgorithms: [
       'doolittle_lu',
       'gauss_elimination_pivoting',
       'bisection',
       'newton_raphson',
-      'secant'
+      'secant',
+      'false_position',
+      'fixed_point_iteration',
+      'trapezoidal',
+      'simpson_1_3',
+      'simpson_3_8',
+      'lagrange',
+      'newton_forward',
+      'newton_backward',
+      'divided_difference',
+      'euler',
+      'modified_euler',
+      'runge_kutta_4',
+      'jacobi',
+      'gauss_seidel',
+      'gauss_jordan'
     ],
     supportedComponents: [
       'forward_substitution',
